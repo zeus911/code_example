@@ -1,0 +1,18 @@
+xxd_env: stage
+server_type: nginx
+v6_package_name: static.zip
+webapp_package_name: webapp_static.zip
+
+v6_static_rsync_source_dir: v6_static_rsync
+v6_static_rsync_dest_dir: /usr/local/nginx/html/static
+
+webapp_static_rsync_source_dir: webapp_static_rsync
+webapp_static_rsync_dest_dir: /usr/local/nginx/html/static/m
+
+storage_ip: 192.168.31.250
+image_dir: /usr/local/nginx/html/static/image
+admin_image_dir: /usr/local/nginx/html/static/admin/image
+download_dir: /usr/local/nginx/html/static/download
+storage_image_dir: /volume1/v6/v6_front/image
+storage_admin_image_dir: /volume1/v6/v6_admin/image
+storage_download_dir: /volume1/v6/download

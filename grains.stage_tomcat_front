@@ -1,0 +1,10 @@
+xxd_env: stage
+server_type: tomcat
+tomcat_app_dir: /opt/webserver/v6_tomcat/webapps/ROOT
+package_name: v6_front.war 
+conf_dir: wujunrong/xxd_configure/stage/v6/front
+image_dir: /opt/webserver/v6_tomcat/webapps/ROOT/static/image
+admin_image_dir: /opt/webserver/v6_tomcat/webapps/ROOT/static/admin/image
+storage_ip: 192.168.31.250
+storage_image_dir: /volume1/v6/v6_front/image
+storage_admin_image_dir: /volume1/v6/v6_admin/image
