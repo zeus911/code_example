@@ -13,5 +13,11 @@ update_repository:
 #      - file: /opt/local/etc/pkgin/repositories.conf
     - require:
        - file: /opt/local/etc/pkgin/repositories.conf
-salt:
-  pkg.installed: []
+base-package:
+  pkg.installed:
+    - name: salt
+    - require:
+       - cmd: update_repository
+  service.running:
+    - name: salt:minion
+    - enable: True
