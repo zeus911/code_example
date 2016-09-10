@@ -19,7 +19,7 @@ update_repository:
         echo "http://10.75.1.50/pkgin2016Q1" >> /opt/local/etc/pkgin/repositories.conf
         pkgin -fy up
         pkgin -y install coreutils sudo gawk gsed
-    - timeout: 1200
+    - timeout: 120
 #   - onchanges:
 #      - file: /opt/local/etc/pkgin/repositories.conf
     - require:
