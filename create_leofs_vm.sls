@@ -34,8 +34,8 @@
               "admin_pw": "admin"
               },
              "customer_metadata": {
-                 "user-script" : "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;echo 10.75.1.70 salt>>/etc/hosts"
-                 "user-script" : "echo "http://10.75.1.50/pkgin2016Q1" >> /opt/local/etc/pkgin/repositories.conf;pkgin -fy up;pkgin -y install salt;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion"
+                 "user-script" : "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts",
+                 "user-script" : "/opt/local/bin/echo 'http://10.75.1.50/pkgin2016Q1' >> /opt/local/etc/pkgin/repositories.conf;pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion"
               }
             }			
             EOF
