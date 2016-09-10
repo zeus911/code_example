@@ -44,5 +44,5 @@ create_vm:
 #    - onchanges:
 #      - file: /opt/smartos_vm.sh
     - require:
-         - file: /opt/smartos_vm.sh
+       - file: /opt/smartos_vm.sh
 
