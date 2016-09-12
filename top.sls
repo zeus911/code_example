@@ -1,3 +1,3 @@
 base:
   '*':
-    - leofs-vm
+    - pillar_leofs_vm

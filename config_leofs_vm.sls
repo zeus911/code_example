@@ -2,15 +2,23 @@
 
 /opt/local/etc/pkgin/repositories.conf:
   file.managed:
-    - source: salt://pkgin_repositories.conf
+    - source:
+      - salt://pkgin_repositories.conf
     - user: root
     - group: root
     - mode: 644
 
+/root/fifo.gpg:
+  file.managed:
+    - source:
+      - salt://fifo.gpg
+    - user: root
+    - group: root
+    - mode: 644   
+    
 update_repository:
   cmd.run:
     - name: |
-        curl -O https://project-fifo.net/fifo.gpg
         gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
         gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
         VERSION=rel

@@ -44,10 +44,10 @@
 create_{{vm_name}}_vm:
   cmd.script:
     - name: /opt/smartos_{{vm_name}}_vm.sh
-    - timeout: 1200
+    - timeout: 500
 #    - onchanges:
-#      - file: /opt/smartos_{{vm_name}}_vm.sh
+#       - file: /opt/smartos_{{vm_name}}_vm.sh
     - require:
-         - file: /opt/smartos_{{vm_name}}_vm.sh
+        - file: /opt/smartos_{{vm_name}}_vm.sh
 
 {% endfor %}
