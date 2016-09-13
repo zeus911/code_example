@@ -34,8 +34,8 @@
         "files": [
             {
                 "path": "{{ module_property.name }}.zfs.gz",
-                "sha1": "{{ salt['cmd.run']('digest -a sha1 /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}" ,,
-                "size": {{ salt['cmd.run']('ls -la  /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print $5}" ') }} ,
+                "sha1": "{{ salt['cmd.run']('digest -a sha1 /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}" ,
+                "size": "{{ salt['cmd.run']('ls -la  /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}" ,
                 "compression": "gzip"
             }
         ],
