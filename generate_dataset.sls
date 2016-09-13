@@ -1,9 +1,15 @@
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
-{% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
 
-/opt/{{ dataset_uuid }}/manifest.json:
+{% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
+{% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
+{{ salt['cmd.run']('zfs snapshot zones/'~ module_property.vm_uuid ~'@'~ module ~''~ snapshot ~'') }}
+{{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
+{{ salt['cmd.run']('zfs send zones/'~ module_property.vm_uuid ~'@'~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
+
+
+/tmp/{{ dataset_uuid }}/manifest.json:
   file.managed:
     - user: root
     - group: root
@@ -34,8 +40,8 @@
         "files": [
             {
                 "path": "{{ module_property.name }}.zfs.gz",
-                "sha1": "{{ salt['cmd.run']('digest -a sha1 /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}" ,
-                "size": "{{ salt['cmd.run']('ls -la  /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}" ,
+                "sha1": "{{ salt['cmd.run']('digest -a sha1 /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}" ,
+                "size": "{{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}" ,
                 "compression": "gzip"
             }
         ],
