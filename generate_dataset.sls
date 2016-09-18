@@ -1,4 +1,4 @@
-
+#salt ocp09.thu.briphant.com state.sls generate_dataset -t 180
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
 
@@ -53,4 +53,16 @@
                 }
             ]
        }
+       
+upload_repository_{{ dataset_uuid }}:
+  cmd.run:
+    - name: |
+        scp  -r /tmp/{{ dataset_uuid }}  root@10.75.1.202:/data/files
+        ssh 10.75.1.202  svcadm restart svc:/application/dsapid:default
+        ssh 10.75.1.202  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
+    - timeout: 120    
+    - require:
+       - file: /tmp/{{ dataset_uuid }}/manifest.json 
+   
 {% endfor %}    
+
