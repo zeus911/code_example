@@ -6,7 +6,7 @@
 {% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
 {{ salt['cmd.run']('zfs snapshot zones/'~ module_property.vm_uuid ~'@'~ module ~''~ snapshot ~'') }}
 {{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
-{{ salt['cmd.run']('zfs send zones/'~ module_property.vm_uuid ~'@'~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
+{{ salt['cmd.run']('zfs send zones/'~ module_property.vm_uuid ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
 
 
 /tmp/{{ dataset_uuid }}/manifest.json:
@@ -29,7 +29,7 @@
         "creator_name": "briphant",
         "creator_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
         "vendor_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
-        "created_at": {{ salt['cmd.run']("date +%FT%TZ") }}
+        "created_at": {{ salt['cmd.run']("date +%FT%TZ") }},
         "published_at": {{ salt['cmd.run']("date +%FT%TZ") }},
         "state": "active",
         "public": true,
