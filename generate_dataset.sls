@@ -1,4 +1,5 @@
-#salt ocp09.thu.briphant.com state.sls generate_dataset -t 180   pillar='{"dataset_repository.mustang.vm_uuid": "938c6024-0c37-e63e-9314-83437ac8ebe7"}' 
+#salt ocp09.thu.briphant.com state.sls generate_dataset -t 720   pillar='{"dataset_repository.mustang.vm_uuid": "938c6024-0c37-e63e-9314-83437ac8ebe7"}' 
+#zfs list -t    snapshot
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
 
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
@@ -28,19 +29,17 @@
         "creator_name": "briphant",
         "creator_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
         "vendor_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
-        "created_at": {{ salt['cmd.run']("date +%FT%TZ") }},
-        "published_at": {{ salt['cmd.run']("date +%FT%TZ") }},
+        "created_at": "{{ salt['cmd.run']("date +%FT%TZ") }}",
+        "published_at": "{{ salt['cmd.run']("date +%FT%TZ") }}",
         "state": "active",
         "public": true,
         "disabled": false,
-        "zpool": "zones",
-        {{ salt['cmd.run']('mkdir -p /opt/'~ dataset_uuid ~'/  ;cp  /opt/tmp/fa4cc42a-a6a4-4f2e-9ab9-5aedbbebfc5f/wujunrong_salt-dataset_test.zfs.gz  /opt/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }} 
-        
+        "zpool": "zones",      
         "files": [
             {
                 "path": "{{ module_property.name }}.zfs.gz",
-                "sha1": "{{ salt['cmd.run']('digest -a sha1 /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}" ,
-                "size": "{{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}" ,
+                "sha1": "{{ salt['cmd.run']('digest -a sha1 /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}",
+                "size": "{{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}",
                 "compression": "gzip"
             }
         ],
@@ -51,14 +50,14 @@
                     "description": "primary nic"
                 }
             ]
+        }
        }
-       
 upload_repository_{{ dataset_uuid }}:
   cmd.run:
     - name: |
-        scp  -r /tmp/{{ dataset_uuid }}  root@10.75.1.202:/data/files
-        ssh 10.75.1.202  svcadm restart svc:/application/dsapid:default
-        ssh 10.75.1.202  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
+        scp  -r /tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
+        ssh 10.75.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
+        ssh 10.75.1.75  svcadm restart svc:/application/dsapid:default
     - timeout: 120    
     - require:
        - file: /tmp/{{ dataset_uuid }}/manifest.json 
