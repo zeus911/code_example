@@ -1,5 +1,4 @@
-#salt ocp09.thu.briphant.com state.sls generate_dataset -t 180
-
+#salt ocp09.thu.briphant.com state.sls generate_dataset -t 180   pillar='{"dataset_repository.mustang.vm_uuid": "938c6024-0c37-e63e-9314-83437ac8ebe7"}' 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
 
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
