@@ -10,7 +10,7 @@
 {{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
 {{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
 {{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
-{{ show_full_context() }}
+
 
 /tmp/{{ dataset_uuid }}/manifest.json:
   file.managed:
