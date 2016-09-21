@@ -4,10 +4,11 @@
 
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
 {% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
-{{ salt['cmd.run']('zfs snapshot zones/'~ module_property.vm_uuid ~'@'~ module ~''~ snapshot ~'') }}
+{% set vm_uuid_for_dataset     =  salt['environ.get']('~ module ~') %}
+{{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
 {{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
-{{ salt['cmd.run']('zfs send zones/'~ module_property.vm_uuid ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
-
+{{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
+{{ show_full_context() }}
 
 /tmp/{{ dataset_uuid }}/manifest.json:
   file.managed:
@@ -61,6 +62,5 @@ upload_repository_{{ dataset_uuid }}:
     - timeout: 120    
     - require:
        - file: /tmp/{{ dataset_uuid }}/manifest.json 
-   
-{% endfor %}    
 
+{% endfor %}    

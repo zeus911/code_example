@@ -1,21 +1,23 @@
 #salt   smartos-x230.zhixiang   state.sls create_smartos_vm  pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'    --log-level=debug -t 120
 #salt   ocp09.thu.briphant.com   state.sls create_smartos_vm  pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "wujunrong-salt-atuo-created", "hostname": "wu-test-qinghua"}'    --log-level=debug -t 120
 #salt-ssh -i samrtos-dataset state.sls config_smartos_vm
+{% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 
-/opt/smartos_vm.sh:
+/opt/{{ module }}_smartos_vm.sh:
   file.managed:
     - user: root
     - group: root
     - mode: 755
     - contents: |
-            tee /opt/smartos_vm.json <<-'EOF'            
+            tee /opt/{{ module }}_smartos_vm.json <<-'EOF'            
             {
              "brand": "joyent",
-             "image_uuid": "{{ pillar['image_uuid'] }}",
-             "alias": "{{ pillar['alias'] }}",
-             "hostname": "{{ pillar['hostname'] }}",
+             "image_uuid": "{{ module_property.image_uuid }}",
+             "alias": "{{ module }}",
+             "hostname": "{{ module }}",
              "max_physical_memory": 1024,
              "quota": 50,
+             "nowait": true,
              "resolvers": ["114.114.114.114", "8.8.4.4"],
              "nics": [
                 {
@@ -37,13 +39,23 @@
             }			
 
             EOF
-            vmadm  create -f /opt/smartos_vm.json
-create_vm:
+            vmadm  create -f /opt/{{ module }}_smartos_vm.json
+create_{{ module }}_vm:
   cmd.script:
-    - name: /opt/smartos_vm.sh
+    - name: /opt/{{ module }}_smartos_vm.sh
     - timeout: 1200
 #    - onchanges:
-#      - file: /opt/smartos_vm.sh
+#      - file: /opt/{{ module }}_smartos_vm.sh
     - require:
-       - file: /opt/smartos_vm.sh
+       - file: /opt/{{ module }}_smartos_vm.sh
 
+set_{{ module }}_vm_uuid:
+  environ.setenv:
+    - name: "{{ module }}"
+    - value: "abc"
+#    - value: "{{ salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{ print \$1 }" ') }}"
+    - update_minion: True
+    - require:
+       - create_{{ module }}_vm
+
+{% endfor %}   
