@@ -11,12 +11,8 @@ install_nativezone:
     - timeout: 720
     - kwarg:
         pillar:
-             image_uuid: "13f711f4-499f-11e6-8ea6-2b9fb858a619"
-             alias: "auto-created-by-salt"
-             hostname: "wu"            
+             image_uuid: "13f711f4-499f-11e6-8ea6-2b9fb858a619"           
 
-
-        
 create_mustang_dataset:
   salt.state:
     - tgt: 'fifo-test.zhixiang'

@@ -4,7 +4,10 @@
 
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
 {% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
-{% set vm_uuid_for_dataset     =  salt['environ.get']('~ module ~') %}
+{% set vm_uuid_for_dataset     =  {{ salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ') }} %}
+
+salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')
+
 {{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
 {{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
 {{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
