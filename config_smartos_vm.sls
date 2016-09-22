@@ -26,7 +26,7 @@ mustang_package:
 install_mustang:
   cmd.run:
     - name: |
-       sleep 240
+       #sleep 240
        #pkgin -fy up
        sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
        /root/mustang.sh  /root/mustang-Main.tar.gz
@@ -34,12 +34,11 @@ install_mustang:
 #   - onchanges:
 #      - file: /opt/local/etc/pkgin/repositories.conf
     - require:
-       - mustang_shell_script
-       - mustang_package
+       - file: mustang_shell_script
+       - file: mustang_package
 base-package:
   service.running:
     - name: salt:minion
     - enable: True
     - require:
        - cmd: install_mustang
-       - pkg: salt
