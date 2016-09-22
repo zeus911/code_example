@@ -9,9 +9,15 @@ install_nativezone:
     - arg:
       - create_smartos_vm
     - timeout: 720
-    - kwarg:
-        pillar:
-             image_uuid: "13f711f4-499f-11e6-8ea6-2b9fb858a619"           
+       
+install_package:
+  salt.state:
+    - tgt: 'fifo-test.zhixiang'
+    - sls:
+      - config_smartos_vm
+    - timeout: 720
+    - require:
+      - salt: install_nativezone
 
 create_mustang_dataset:
   salt.state:
@@ -20,4 +26,4 @@ create_mustang_dataset:
       - generate_dataset
     - timeout: 720
     - require:
-      - salt: install_nativezone
+      - salt: install_package
