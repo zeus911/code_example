@@ -42,7 +42,7 @@
             {
                 "path": "{{ module_property.name }}.zfs.gz",
                 "sha1": "{{ salt['cmd.run']('digest -a sha1 /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}",
-                "size": "{{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }}",
+                "size": {{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }},
                 "compression": "gzip"
             }
         ],
