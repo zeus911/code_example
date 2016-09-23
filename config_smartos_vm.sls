@@ -22,6 +22,18 @@ mustang_package:
     - user: root
     - group: root
     - mode: 744 
+
+
+
+taurus_shell_script:
+  file.managed:
+    - name: /root/taurus.sh
+    - source: salt://taurus.sh
+    - user: root
+    - group: root
+    - mode: 755    
+    
+
     
 install_mustang:
   cmd.run:
@@ -30,12 +42,14 @@ install_mustang:
        #pkgin -fy up
        sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
        /root/mustang.sh  /root/mustang-Main.tar.gz
+       /root/taurus.sh
     - timeout: 1200
 #   - onchanges:
 #      - file: /opt/local/etc/pkgin/repositories.conf
     - require:
        - file: mustang_shell_script
        - file: mustang_package
+       - file: taurus_shell_script
 base-package:
   service.running:
     - name: salt:minion
