@@ -7,7 +7,7 @@
 #  manage.down:
 #   - removekeys: True
    
-install_nativezone:
+create_nativezone:
   salt.function:
     - name: state.sls
     - tgt: 'fifo-test.zhixiang'
@@ -23,8 +23,16 @@ install_package:
       - config_smartos_vm
     - timeout: 720
     - require:
-      - salt: install_nativezone
+      - salt: create_nativezone
 
+dataset_key:
+  salt.state:
+    - tgt: 'datasets.dsapid'
+    - sls:
+      - ssh_id_rsa
+    - timeout: 720
+
+      
 create_mustang_dataset:
   salt.state:
     - tgt: 'fifo-test.zhixiang'
@@ -33,3 +41,4 @@ create_mustang_dataset:
     - timeout: 720
     - require:
       - salt: install_package
+      - salt: dataset_key
