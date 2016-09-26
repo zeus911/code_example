@@ -22,7 +22,7 @@
              "nics": [
                 {
                    "nic_tag": "admin",
-                   "ip": "10.75.1.60",
+                   "ip": "{{ module_property.ip }}",
                    "netmask": "255.255.255.0",
                    "gateway": "10.75.1.1",
                    "primary": true

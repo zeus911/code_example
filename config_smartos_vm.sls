@@ -39,7 +39,7 @@ install_mustang:
   cmd.run:
     - name: |
        #sleep 240
-       #pkgin -fy up
+       pkgin -fy up
        sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
        /root/mustang.sh  /root/mustang-Main.tar.gz
        /root/taurus.sh
