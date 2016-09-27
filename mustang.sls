@@ -15,7 +15,14 @@ create_nativezone:
       - create_smartos_vm
     - timeout: 720
 
-    
+vm_ping:
+  salt.function:
+    - tgt: 'dataset_test_mustang'
+    - name: test.ping
+    - timeout: 720
+    - require:
+      - salt: create_nativezone
+      
 install_package:
   salt.state:
     - tgt: 'dataset_test_mustang'
@@ -23,7 +30,7 @@ install_package:
       - config_smartos_vm
     - timeout: 720
     - require:
-      - salt: create_nativezone
+      - salt: vm_ping
 
 dataset_key:
   salt.state:
