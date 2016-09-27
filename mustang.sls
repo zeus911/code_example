@@ -18,7 +18,7 @@ create_nativezone:
     
 install_package:
   salt.state:
-    - tgt: 'mustang'
+    - tgt: 'dataset_test_mustang'
     - sls:
       - config_smartos_vm
     - timeout: 720
