@@ -17,7 +17,8 @@ create_nativezone:
 
 vm_ping:
   salt.function:
-    - tgt: 'dataset_test_mustang'
+    - tgt: 'dataset_test_FileServer_NFS,dataset_test_megatron,dataset_test_mustang'
+    - tgt_type: list
     - name: test.ping
     - timeout: 720
     - require:
@@ -25,7 +26,7 @@ vm_ping:
       
 install_package:
   salt.state:
-    - tgt: 'dataset_test_mustang'
+    - tgt: 'dataset_test_*'
     - sls:
       - config_smartos_vm
     - timeout: 720
@@ -40,12 +41,13 @@ dataset_key:
     - timeout: 720
 
       
-create_mustang_dataset:
-  salt.state:
-    - tgt: 'fifo-test.zhixiang'
-    - sls:
-      - generate_dataset
-    - timeout: 720
-    - require:
-      - salt: install_package
-      - salt: dataset_key
+
+#create_mustang_dataset:
+#  salt.state:
+#    - tgt: 'fifo-test.zhixiang'
+#    - sls:
+#      - generate_dataset
+#    - timeout: 720
+#    - require:
+#      - salt: install_package
+#      - salt: dataset_key
