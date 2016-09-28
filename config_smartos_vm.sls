@@ -46,10 +46,10 @@
     - mode: 755
     - source_hash: sha1={{ salt['cmd.run']('curl -s '~ file_source ~'  | openssl sha1 | cut -f 2 -d " " ' )  }}
     - require_in:
-      - file: /root/dataset_{{ vm_hostname }}_install.sh
+      - file: /root/{{ vm_hostname }}_install.sh
 {% endfor %}   
 
-/root/dataset_{{ vm_hostname }}_install.sh:
+/root/{{ vm_hostname }}_install.sh:
   file.managed:
     - user: root
     - group: root
@@ -61,5 +61,5 @@
 dataset_install:
   cmd.run:
     - name: |
-        /root/dataset_{{ vm_hostname }}_install.sh
+        /root/{{ vm_hostname }}_install.sh
     - timeout: 1200

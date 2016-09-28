@@ -17,8 +17,8 @@ create_nativezone:
 
 vm_ping:
   salt.function:
-    - tgt: 'dataset_test_FileServer_NFS,dataset_test_megatronsss,dataset_test_mustang'
-    - tgt_type: list
+    - tgt: 'dataset_test_FileServer_NFS or dataset_test_mustang or dataset_test_megatron'
+    - tgt_type: compound
     - name: test.ping
     - timeout: 720
     - require:
