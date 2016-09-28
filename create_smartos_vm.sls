@@ -18,7 +18,7 @@
              "hostname": "{{ module }}",
              "max_physical_memory": 1024,
              "quota": 50,
-             "resolvers": ["114.114.114.114", "172.17.1.10"],
+             "resolvers": ["172.17.1.10", "114.114.114.114"],
              "nics": [
                 {
                    "nic_tag": "admin",

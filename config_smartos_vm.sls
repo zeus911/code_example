@@ -46,12 +46,20 @@
     - mode: 755
     - source_hash: sha1={{ salt['cmd.run']('curl -s '~ file_source ~'  | openssl sha1 | cut -f 2 -d " " ' )  }}
     - require_in:
-      - cmd: dataset_install
+      - file: /root/custom.sh
 {% endfor %}   
 
-dataset_install:
-  cmd.run:
-    - name: |
-        {{ salt['pillar.get']('dataset_repository:'~ vm_hostname ~':dataset_install_script', {}) }}
-    - timeout: 1200
+/root/custom.sh:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs: True
+    - contents_pillar: dataset_repository:{{ vm_hostname }}:dataset_install_script
+
+#dataset_install:
+#  cmd.run:
+#    - name: |
+#        {{ salt['pillar.get']('dataset_repository:'~ vm_hostname ~':dataset_install_script', {}) }}
+#    - timeout: 1200
     
