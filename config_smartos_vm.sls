@@ -45,10 +45,13 @@
     - group: root
     - mode: 755
     - source_hash: sha1={{ salt['cmd.run']('curl -s '~ file_source ~'  | openssl sha1 | cut -f 2 -d " " ' )  }}
+    - require_in:
+      - cmd: dataset_install
 {% endfor %}   
 
-       
-
-
-
-
+dataset_install:
+  cmd.run:
+    - name: |
+        {{ salt['pillar.get']('dataset_repository:'~ vm_hostname ~':dataset_install_script', {}) }}
+    - timeout: 1200
+    
