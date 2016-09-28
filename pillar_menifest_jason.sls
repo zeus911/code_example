@@ -31,9 +31,10 @@ dataset_repository:
        programm_files:
           install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
        dataset_install_script: |       
+          export HOME=/root
           #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
-          #sh /root/install_file_server_nfs.sh
-        
+          sh /root/install_file_server_nfs.sh
+          echo abc       
     dataset_test_megatron:
        image_uuid: b7a38170-0c8c-11e6-8d0a-532371aa73bb
        name: megatron
@@ -44,6 +45,15 @@ dataset_repository:
        ip: 10.75.1.62
        customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;/usr/bin/echo '10.75.1.70 salt'>>/etc/hosts;/usr/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/usr/bin/echo 'http://192.168.1.232/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/salt-minion -d;/usr/bin/sleep 20"
        programm_files:
-          install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
+          install_aries.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aries/install.sh'
+          install_lobster.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Lobster/install.sh'
+          install_giraffe.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Giraffe/install.sh'
+          install_nsq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/NSQ/install.sh'
+          install_rabbitmq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/RabbitMQ/install.sh'
        dataset_install_script: |       
-          echo abc          
+          echo abc
+          /root/install_aries.sh
+          /root/install_lobster.sh
+          /root/install_giraffe.sh
+          /root/install_nsq.sh
+          /root/install_rabbitmq.sh
