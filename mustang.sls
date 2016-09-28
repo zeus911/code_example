@@ -47,7 +47,7 @@ dataset_key:
 #    - tgt: 'fifo-test.zhixiang'
 #    - sls:
 #      - generate_dataset
-#    - timeout: 720
+#    - timeout: 1720
 #    - require:
 #      - salt: install_package
 #      - salt: dataset_key

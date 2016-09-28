@@ -62,4 +62,4 @@ dataset_install:
   cmd.run:
     - name: |
         /root/{{ vm_hostname }}_install.sh
-    - timeout: 1200
+    - timeout: 600
