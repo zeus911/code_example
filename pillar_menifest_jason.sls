@@ -14,7 +14,8 @@ dataset_repository:
           mustang.sh: 'http://192.168.1.232/file-share/mustang.sh'
           taurus.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Taurus/install.sh'
           mustang-Main.tar.gz: 'http://192.168.1.232/file-share/mustang-Main.tar.gz'
-       dataset_install_script: |       
+       dataset_install_script: |                 
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           /root/mustang.sh /root/mustang-Main.tar.gz
           #/root/taurus.sh
           #http://192.168.10.56:5000/devops/megatron/raw/master/Mustang_Real/install.sh 
@@ -30,6 +31,7 @@ dataset_repository:
        programm_files:
           install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
        dataset_install_script: |       
+          export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
           /root/install_file_server_nfs.sh
         
     dataset_test_megatron:
