@@ -26,7 +26,7 @@ install_package:
     - name: state.sls
     - arg:
       - config_smartos_vm
-    - timeout: 300
+    - timeout: 3600
     - require:
       - salt: vm_ping
 

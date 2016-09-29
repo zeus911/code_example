@@ -64,7 +64,7 @@ dataset_install_{{ module }}:
   cmd.run:
     - name: |
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh
-    - timeout: 300    
+    - timeout: 1800    
     
 
 {% endfor %} 
