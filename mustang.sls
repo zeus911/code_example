@@ -3,10 +3,7 @@
 #salt-run manage.down removekeys=True
 
 
-#remove_keys:
-#  manage.down:
-#   - removekeys: True
-   
+ 
 create_nativezone:
   salt.function:
     - name: state.sls
@@ -17,26 +14,27 @@ create_nativezone:
 
 vm_ping:
   salt.function:
-    - tgt: 'dataset_test_FileServer_NFS or dataset_test_mustang or dataset_test_megatron'
-    - tgt_type: compound
+    - tgt: 'fifo-test.zhixiang'
     - name: test.ping
     - timeout: 720
     - require:
       - salt: create_nativezone
       
 install_package:
-  salt.state:
-    - tgt: 'dataset_test_*'
-    - sls:
+  salt.function:
+    - tgt: 'fifo-test.zhixiang'
+    - name: state.sls
+    - arg:
       - config_smartos_vm
-    - timeout: 720
+    - timeout: 300
     - require:
       - salt: vm_ping
 
 dataset_key:
-  salt.state:
+  salt.function:
     - tgt: 'datasets.dsapid'
-    - sls:
+    - name: state.sls
+    - arg:
       - ssh_id_rsa
     - timeout: 720
 
