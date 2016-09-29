@@ -2,7 +2,7 @@
 
 dataset_repository:
     dataset_test_mustang:
-       image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
+       image_uuid: 9d58adc6-499b-11e6-9ea7-437c859dc16b
        name: mustang-dataset_add_ssh
        version: 2.0
        description: mustang
@@ -22,7 +22,8 @@ dataset_repository:
           install_monkey.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Monkey/install.sh'
           
        dataset_install_script: |
-          exec &> >(tee "/root/dataset_install.log")       
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           /root/mustang.sh /root/mustang-Main.tar.gz
           #/root/taurus.sh
@@ -48,6 +49,8 @@ dataset_repository:
        programm_files:
           install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
        dataset_install_script: |       
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name") 
           export HOME=/root
           export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
           #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
