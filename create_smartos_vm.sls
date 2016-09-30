@@ -21,11 +21,8 @@
              "resolvers": ["172.17.1.10", "114.114.114.114"],
              "nics": [
                 {
-                   "nic_tag": "admin",
-                   "ip": "{{ module_property.ip }}",
-                   "netmask": "255.255.255.0",
-                   "gateway": "10.75.1.1",
-                   "primary": true
+                     "nic_tag": "admin",
+                     "ips": ["dhcp"]
                 }
              ],
              "internal_metadata": {

@@ -63,6 +63,7 @@
 dataset_install_{{ module }}:
   cmd.run:
     - name: |       
+        echo in_cmd_run
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
     - timeout: 1800    
