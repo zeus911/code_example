@@ -1,6 +1,7 @@
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
+{% if module_property.type == "zone-dataset" %}
    {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
  
@@ -32,5 +33,5 @@ dataset_install_{{ module }}:
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
     - timeout: 1800    
     
-
+{% endif %} 
 {% endfor %} 
