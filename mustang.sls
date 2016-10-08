@@ -7,14 +7,14 @@
 create_nativezone:
   salt.function:
     - name: state.sls
-    - tgt: 'smartos_thinkpad.zhixiang'
+    - tgt: 'smartos-x230.zhixiang'
     - arg:
       - create_smartos_vm
     - timeout: 720
 
 vm_ping:
   salt.function:
-    - tgt: 'smartos_thinkpad.zhixiang'
+    - tgt: 'smartos-x230.zhixiang'
     - name: test.ping
     - timeout: 720
     - require:
@@ -22,7 +22,7 @@ vm_ping:
       
 install_package:
   salt.function:
-    - tgt: 'smartos_thinkpad.zhixiang'
+    - tgt: 'smartos-x230.zhixiang'
     - name: state.sls
     - arg:
       - config_smartos_vm
