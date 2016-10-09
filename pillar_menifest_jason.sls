@@ -2,6 +2,7 @@
 
 dataset_repository:
     dataset_test_mustang:
+       salt_target: smartos_thinkpad.zhixiang
        image_uuid: 9d58adc6-499b-11e6-9ea7-437c859dc16b
        name: mustang-dataset_add_ssh
        version: 2.0
@@ -38,6 +39,7 @@ dataset_repository:
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
     dataset_test_NFS:
+       salt_target: smartos_thinkpad.zhixiang
        image_uuid: 163cd9fe-0c90-11e6-bd05-afd50e5961b6
        name: FileServer_NFS
        version: 2.0
@@ -58,6 +60,7 @@ dataset_repository:
           echo abc
           /opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
     dataset_test_kvm:
+       salt_target: smartos_thinkpad.zhixiang
        image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
        name: FileServer_NFS
        version: 2.0
