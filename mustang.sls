@@ -39,13 +39,12 @@ dataset_key:
     - timeout: 720
 
       
-
-#create_mustang_dataset:
-#  salt.state:
-#    - tgt: 'fifo-test.zhixiang'
-#    - sls:
-#      - generate_dataset
-#    - timeout: 1720
-#    - require:
-#      - salt: install_package
-#      - salt: dataset_key
+create_mustang_dataset:
+  salt.state:
+    - tgt: 'smartos_thinkpad.zhixiang'
+    - sls:
+      - generate_dataset
+    - timeout: 1720
+    - require:
+      - salt: install_package
+      - salt: dataset_key

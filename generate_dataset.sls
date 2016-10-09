@@ -2,6 +2,8 @@
 #zfs list -t    snapshot
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
 
+{% if module_property.type == 'zone-dataset' and module_property.salt_target == salt['grains.get']('fqdn', '') %}
+
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
 {% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
 {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
@@ -62,8 +64,8 @@ upload_repository_{{ dataset_uuid }}:
         scp  -r /tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
         ssh 10.75.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
         ssh 10.75.1.75  svcadm restart svc:/application/dsapid:default
-    - timeout: 120    
+    - timeout: 1800    
     - require:
        - file: /tmp/{{ dataset_uuid }}/manifest.json 
-
+{% endif %} 
 {% endfor %}    

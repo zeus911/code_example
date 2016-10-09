@@ -1,7 +1,7 @@
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
-{% if module_property.type == "zone-dataset" %}
+{% if module_property.type == 'zone-dataset' and module_property.salt_target == salt['grains.get']('fqdn', '') %}
    {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
  

@@ -4,7 +4,7 @@ dataset_repository:
     dataset_test_mustang:
        salt_target: smartos_thinkpad.zhixiang
        image_uuid: 9d58adc6-499b-11e6-9ea7-437c859dc16b
-       name: mustang-dataset_add_ssh
+       name: mustang-dataset_1009
        version: 2.0
        description: mustang
        os: smartos
@@ -41,7 +41,7 @@ dataset_repository:
     dataset_test_NFS:
        salt_target: smartos_thinkpad.zhixiang
        image_uuid: 163cd9fe-0c90-11e6-bd05-afd50e5961b6
-       name: FileServer_NFS
+       name: FileServer_NFS_1009
        version: 2.0
        description: xiaotie
        os: smartos
