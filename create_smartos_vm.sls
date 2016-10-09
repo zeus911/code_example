@@ -3,7 +3,8 @@
 #salt-ssh -i samrtos-dataset state.sls config_smartos_vm
 #salt fifo-test.zhixiang environ.get mustang
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
-{% if module_property.type == "zone-dataset" %}
+
+{% if module_property.type == 'zone-dataset' and module_property.salt_target == salt['grains.get']('fqdn', '') %}
 /opt/{{ module }}_smartos_vm.sh:
   file.managed:
     - user: root
@@ -47,7 +48,8 @@ create_{{ module }}_vm:
     - timeout: 1200
     - require:
        - file: /opt/{{ module }}_smartos_vm.sh
-{% endif %} 
+{% endif %}
+ 
 {% endfor %}   
 
 
