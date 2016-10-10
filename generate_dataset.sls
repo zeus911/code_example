@@ -2,19 +2,19 @@
 #zfs list -t    snapshot
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
 
-{% if module_property.type == 'zone-dataset' and module_property.salt_target == salt['grains.get']('fqdn', '') %}
+{% if module_property.type == 'zone-dataset' %}
 
 {% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
 {% set snapshot    =  salt['cmd.run']("date -u '+%Y-%m-%dT%H:%M:%SZ' ") %}
 {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
 
+   {% if vm_uuid_for_dataset %}
+     {{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
+     {{ salt['cmd.run']('mkdir -p /var/tmp/'~ dataset_uuid ~'') }}
+     {{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
+   {% endif %}
 
-{{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
-{{ salt['cmd.run']('mkdir -p /tmp/'~ dataset_uuid ~'') }}
-{{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
-
-
-/tmp/{{ dataset_uuid }}/manifest.json:
+/var/tmp/{{ dataset_uuid }}/manifest.json:
   file.managed:
     - user: root
     - group: root
@@ -43,8 +43,8 @@
         "files": [
             {
                 "path": "{{ module_property.name }}.zfs.gz",
-                "sha1": "{{ salt['cmd.run']('digest -a sha1 /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}",
-                "size": {{ salt['cmd.run']('ls -la  /tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }},
+                "sha1": "{{ salt['cmd.run']('digest -a sha1 /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}",
+                "size": {{ salt['cmd.run']('ls -la  /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz | awk "{ print \$5}" ') }},
                 "compression": "gzip"
             }
         ],
@@ -57,15 +57,15 @@
             ]
         }
        }
-upload_repository_{{ dataset_uuid }}:
+upload_repository_{{ module }}:
   cmd.run:
     - name: |
         zlogin {{ vm_uuid_for_dataset }}  hostname
-        scp  -r /tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
+        scp  -r /var/tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
         ssh 10.75.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
         ssh 10.75.1.75  svcadm restart svc:/application/dsapid:default
     - timeout: 1800    
     - require:
-       - file: /tmp/{{ dataset_uuid }}/manifest.json 
+       - file: /var/tmp/{{ dataset_uuid }}/manifest.json 
 {% endif %} 
 {% endfor %}    

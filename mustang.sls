@@ -2,49 +2,59 @@
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
 #salt-run manage.down removekeys=True
 
+#dataset_key:
+#  salt.function:
+#    - tgt: 'datasets.dsapid'
+#    - name: state.sls
+#    - arg:
+#      - ssh_id_rsa
+#    - timeout: 720
 
+
+{% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
+{% if module_property.type == "zone-dataset" %}
  
-create_nativezone:
+{{ module }}_create_nativezone:
   salt.function:
-    - name: state.sls
-    - tgt: 'smartos_thinkpad.zhixiang'
+    - name: state.sls_id
+    - tgt: '{{ module_property.salt_target }}'
     - arg:
-      - create_smartos_vm
+      - create_{{ module }}_vm
+      - create_smartos_vm   
     - timeout: 720
 
-vm_ping:
+{{ module }}_vm_ping:
   salt.function:
-    - tgt: 'smartos_thinkpad.zhixiang'
+    - tgt: '{{ module_property.salt_target }}'
     - name: test.ping
-    - timeout: 720
+    - timeout: 720 
     - require:
-      - salt: create_nativezone
+      - salt: {{ module }}_create_nativezone
       
-install_package:
+{{ module }}_install_package:
   salt.function:
-    - tgt: 'smartos_thinkpad.zhixiang'
-    - name: state.sls
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
     - arg:
-      - config_smartos_vm
+      - dataset_install_{{ module }} 
+      - config_smartos_vm 
     - timeout: 3600
     - require:
-      - salt: vm_ping
+      - salt: {{ module }}_vm_ping
 
-dataset_key:
-  salt.function:
-    - tgt: 'datasets.dsapid'
-    - name: state.sls
-    - arg:
-      - ssh_id_rsa
-    - timeout: 720
 
       
-create_mustang_dataset:
-  salt.state:
-    - tgt: 'smartos_thinkpad.zhixiang'
-    - sls:
-      - generate_dataset
+{{ module }}_create_mustang_dataset:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - upload_repository_{{ module }}
+      - generate_dataset   
     - timeout: 1720
     - require:
-      - salt: install_package
-      - salt: dataset_key
+      - salt: {{ module }}_install_package
+
+      
+{% endif %} 
+{% endfor %}

@@ -4,13 +4,14 @@
 #salt fifo-test.zhixiang environ.get mustang
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 
-{% if module_property.type == 'zone-dataset' and module_property.salt_target == salt['grains.get']('fqdn', '') %}
+{% if module_property.type == 'zone-dataset' %}
 /opt/{{ module }}_smartos_vm.sh:
   file.managed:
     - user: root
     - group: root
     - mode: 755
     - contents: |
+            set -e
             tee /opt/{{ module }}_smartos_vm.json <<-'EOF'            
             {
              "brand": "joyent",
