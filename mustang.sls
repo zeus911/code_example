@@ -2,13 +2,21 @@
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
 #salt-run manage.down removekeys=True
 
-dataset_key:
+ssh_key_dataset_server:
+  salt.function:
+    - tgt: 'centos7-qinghua'
+    - name: state.sls
+    - arg:
+      - ssh_id_rsa
+    - timeout: 60
+
+ssh_key_log_server:
   salt.function:
     - tgt: 'datasets.dsapid'
     - name: state.sls
     - arg:
       - ssh_id_rsa
-    - timeout: 720
+    - timeout: 60
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
@@ -41,6 +49,7 @@ dataset_key:
     - timeout: 3600
     - require:
       - salt: {{ module }}_vm_ping
+      - salt: ssh_key_log_server
 
 
       
@@ -54,7 +63,7 @@ dataset_key:
     - timeout: 1720
     - require:
       - salt: {{ module }}_install_package
-      - salt: dataset_key
+      - salt: ssh_key_dataset_server
       
 {% endif %} 
 {% endfor %}
