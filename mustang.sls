@@ -54,7 +54,7 @@ dataset_key:
     - timeout: 1720
     - require:
       - salt: {{ module }}_install_package
-
+      - salt: dataset_key
       
 {% endif %} 
 {% endfor %}
