@@ -24,7 +24,7 @@
        { 
         "v": 2,
         "uuid": "{{ dataset_uuid }}",
-        "name": "{{ module_property.name }}",
+        "name": "{{ module_property.name }}{{ salt['cmd.run']("date +%FT%TZ") }}",
         "version": "{{ module_property.version }}" ,
         "owner": "00000000-0000-0000-0000-000000000000",
         "description": "{{ module_property.description }}",

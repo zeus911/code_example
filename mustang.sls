@@ -2,13 +2,13 @@
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
 #salt-run manage.down removekeys=True
 
-#dataset_key:
-#  salt.function:
-#    - tgt: 'datasets.dsapid'
-#    - name: state.sls
-#    - arg:
-#      - ssh_id_rsa
-#    - timeout: 720
+dataset_key:
+  salt.function:
+    - tgt: 'datasets.dsapid'
+    - name: state.sls
+    - arg:
+      - ssh_id_rsa
+    - timeout: 720
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 

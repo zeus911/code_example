@@ -4,7 +4,7 @@ dataset_repository:
     dataset_test_mustang:
        salt_target: smartos_thinkpad.zhixiang
        image_uuid: 9d58adc6-499b-11e6-9ea7-437c859dc16b
-       name: mustang-dataset_1009_3
+       name: mustang-dataset
        version: 2.0
        description: mustang
        os: smartos
@@ -14,7 +14,7 @@ dataset_repository:
        programm_files:
           mustang_local.sh: 'http://192.168.1.128/file-share/mustang.sh'
           mustang.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Mustang_Real/install.sh'
-          mustang-Main.tar.gz: 'http://192.168.1.128/file-share/mustang-Main.tar.gz'
+          mustang-Main.tar.gz: 'http://192.168.31.23/quant/master/mustang/mustang_master_962.tar.gz'
           install_taurus.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Taurus/install.sh'
           install_aries.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aries/install.sh'
           install_lobster.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Lobster/install.sh'
@@ -27,8 +27,8 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          #/root/mustang.sh /root/mustang-Main.tar.gz
-          #/root/install_taurus.sh
+          /root/mustang.sh mustang_master_962.tar.gz
+          /root/install_taurus.sh
           /root/install_aries.sh
           /root/install_lobster.sh
           /root/install_giraffe.sh
@@ -41,7 +41,7 @@ dataset_repository:
     dataset_test_NFS:
        salt_target: smartos_thinkpad.zhixiang
        image_uuid: 163cd9fe-0c90-11e6-bd05-afd50e5961b6
-       name: FileServer_NFS_1009_3
+       name: FileServer_NFS
        version: 2.0
        description: xiaotie
        os: smartos
