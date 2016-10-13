@@ -60,14 +60,14 @@ create_{{ module }}_vm:
     - contents: |
         tee /opt/centos7-docker.json <<-'EOF'
         {
-          "alias": "docker-centos7-wujunrong",
+          "alias": "{{ module }}",
           "brand": "lx",
           "hostname": "docker-centos7",
           "kernel_version": "3.13.0",
           "max_physical_memory": 2048,
-          "quota": 10,
-          "image_uuid": "07b33b7a-27a3-11e6-816f-df7d94eea009",
-          "resolvers": ["114.114.114.114","8.8.4.4"],
+          "quota": 50,
+          "image_uuid": "{{ module_property.image_uuid }}",
+          "resolvers": ["172.17.1.10","114.114.114.114"],
           "nics": [
             {
               "nic_tag": "admin",
