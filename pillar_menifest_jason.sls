@@ -24,6 +24,7 @@ dataset_repository:
           install_monkey.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Monkey/install.sh'
           install_python.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Python_Modules/install.sh'       
        dataset_install_script: |
+          set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
@@ -50,7 +51,8 @@ dataset_repository:
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;"
        programm_files:
           install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
-       dataset_install_script: |       
+       dataset_install_script: |
+          set -e       
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
           export HOME=/root
@@ -67,6 +69,27 @@ dataset_repository:
        description: xiaotie
        os: smartos
        type: zvol
+       ip: 192.168.2.79
+       customer_metadata: "NULL"
+       programm_files:
+          install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
+       dataset_install_script: |       
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name") 
+          #export HOME=/root
+          #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
+          #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
+          #/root/install_file_server_nfs.sh
+          echo abc
+          #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
+    dataset_test_lx:
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
+       name: lx-test
+       version: 2.0
+       description: xiaotie
+       os: smartos
+       type: lx-dataset
        ip: 192.168.2.79
        customer_metadata: "NULL"
        programm_files:

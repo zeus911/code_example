@@ -1,6 +1,3 @@
-known_hosts:
-  - datasets.dsapid
-  - centos7-qinghua
 
 
 mine_functions:
