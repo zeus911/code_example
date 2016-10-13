@@ -20,7 +20,7 @@ ssh_key_log_server:
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
-{% if module_property.type == "zone-dataset" %}
+{% if module_property.type == "zone-dataset" and module_property.salt_target != "no-minion" %}
  
 {{ module }}_create_nativezone:
   salt.function:
@@ -65,5 +65,17 @@ ssh_key_log_server:
       - salt: {{ module }}_install_package
       - salt: ssh_key_dataset_server
       
+{% endif %} 
+
+{% if module_property.type == "lx-dataset" and module_property.salt_target != "no-minion" %}
+ 
+{{ module }}_create_nativezone:
+  salt.function:
+    - name: state.sls_id
+    - tgt: '{{ module_property.salt_target }}'
+    - arg:
+      - create_{{ module }}_vm
+      - create_smartos_vm   
+    - timeout: 720
 {% endif %} 
 {% endfor %}
