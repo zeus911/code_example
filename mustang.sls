@@ -4,7 +4,7 @@
 
 ssh_key_dataset_server:
   salt.function:
-    - tgt: 'centos7-qinghua'
+    - tgt: 'datasets.dsapid'
     - name: state.sls
     - arg:
       - ssh_id_rsa
@@ -12,7 +12,7 @@ ssh_key_dataset_server:
 
 ssh_key_log_server:
   salt.function:
-    - tgt: 'datasets.dsapid'
+    - tgt: 'centos7-qinghua'
     - name: state.sls
     - arg:
       - ssh_id_rsa
