@@ -9,6 +9,7 @@
 {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
 
    {% if vm_uuid_for_dataset %}
+     {{ salt['cmd.run']('zlogin '~ vm_uuid_for_dataset ~' sm-prepare-image -y 1>/dev/null 2>/dev/null') }}
      {{ salt['cmd.run']('zfs snapshot zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~'') }}
      {{ salt['cmd.run']('mkdir -p /var/tmp/'~ dataset_uuid ~'') }}
      {{ salt['cmd.run']('zfs send zones/'~ vm_uuid_for_dataset ~'@'~ module ~''~ snapshot ~' 2> /dev/null | gzip -9 > /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zfs.gz') }}
@@ -60,7 +61,7 @@
 upload_repository_{{ module }}:
   cmd.run:
     - name: |
-        zlogin {{ vm_uuid_for_dataset }}  hostname
+        #zlogin {{ vm_uuid_for_dataset }}  hostname
         scp  -r /var/tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
         ssh 10.75.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
         ssh 10.75.1.75  svcadm restart svc:/application/dsapid:default
