@@ -1,13 +1,14 @@
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
-{% if module_property.type == 'zone-dataset' %}
+{% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
 
    {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
    
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
-/zones/{{ vm_uuid_for_dataset }}/root/root/{{file_name }}:
+download_{{ module }}_{{file_name }}_from_git:
   file.managed:
+    - name: /zones/{{ vm_uuid_for_dataset }}/root/root/{{file_name }}
     - source: {{ file_source }}
     - user: root
     - group: root
@@ -25,7 +26,7 @@ generate_{{ module }}_script_file:
     - contents_pillar: dataset_repository:{{ module }}:dataset_install_script
     - require:
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
-      - file: /zones/{{ vm_uuid_for_dataset }}/root/root/{{file_name }}
+      - file: download_{{ module }}_{{file_name }}_from_git
    {% endfor %} 
    
 dataset_install_{{ module }}:

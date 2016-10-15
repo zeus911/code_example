@@ -2,21 +2,15 @@
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
 #salt-run manage.down removekeys=True
 
-ssh_key_dataset_server:
+set_authorized_keys:
   salt.function:
-    - tgt: 'datasets.dsapid'
+    - tgt: 'datasets.dsapid,centos7-qinghua'
+    - tgt_type: list    
     - name: state.sls
     - arg:
       - ssh_id_rsa
     - timeout: 60
 
-ssh_key_log_server:
-  salt.function:
-    - tgt: 'centos7-qinghua'
-    - name: state.sls
-    - arg:
-      - ssh_id_rsa
-    - timeout: 60
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
@@ -49,7 +43,7 @@ ssh_key_log_server:
     - timeout: 3600
     - require:
       - salt: {{ module }}_vm_ping
-      - salt: ssh_key_log_server
+      - salt: set_authorized_keys
 
 
       
@@ -63,7 +57,7 @@ ssh_key_log_server:
     - timeout: 7200
     - require:
       - salt: {{ module }}_install_package
-      - salt: ssh_key_dataset_server
+      - salt: set_authorized_keys
       
 {% endif %} 
 
@@ -77,5 +71,26 @@ ssh_key_log_server:
       - create_{{ module }}_vm
       - create_smartos_vm   
     - timeout: 720
+
+{{ module }}_vm_ping:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: test.ping
+    - timeout: 720 
+    - require:
+      - salt: {{ module }}_create_nativezone
+      
+{{ module }}_install_package:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - dataset_install_{{ module }} 
+      - config_smartos_vm 
+    - timeout: 3600
+    - require:
+      - salt: {{ module }}_vm_ping
+      - salt: set_authorized_keys    
+    
 {% endif %} 
 {% endfor %}

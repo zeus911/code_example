@@ -2,7 +2,7 @@
 
 dataset_repository:
     dataset_test_mustang:
-       salt_target: no-minion
+       salt_target: smartos_thinkpad.zhixiang
        image_uuid: 17e009d8-91ed-11e6-825d-800c293c9b45
        name: mustang-dataset
        version: 2.0
@@ -31,12 +31,12 @@ dataset_repository:
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           /root/mustang.sh mustang_master_962.tar.gz
           #/root/install_taurus.sh
-          # /root/install_aries.sh
-          # /root/install_lobster.sh
-          # /root/install_giraffe.sh
-          # /root/install_nsq.sh
-          # /root/install_rabbitmq.sh
-          # /root/install_monkey.sh
+          sh /root/install_aries.sh
+          sh /root/install_lobster.sh
+          sh /root/install_giraffe.sh
+          sh /root/install_nsq.sh
+          sh /root/install_rabbitmq.sh
+          sh /root/install_monkey.sh
           #sh /root/install_python.sh
           #sh install_python_wu.sh
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
@@ -85,7 +85,7 @@ dataset_repository:
           echo abc
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
     dataset_test_lx:
-       salt_target: ocp09.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
        name: lx-test
        version: 2.0
