@@ -60,7 +60,7 @@ ssh_key_log_server:
     - arg:
       - upload_repository_{{ module }}
       - generate_dataset   
-    - timeout: 1720
+    - timeout: 7200
     - require:
       - salt: {{ module }}_install_package
       - salt: ssh_key_dataset_server

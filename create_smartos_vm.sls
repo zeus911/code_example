@@ -62,7 +62,7 @@ create_{{ module }}_vm:
         {
           "alias": "{{ module }}",
           "brand": "lx",
-          "hostname": "docker-centos7",
+          "hostname": "{{ module }}",
           "kernel_version": "3.13.0",
           "max_physical_memory": 2048,
           "quota": 50,
@@ -71,9 +71,9 @@ create_{{ module }}_vm:
           "nics": [
             {
               "nic_tag": "admin",
-              "ip": "172.50.50.27",
-              "netmask": "255.255.255.224",
-              "gateway": "172.50.50.1",
+              "ip": "10.75.1.53",
+              "netmask": "255.255.255.0",
+              "gateway": "10.75.1.1",
               "primary": true
             }
           ]
