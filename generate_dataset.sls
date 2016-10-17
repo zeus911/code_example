@@ -65,7 +65,7 @@ upload_repository_{{ module }}:
         scp  -r /var/tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
         ssh 10.75.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
         ssh 10.75.1.75  svcadm restart svc:/application/dsapid:default
-    - timeout: 1800    
+    - timeout: 3600    
     - require:
        - file: /var/tmp/{{ dataset_uuid }}/manifest.json 
 {% endif %} 
