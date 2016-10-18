@@ -93,4 +93,25 @@ set_authorized_keys:
       - salt: set_authorized_keys    
     
 {% endif %} 
+{% if module_property.type == "zvol" and module_property.salt_target != "no-minion" %}
+ 
+{{ module }}_create_nativezone:
+  salt.function:
+    - name: state.sls_id
+    - tgt: '{{ module_property.salt_target }}'
+    - arg:
+      - create_{{ module }}_vm
+      - create_smartos_vm   
+    - timeout: 720
+
+{{ module }}_vm_ping:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: test.ping
+    - timeout: 720 
+    - require:
+      - salt: {{ module }}_create_nativezone
+      
+
+{% endif %} 
 {% endfor %}

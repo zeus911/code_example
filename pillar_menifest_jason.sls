@@ -2,7 +2,7 @@
 
 dataset_repository:
     dataset_test_mustang:
-       salt_target: smartos_thinkpad.zhixiang
+       salt_target: no-minion
        image_uuid: 17e009d8-91ed-11e6-825d-800c293c9b45
        name: mustang-dataset
        version: 2.0
@@ -64,9 +64,9 @@ dataset_repository:
           echo abc
           /opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
     dataset_test_kvm:
-       salt_target: no-minion
-       image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
-       name: FileServer_NFS
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 8a1dbc62-b885-11e5-b0de-1777d1a6eb10
+       name: kvm-test
        version: 2.0
        description: xiaotie
        os: smartos

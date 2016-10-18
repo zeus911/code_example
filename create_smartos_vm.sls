@@ -87,7 +87,60 @@ create_{{ module }}_vm:
     - require:
        - file: /opt/{{ module }}_LX_vm.sh
 {% endif %}
-
+{% if module_property.type == 'zvol' %}
+/opt/{{ module }}_kvm_vm.sh:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 755
+    - contents: |
+        tee /opt/centos-kvm.json <<-'EOF'
+          {
+            "alias": "{{ module }}",
+            "brand": "kvm",
+            "resolvers": [
+              "172.17.1.10",
+              "114.114.114.114"
+            ],
+            "ram": "2048",
+            "vcpus": "2",
+            "hostname": "{{ module }}",
+            "nics": [
+              {
+                "nic_tag": "admin",
+                "ip": "10.75.1.73",
+                "netmask": "255.255.255.0",
+                "gateway": "10.75.1.1",
+                "model": "virtio",
+                "primary": true
+              }
+             ],
+            "internal_metadata": {
+               "root_pw": "root",
+               "admin_pw": "admin"
+              },
+            "customer_metadata" : {
+                "user-script" : "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart",            
+                "root_authorized_keys":
+                "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9vgaOMggb9WgG23YI7eHgx0H2MtI1jKfb1BfiLk5yXJpDVBJ+qH1f28YwIgzv9ig7Ul742NCXukOoAVaa4noiJmQhMQVMfE8P7jJm+gJ+zLP2MzxWetRGKAXx8NT+v34nSacvRlacoAoS/6AlHbsRvKWaO0XEGkFXSBciOl+28n8kmp9pAcblhHtJGKwRYgv7xN8KLWgrU2jD0s4vay3DpG4A8RbkTjosYgJRZzDHGqTEbjiFK7aS157pWcQlSANfDR2tH21DmYE5Pt2T4aGB9Mxo9sTUGytekk9BbssvnjZzoIO5FjtqX0/A5x8fvsfrLq2kh+rWUb8B5jdierRV root@frank"
+              },
+            "disks": [
+              {
+                "image_uuid": "{{ module_property.image_uuid }}",
+                "boot": true,
+                "model": "virtio"
+              }
+            ]
+          }
+        EOF
+        vmadm  create -f /opt/centos-kvm.json
+create_{{ module }}_vm:
+  cmd.script:
+    - name: /opt/{{ module }}_kvm_vm.sh
+    - timeout: 1200
+    - require:
+       - file: /opt/{{ module }}_kvm_vm.sh
+{% endif %}
  
 {% endfor %}   
 
