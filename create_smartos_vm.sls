@@ -135,7 +135,7 @@ create_{{ module }}_vm:
           }
         EOF
         vmadm  create -f /opt/centos-kvm.json
-        sleep 600
+        sleep 450
 create_{{ module }}_vm:
   cmd.script:
     - name: /opt/{{ module }}_kvm_vm.sh

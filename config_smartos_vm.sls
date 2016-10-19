@@ -7,6 +7,14 @@
               {% set file_name_to_run        = '/zones/'+vm_uuid_for_dataset+'/root/root/'+module+'_install.sh' %} 
         {% elif module_property.type == 'zvol' %}
               {% set file_name_to_run        = '/root/'+module+'_install.sh' %}
+
+centos-lx-brand-image-builder:
+  file.recurse:
+    - name: /root/centos-lx-brand-image-builder
+    - source: salt://files/centos-lx-brand-image-builder
+              
+              
+              
         {% endif %}    
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
         {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
@@ -39,20 +47,25 @@ generate_{{ module }}_script_file:
    
 dataset_install_{{ module }}:
   cmd.run:
-{% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
+    {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
     - name: |       
         echo in_cmd_run
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
-{% elif module_property.type == 'zvol' %}
+    {% elif module_property.type == 'zvol' %}
     - name: |       
         echo in_cmd_run
+        chmod +x /root/centos-lx-brand-image-builder/install
+        chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
         #/root/{{ module }}_install.sh >/dev/null
         #scp  /root/root/*.log  10.75.1.50:/var/www/html/log/
-{% endif %} 
+    {% endif %} 
 
     - timeout: 3600    
     - require:
       - file: generate_{{ module }}_script_file
+    {% if module_property.type == 'zvol' %}
+      - file: centos-lx-brand-image-builder
+    {% endif %} 
 {% endif %} 
 {% endfor %} 
