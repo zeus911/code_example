@@ -8,7 +8,7 @@ set_authorized_keys:
     - tgt_type: list    
     - name: state.sls
     - arg:
-      - ssh_id_rsa
+      - set_ssh_authorized_keys
     - timeout: 60
 
 
