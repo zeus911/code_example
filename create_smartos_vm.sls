@@ -80,6 +80,7 @@ create_{{ module }}_vm:
         }
         EOF
         vmadm  create -f /opt/centos7-docker.json
+
 create_{{ module }}_vm:
   cmd.script:
     - name: /opt/{{ module }}_LX_vm.sh
@@ -120,7 +121,7 @@ create_{{ module }}_vm:
                "admin_pw": "admin"
               },
             "customer_metadata" : {
-                "user-script" : "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart",            
+                "user-script" : "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start",            
                 "root_authorized_keys":
                 "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9vgaOMggb9WgG23YI7eHgx0H2MtI1jKfb1BfiLk5yXJpDVBJ+qH1f28YwIgzv9ig7Ul742NCXukOoAVaa4noiJmQhMQVMfE8P7jJm+gJ+zLP2MzxWetRGKAXx8NT+v34nSacvRlacoAoS/6AlHbsRvKWaO0XEGkFXSBciOl+28n8kmp9pAcblhHtJGKwRYgv7xN8KLWgrU2jD0s4vay3DpG4A8RbkTjosYgJRZzDHGqTEbjiFK7aS157pWcQlSANfDR2tH21DmYE5Pt2T4aGB9Mxo9sTUGytekk9BbssvnjZzoIO5FjtqX0/A5x8fvsfrLq2kh+rWUb8B5jdierRV root@frank"
               },
@@ -134,6 +135,7 @@ create_{{ module }}_vm:
           }
         EOF
         vmadm  create -f /opt/centos-kvm.json
+        sleep 600
 create_{{ module }}_vm:
   cmd.script:
     - name: /opt/{{ module }}_kvm_vm.sh

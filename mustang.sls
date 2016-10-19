@@ -106,12 +106,22 @@ set_authorized_keys:
 
 {{ module }}_vm_ping:
   salt.function:
-    - tgt: '{{ module_property.salt_target }}'
+    - tgt: 'dataset_test_kvm'
     - name: test.ping
     - timeout: 720 
     - require:
       - salt: {{ module }}_create_nativezone
-      
+{{ module }}_install_package:
+  salt.function:
+    - tgt: 'dataset_test_kvm'
+    - name: state.sls_id
+    - arg:
+      - dataset_install_{{ module }} 
+      - config_smartos_vm 
+    - timeout: 3600
+    - require:
+      - salt: {{ module }}_vm_ping
+      - salt: set_authorized_keys          
 
 {% endif %} 
 {% endfor %}
