@@ -7,8 +7,8 @@
     - contents: |
          {{ '' }}       
          {#- Loop over targetted minions -#}
-         {%- set host_keys = salt['mine.get']('L@centos7-qinghua or L@datasets.dsapid', 'cmd.run', expr_form='compound') -%}
-         {%- set ips = salt['mine.get']('L@centos7-qinghua or L@datasets.dsapid', 'network.ip_addrs', expr_form='compound') -%}
+         {%- set host_keys = salt['mine.get']('*', 'cmd.run', expr_form='glob') -%}
+         {%- set ips = salt['mine.get']('*', 'network.ip_addrs', expr_form='glob') -%}
          {%- for host, keys in host_keys|dictsort -%}
            {% set names = [] %}
            {%- set ip4 = ips[host] -%}

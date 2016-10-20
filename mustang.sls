@@ -4,7 +4,7 @@
 
 set_authorized_keys:
   salt.function:
-    - tgt: 'datasets.dsapid,centos7-qinghua'
+    - tgt: 'datasets.dsapid,centos7-qinghua,ocp09.thu.briphant.com,smartos_thinkpad.zhixiang,'
     - tgt_type: list    
     - name: state.sls
     - arg:
