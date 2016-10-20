@@ -80,15 +80,12 @@ dataset_repository:
        dataset_install_script: |       
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
-          #export HOME=/root
-          #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
-          #export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
-          #/root/install_file_server_nfs.sh
           echo abc
-          #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
+          ./install -d /data/chroot -m http://vault.centos.org/centos/7.1.1503/os/x86_64/Packages/  -r centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm  -i test-lx-centos-7.2 -p "CentOS 7.2 LX Brand" -D "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
+         
     dataset_test_lx:
        salt_target: no-minion
-       image_uuid: 2f365e66-9288-11e6-93f3-800c293c9b45
+       image_uuid: dfae9fdc-91f8-11e6-a350-800c293c9b45
        name: lx-test
        version: 2.0
        description: xiaotie

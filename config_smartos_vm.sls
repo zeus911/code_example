@@ -2,20 +2,27 @@
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 {% if module_property.salt_target != "no-minion" %}
-   {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
-        {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
+   
+        {% if grains['os_family'] == 'Solaris' %}
+            {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
+        {% else %}
+            {% set vm_uuid_for_dataset = 'xxxx' %}
+        {% endif %}
+
+
+        {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}             
               {% set file_name_to_run        = '/zones/'+vm_uuid_for_dataset+'/root/root/'+module+'_install.sh' %} 
         {% elif module_property.type == 'zvol' %}
               {% set file_name_to_run        = '/root/'+module+'_install.sh' %}
-
+              
 centos-lx-brand-image-builder:
   file.recurse:
     - name: /root/centos-lx-brand-image-builder
     - source: salt://files/centos-lx-brand-image-builder
-              
-              
-              
-        {% endif %}    
+                      
+        {% endif %}   
+
+        
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
         {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
               {% set file_name_to_download   = '/zones/'+vm_uuid_for_dataset+'/root/root/'+file_name %} 
@@ -58,7 +65,10 @@ dataset_install_{{ module }}:
         chmod +x /root/centos-lx-brand-image-builder/install
         chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
         #/root/{{ module }}_install.sh >/dev/null
-        #scp  /root/root/*.log  10.75.1.50:/var/www/html/log/
+        
+        {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
+        {% set ip4         = host_ip_dic[module_property.salt_target] %}
+        scp  /root/centos-lx-brand-image-builder/*.gz  {{ ip4 }}:/opt/centos-lx-brand-image-builder/ 
     {% endif %} 
 
     - timeout: 3600    

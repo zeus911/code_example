@@ -142,6 +142,13 @@ create_{{ module }}_vm:
     - timeout: 1200
     - require:
        - file: /opt/{{ module }}_kvm_vm.sh
+
+centos-lx-brand-image-builder:
+  file.recurse:
+    - name: /root/centos-lx-brand-image-builder
+    - source: salt://files/centos-lx-brand-image-builder
+          
+       
 {% endif %}
  
 {% endfor %}   
