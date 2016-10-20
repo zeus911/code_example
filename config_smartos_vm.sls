@@ -61,6 +61,10 @@ dataset_install_{{ module }}:
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
     {% elif module_property.type == 'zvol' %}
     - name: |       
+        
+        
+        log_file_name=dataset_install_`date +%F-%H_%M`.log
+        #exec &> "/root/$log_file_name" 
         echo in_cmd_run
         chmod +x /root/centos-lx-brand-image-builder/install
         chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
@@ -68,7 +72,9 @@ dataset_install_{{ module }}:
         
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
         {% set ip4         = host_ip_dic[module_property.salt_target] %}
-        scp  /root/centos-lx-brand-image-builder/*.gz  {{ ip4 }}:/opt/centos-lx-brand-image-builder/ 
+        #scp  /root/centos-lx-brand-image-builder/*.gz  {{ ip4 }}:/opt/centos-lx-brand-image-builder/
+        ssh {{ ip4 }}  /opt/centos-lx-brand-image-builder/create-lx-image -t  /opt/centos-lx-brand-image-builder/test-lx-centos-7.2-20161020.tar.gz  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u ttps://docs.joyent.com/images/container-native-linux;  
+        
     {% endif %} 
 
     - timeout: 3600    
