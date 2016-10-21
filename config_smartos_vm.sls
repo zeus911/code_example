@@ -10,9 +10,9 @@
         {% endif %}
 
 
-        {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}             
+        {% if module_property.type == 'zone-dataset'  %}             
               {% set file_name_to_run        = '/zones/'+vm_uuid_for_dataset+'/root/root/'+module+'_install.sh' %} 
-        {% elif module_property.type == 'zvol' %}
+        {% elif module_property.type == 'zvol' or module_property.type == 'lx-dataset' %}
               {% set file_name_to_run        = '/root/'+module+'_install.sh' %}
               
 centos-lx-brand-image-builder:
@@ -24,9 +24,9 @@ centos-lx-brand-image-builder:
 
         
    {% for file_name, file_source in salt['pillar.get']('dataset_repository:'~ module ~':programm_files', {}).items() %} 
-        {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
+        {% if module_property.type == 'zone-dataset' %}
               {% set file_name_to_download   = '/zones/'+vm_uuid_for_dataset+'/root/root/'+file_name %} 
-        {% elif module_property.type == 'zvol' %}
+        {% elif module_property.type == 'zvol' or module_property.type == 'lx-dataset' %}
               {% set file_name_to_download   = '/root/'+file_name %} 
         {% endif %} 
 download_{{ module }}_{{file_name }}_from_git:
@@ -54,26 +54,29 @@ generate_{{ module }}_script_file:
    
 dataset_install_{{ module }}:
   cmd.run:
-    {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
+    {% if module_property.type == 'zone-dataset' %}
     - name: |       
         echo in_cmd_run
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
-    {% elif module_property.type == 'zvol' %}
+    {% elif module_property.type == 'zvol' or module_property.type == 'lx-dataset' %}
     - name: |       
         
         
         log_file_name=dataset_install_`date +%F-%H_%M`.log
-        #exec &> "/root/$log_file_name" 
+        exec &> "/root/$log_file_name" 
         echo in_cmd_run
         chmod +x /root/centos-lx-brand-image-builder/install
         chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
         #/root/{{ module }}_install.sh >/dev/null
         
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
-        {% set ip4         = host_ip_dic[module_property.salt_target] %}
-        #scp  /root/centos-lx-brand-image-builder/*.gz  {{ ip4 }}:/opt/centos-lx-brand-image-builder/
-        ssh {{ ip4 }}  /opt/centos-lx-brand-image-builder/create-lx-image -t  /opt/centos-lx-brand-image-builder/test-lx-centos-7.2-20161020.tar.gz  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u ttps://docs.joyent.com/images/container-native-linux;  
+        {% set global_zone_ip         = host_ip_dic[module_property.salt_target] %}
+
+        ssh {{ global_zone_ip  }}  'cd  /opt/centos-lx-brand-image-builder/;rm -f *.gz; rm -f *.json'
+        scp  /root/centos-lx-brand-image-builder/*.gz  {{ global_zone_ip }}:/opt/centos-lx-brand-image-builder/
+        
+        ssh {{ global_zone_ip  }}  'cd  /opt/centos-lx-brand-image-builder/; /opt/centos-lx-brand-image-builder/create-lx-image -t  `ls /opt/centos-lx-brand-image-builder/*.gz`  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u ttps://docs.joyent.com/images/container-native-linux'
         
     {% endif %} 
 

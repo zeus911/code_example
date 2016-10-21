@@ -66,7 +66,7 @@ dataset_repository:
           echo abc
           /opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
     dataset_test_kvm:
-       salt_target: ocp09.thu.briphant.com
+       salt_target: no-minion
        image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
        name: kvm-test
        version: 2.0
@@ -84,7 +84,7 @@ dataset_repository:
           ./install -d /data/chroot -m http://vault.centos.org/centos/7.1.1503/os/x86_64/Packages/  -r centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm  -i test-lx-centos-7.2 -p "CentOS 7.2 LX Brand" -D "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
          
     dataset_test_lx:
-       salt_target: no-minion
+       salt_target: ocp09.thu.briphant.com
        image_uuid: dfae9fdc-91f8-11e6-a350-800c293c9b45
        name: lx-test
        version: 2.0
