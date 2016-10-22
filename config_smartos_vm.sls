@@ -61,7 +61,7 @@ dataset_install_{{ module }}:
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
     {% elif module_property.type == 'zvol' or module_property.type == 'lx-dataset' %}
     - name: |       
-        
+        #kvm dataset is created from kvm vm
         
         log_file_name=dataset_install_`date +%F-%H_%M`.log
         exec &> "/root/$log_file_name" 
@@ -70,20 +70,23 @@ dataset_install_{{ module }}:
         chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
         #/root/{{ module }}_install.sh >/dev/null
         
+        cd /root/centos-lx-brand-image-builder/
+        rm -f /root/centos-lx-brand-image-builder/*.gz
+        ./install -d /data/chroot -m http://vault.centos.org/centos/7.1.1503/os/x86_64/Packages/  -r centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm  -i test-lx-centos-7.2 -p "CentOS 7.2 LX Brand" -D "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
+ 
+               
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
         {% set global_zone_ip         = host_ip_dic[module_property.salt_target] %}
 
         ssh {{ global_zone_ip  }}  'cd  /opt/centos-lx-brand-image-builder/;rm -f *.gz; rm -f *.json'
         scp  /root/centos-lx-brand-image-builder/*.gz  {{ global_zone_ip }}:/opt/centos-lx-brand-image-builder/
         
-        ssh {{ global_zone_ip  }}  'cd  /opt/centos-lx-brand-image-builder/; /opt/centos-lx-brand-image-builder/create-lx-image -t  `ls /opt/centos-lx-brand-image-builder/*.gz`  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u ttps://docs.joyent.com/images/container-native-linux'
-        
     {% endif %} 
 
     - timeout: 3600    
     - require:
       - file: generate_{{ module }}_script_file
-    {% if module_property.type == 'zvol' %}
+    {% if module_property.type == 'lx-dataset' %}
       - file: {{ module }}_centos-lx-brand-image-builder
     {% endif %} 
 {% endif %} 

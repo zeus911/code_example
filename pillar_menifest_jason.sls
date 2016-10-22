@@ -70,22 +70,22 @@ dataset_repository:
        image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
        name: kvm-test
        version: 2.0
-       description: xiaotie
+       description: used-for-generating-lx-dataset
        os: smartos
        type: zvol
-       ip: 192.168.2.79
+       ip: 10.75.1.3
        customer_metadata: "NULL"
        programm_files:
-          install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
+          install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
        dataset_install_script: |       
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
           echo abc
-          ./install -d /data/chroot -m http://vault.centos.org/centos/7.1.1503/os/x86_64/Packages/  -r centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm  -i test-lx-centos-7.2 -p "CentOS 7.2 LX Brand" -D "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
+          /root/install_EMS.sh
          
     dataset_test_lx:
        salt_target: ocp09.thu.briphant.com
-       image_uuid: b852813a-9809-11e6-bbac-c116b3d1637e
+       image_uuid: ca1bbbce-9814-11e6-a345-2d7d0bb6e46d
        name: lx-test
        version: 2.0
        description: xiaotie
@@ -94,7 +94,7 @@ dataset_repository:
        ip: 192.168.2.79
        customer_metadata: "NULL"
        programm_files:
-          install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
+          install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
        dataset_install_script: |       
           log_file_name=`date +%F-%H_%M`_dataset_install.log
           exec &> >(tee "/root/$log_file_name") 

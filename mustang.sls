@@ -5,7 +5,7 @@
 
 set_authorized_keys:
   salt.function:
-    - tgt: 'datasets.dsapid,centos7-qinghua,ocp09.thu.briphant.com,smartos_thinkpad.zhixiang,'
+    - tgt: 'datasets.dsapid,centos7-qinghua,ocp09.thu.briphant.com,smartos_thinkpad.zhixiang,dataset_test_kvm'
     - tgt_type: list    
     - name: state.sls
     - arg:
@@ -83,8 +83,20 @@ set_authorized_keys:
     - require:
       - salt: {{ module }}_vm_ping
       - salt: set_authorized_keys    
-    
-{{ module }}_create_mustang_dataset:
+
+{{ module }}_prepare_dataset:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - {{ module }}_generate_dataset_file
+      - prepare_dataset 
+    - timeout: 3600
+    - require:
+      - salt: {{ module }}_install_package
+
+      
+{{ module }}_create_lx_dataset:
   salt.function:
     - tgt: '{{ module_property.salt_target }}'
     - name: state.sls_id
@@ -93,7 +105,7 @@ set_authorized_keys:
       - generate_dataset   
     - timeout: 7200
     - require:
-      - salt: {{ module }}_install_package
+      - salt: {{ module }}_prepare_dataset
       - salt: set_authorized_keys    
     
 {% endif %} 

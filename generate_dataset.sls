@@ -65,10 +65,7 @@
        {% endif %}
 
     {% if module_property.type == 'lx-dataset' %}           
-{{ module }}_centos-lx-brand-image-builder:
-  file.recurse:
-    - name: /opt/centos-lx-brand-image-builder
-    - source: salt://files/centos-lx-brand-image-builder
+
     
 /opt/{{ module }}-update_lxzone_dataset_manifest_file.py:
   file.managed:
@@ -110,7 +107,9 @@ upload_repository_{{ module }}:
   cmd.run:
     - name: |
         #zlogin {{ vm_uuid_for_dataset }}  hostname
-    {% if module_property.type == 'lx-dataset' %}     
+    {% if module_property.type == 'lx-dataset' %} 
+        log_file_name=upload_dataset_`date +%F-%H_%M`.log
+        exec &> "/opt/$log_file_name"     
 
         cd  /opt/centos-lx-brand-image-builder
         mv `ls *.json`  manifest.json
@@ -128,7 +127,7 @@ upload_repository_{{ module }}:
        {% endif %}
     {% if module_property.type == 'lx-dataset' %}    
        - file: /opt/{{ module }}-update_lxzone_dataset_manifest_file.py
-       - file: {{ module }}_centos-lx-brand-image-builder
+       
     {% endif %}  
 {% endif %} 
 

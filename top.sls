@@ -11,6 +11,7 @@ base:
     - match: list
   'dataset_test_kvm':
     - pillar_kvm_ssh_client_share_keys
+    - pillar_kvm_ssh_server_share_keys
     - match: list    
   '*':
     - pillar_menifest_jason
