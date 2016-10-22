@@ -1,35 +1,6 @@
 #salt ocp09.thu.briphant.com state.sls generate_dataset -t 720   pillar='{"dataset_repository.mustang.vm_uuid": "938c6024-0c37-e63e-9314-83437ac8ebe7"}' 
 #zfs list -t    snapshot
 
-/opt/update_lxzone_dataset_manifest_file.py:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: 755
-    - makedirs : True
-    - contents: |
-        #!/opt/local/bin/python
-        import json
-        
-        a_dict = {'path': 'test-lx-centos-7.2-20161021.zfs.gz'}
-        b_dict = {
-                      "creator_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
-                      "vendor_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
-                      "created_at": "2016-10-17T02:03:37Z",
-                      "state": "active",
-                      "public": True,
-                      "urn": "smartos:briphant:mustang-dataset:2.0"
-                 }
-
-        
-        print "abc"
-        with open('/opt/centos-lx-brand-image-builder/test-lx-centos-7.2-20161021.json') as f:
-            data = json.load(f)
-        
-        data['files'][0].update(a_dict)
-        data.update(b_dict)
-        with open('/opt/centos-lx-brand-image-builder/test-lx-centos-7.2-20161021.json', 'w') as f:
-            json.dump(data, f)
 
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
@@ -92,17 +63,59 @@
        }
        
        {% endif %}
+
+    {% if module_property.type == 'lx-dataset' %}           
+{{ module }}_centos-lx-brand-image-builder:
+  file.recurse:
+    - name: /opt/centos-lx-brand-image-builder
+    - source: salt://files/centos-lx-brand-image-builder
+    
+/opt/{{ module }}-update_lxzone_dataset_manifest_file.py:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs : True
+    - contents: |
+        #!/opt/local/bin/python
+        import json
+        
+        sub_unit_file_dict = {
+                    'path': '{{ salt['cmd.run']("cd  /opt/centos-lx-brand-image-builder;ls *.zfs.gz") }}',                                
+                 }
+        
+        b_dict = {
+                      'name': 'lx-zone_{{ module_property.name }}{{ salt['cmd.run']("date +%FT%TZ") }}',
+                      'uuid': '{{ dataset_uuid }}',
+                      "creator_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
+                      "vendor_uuid": "3b1ffc44-9e62-11e4-8e98-b760856b37ca",
+                      "created_at": "2016-10-17T02:03:37Z",
+                      "state": "active",
+                      "public": True,
+                      "urn": "smartos:briphant:mustang-dataset:2.0"
+                 }
+
+        
+        print "abc"
+        with open('/opt/centos-lx-brand-image-builder/manifest.json') as f:
+            data = json.load(f)
+        
+        data['files'][0].update(sub_unit_file_dict)
+        data.update(b_dict)
+        with open('/opt/centos-lx-brand-image-builder/manifest.json', 'w') as f:
+            json.dump(data, f)
+
+    {% endif %} 
 upload_repository_{{ module }}:
   cmd.run:
     - name: |
         #zlogin {{ vm_uuid_for_dataset }}  hostname
     {% if module_property.type == 'lx-dataset' %}     
-        python /opt/update_lxzone_dataset_manifest_file.py
+
         cd  /opt/centos-lx-brand-image-builder
         mv `ls *.json`  manifest.json
+        python /opt/{{ module }}-update_lxzone_dataset_manifest_file.py
         cp  *.json  *.zfs.gz /var/tmp/{{ dataset_uuid }}  
-        
-
     {% endif %}        
        
         scp  -r /var/tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
@@ -113,6 +126,13 @@ upload_repository_{{ module }}:
        {% if vm_uuid_for_dataset %}
        - file: /var/tmp/{{ dataset_uuid }}/manifest.json 
        {% endif %}
-       - file: /opt/update_lxzone_dataset_manifest_file.py
+    {% if module_property.type == 'lx-dataset' %}    
+       - file: /opt/{{ module }}-update_lxzone_dataset_manifest_file.py
+       - file: {{ module }}_centos-lx-brand-image-builder
+    {% endif %}  
 {% endif %} 
+
+
+
+
 {% endfor %}    

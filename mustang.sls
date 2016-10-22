@@ -1,5 +1,6 @@
 # salt-run state.orchestrate my_orchestration pillar='{p1: value1,p2: value2}'
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
+#salt ocp09.thu.briphant.com state.sls_id create_dataset_test_lx_vm create_smartos_vm -t 120
 #salt-run manage.down removekeys=True
 
 set_authorized_keys:

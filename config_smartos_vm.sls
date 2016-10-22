@@ -15,7 +15,7 @@
         {% elif module_property.type == 'zvol' or module_property.type == 'lx-dataset' %}
               {% set file_name_to_run        = '/root/'+module+'_install.sh' %}
               
-centos-lx-brand-image-builder:
+{{ module }}_centos-lx-brand-image-builder:
   file.recurse:
     - name: /root/centos-lx-brand-image-builder
     - source: salt://files/centos-lx-brand-image-builder
@@ -84,7 +84,7 @@ dataset_install_{{ module }}:
     - require:
       - file: generate_{{ module }}_script_file
     {% if module_property.type == 'zvol' %}
-      - file: centos-lx-brand-image-builder
+      - file: {{ module }}_centos-lx-brand-image-builder
     {% endif %} 
 {% endif %} 
 {% endfor %} 
