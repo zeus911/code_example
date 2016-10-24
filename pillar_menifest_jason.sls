@@ -85,7 +85,7 @@ dataset_repository:
          
     dataset_test_lx:
        salt_target: ocp09.thu.briphant.com
-       image_uuid: ca1bbbce-9814-11e6-a345-2d7d0bb6e46d
+       image_uuid: 46bbd160-9846-11e6-b5b7-79744c798854
        name: lx-test
        version: 2.0
        description: xiaotie

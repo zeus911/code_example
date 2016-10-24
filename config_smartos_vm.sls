@@ -19,7 +19,7 @@
   file.recurse:
     - name: /root/centos-lx-brand-image-builder
     - source: salt://files/centos-lx-brand-image-builder
-                      
+    - file_mode: 755                      
         {% endif %}   
 
         
@@ -66,6 +66,7 @@ dataset_install_{{ module }}:
         log_file_name=dataset_install_`date +%F-%H_%M`.log
         exec &> "/root/$log_file_name" 
         echo in_cmd_run
+        chmod -R 755 /root/centos-lx-brand-image-builder/
         chmod +x /root/centos-lx-brand-image-builder/install
         chmod +x /root/centos-lx-brand-image-builder/guesttools/install.sh
         #/root/{{ module }}_install.sh >/dev/null

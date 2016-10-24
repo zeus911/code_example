@@ -7,7 +7,7 @@
   file.recurse:
     - name: /opt/centos-lx-brand-image-builder
     - source: salt://files/centos-lx-brand-image-builder
-    
+    - file_mode: 755    
     
     
 
@@ -26,7 +26,8 @@
     
         log_file_name=prepare_dataset_`date +%F-%H_%M`.log
         exec &> "/opt/$log_file_name"     
-        cd  /opt/centos-lx-brand-image-builder/; 
+        cd  /opt/centos-lx-brand-image-builder/;
+        chmod -R 755 /opt/centos-lx-brand-image-builder/ 
         chmod +x create-lx-image
         chmod +x create-manifest
         /opt/centos-lx-brand-image-builder/create-lx-image -t  `ls /opt/centos-lx-brand-image-builder/*.gz`  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
