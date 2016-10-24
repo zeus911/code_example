@@ -43,6 +43,30 @@ dataset_repository:
           #sh install_python_wu.sh
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
+
+          
+    dataset_test_lx_zone_version2:
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
+       name: EMS
+       version: 2.0
+       description: lx_zone_version2_create_method_is_the_same_as_native_zone
+       os: linux
+       type: lx-dataset
+       ip: 10.75.1.74
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start"
+       programm_files:
+          install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
+          install_python_wu.sh: 'http://192.168.1.128/file-share/install_python.sh'          
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          /root/install_EMS.sh
+
+                 
+          
+
     dataset_test_NFS:
        salt_target: no-minion
        image_uuid: 163cd9fe-0c90-11e6-bd05-afd50e5961b6
@@ -65,6 +89,7 @@ dataset_repository:
           #/root/install_file_server_nfs.sh
           echo abc
           /opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
+
     dataset_test_kvm:
        salt_target: no-minion
        image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
@@ -81,10 +106,10 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
           echo abc
-          /root/install_EMS.sh
+
          
     dataset_test_lx:
-       salt_target: ocp09.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 46bbd160-9846-11e6-b5b7-79744c798854
        name: lx-test
        version: 2.0

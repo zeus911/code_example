@@ -61,8 +61,54 @@ set_authorized_keys:
       - salt: set_authorized_keys
       
 {% endif %} 
-
 {% if module_property.type == "lx-dataset" and module_property.salt_target != "no-minion" %}
+ 
+{{ module }}_create_nativezone:
+  salt.function:
+    - name: state.sls_id
+    - tgt: '{{ module_property.salt_target }}'
+    - arg:
+      - create_{{ module }}_vm
+      - create_smartos_vm   
+    - timeout: 720
+
+{{ module }}_vm_ping:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: test.ping
+    - timeout: 720 
+    - require:
+      - salt: {{ module }}_create_nativezone
+      
+{{ module }}_install_package:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - dataset_install_{{ module }} 
+      - config_smartos_vm 
+    - timeout: 3600
+    - require:
+      - salt: {{ module }}_vm_ping
+      - salt: set_authorized_keys
+
+
+      
+{{ module }}_create_mustang_dataset:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - upload_repository_{{ module }}
+      - generate_dataset   
+    - timeout: 7200
+    - require:
+      - salt: {{ module }}_install_package
+      - salt: set_authorized_keys
+      
+{% endif %} 
+
+{% if module_property.type == "lx-os-dataset-not-include-custem-programm" and module_property.salt_target != "no-minion" %}
  
 
 {{ module }}_vm_ping:

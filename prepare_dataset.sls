@@ -1,6 +1,6 @@
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
-   {% if module_property.type == 'lx-dataset' %}           
+   {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}           
 
    
 {{ module }}_centos-lx-brand-image-builder:
@@ -16,7 +16,7 @@
     - name: |
     
 
-    {% if module_property.type == 'lx-dataset' %} 
+    {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %} 
     
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
         {% set kvm_server_ip         = host_ip_dic['dataset_test_kvm'] %}

@@ -64,7 +64,7 @@
        
        {% endif %}
 
-    {% if module_property.type == 'lx-dataset' %}           
+    {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}           
 
     
 /opt/{{ module }}-update_lxzone_dataset_manifest_file.py:
@@ -107,7 +107,7 @@ upload_repository_{{ module }}:
   cmd.run:
     - name: |
         #zlogin {{ vm_uuid_for_dataset }}  hostname
-    {% if module_property.type == 'lx-dataset' %} 
+    {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %} 
         log_file_name=upload_dataset_`date +%F-%H_%M`.log
         exec &> "/opt/$log_file_name"     
 
@@ -125,7 +125,7 @@ upload_repository_{{ module }}:
        {% if vm_uuid_for_dataset %}
        - file: /var/tmp/{{ dataset_uuid }}/manifest.json 
        {% endif %}
-    {% if module_property.type == 'lx-dataset' %}    
+    {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}    
        - file: /opt/{{ module }}-update_lxzone_dataset_manifest_file.py
        
     {% endif %}  

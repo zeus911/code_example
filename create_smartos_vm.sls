@@ -4,7 +4,7 @@
 #salt fifo-test.zhixiang environ.get mustang
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 
-{% if module_property.type == 'zone-dataset' %}
+{% if module_property.type == 'zone-dataset' and module_property.os == 'smartos' %}
 /opt/{{ module }}_smartos_vm.sh:
   file.managed:
     - user: root
@@ -51,7 +51,7 @@ create_{{ module }}_vm:
        - file: /opt/{{ module }}_smartos_vm.sh
 {% endif %}
  
-{% if module_property.type == 'lx-dataset' %}
+{% if module_property.type == 'lx-dataset' and module_property.os == 'linux' %}
 /opt/{{ module }}_LX_vm.sh:
   file.managed:
     - user: root
@@ -68,6 +68,14 @@ create_{{ module }}_vm:
           "quota": 50,
           "image_uuid": "{{ module_property.image_uuid }}",
           "resolvers": ["172.17.1.10","114.114.114.114"],
+          "internal_metadata": {
+              "root_pw": "root",
+              "admin_pw": "admin"
+              },
+          "customer_metadata": {
+                 "user-script" : "{{ module_property.customer_metadata }}",
+                 "root_authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9vgaOMggb9WgG23YI7eHgx0H2MtI1jKfb1BfiLk5yXJpDVBJ+qH1f28YwIgzv9ig7Ul742NCXukOoAVaa4noiJmQhMQVMfE8P7jJm+gJ+zLP2MzxWetRGKAXx8NT+v34nSacvRlacoAoS/6AlHbsRvKWaO0XEGkFXSBciOl+28n8kmp9pAcblhHtJGKwRYgv7xN8KLWgrU2jD0s4vay3DpG4A8RbkTjosYgJRZzDHGqTEbjiFK7aS157pWcQlSANfDR2tH21DmYE5Pt2T4aGB9Mxo9sTUGytekk9BbssvnjZzoIO5FjtqX0/A5x8fvsfrLq2kh+rWUb8B5jdierRV root@frank"
+              },
           "nics": [
             {
               "nic_tag": "admin",
