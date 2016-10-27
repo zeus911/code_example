@@ -23,8 +23,13 @@
              "resolvers": ["172.17.1.10", "114.114.114.114"],
              "nics": [
                 {
-                     "nic_tag": "admin",
-                     "ips": ["dhcp"]
+
+                        "nic_tag": "admin",
+                        "ip": "{{ module_property.image_uuid }}",
+                        "gateway": "10.75.1.1",
+                        "netmask": "255.255.255.0",
+                        "primary": true                    
+                        
                 }
              ],
              "internal_metadata": {
