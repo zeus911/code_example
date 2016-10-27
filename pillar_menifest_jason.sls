@@ -45,8 +45,8 @@ dataset_repository:
           #echo abc          
 
           
-    dataset_test_lx_zone_version2:
-       salt_target: ocp09.thu.briphant.com
+    EMS:
+       salt_target: no-minion
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
        name: EMS
        version: 2.0
@@ -65,8 +65,49 @@ dataset_repository:
           /root/install_EMS.sh
           yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
 
-    vpnservice:
+    aerospike-server:
+       salt_target: no-minion
+       image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
+       name: aerospike-server
+       version: 2.0
+       description: laerospike-server
+       os: linux
+       type: lx-dataset
+       ip: 10.75.1.74
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
+       programm_files:
+          aerospike-server.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aerospike_MD/aerospike-server.sh'
+                  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          /root/aerospike-server.sh
+          yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start          
+          
+    aerospike_Trading-server:
        salt_target: ocp09.thu.briphant.com
+       image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
+       name: aerospike-server
+       version: 2.0
+       description: aerospike_Trading-server
+       os: linux
+       type: lx-dataset
+       ip: 10.75.1.74
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
+       programm_files:
+          aerospike-server.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aerospike_Trading/aerospike-server.sh'
+                  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          /root/aerospike-server.sh
+          yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
+
+          
+    vpnservice:
+       salt_target: no-minion
        image_uuid: 74be319f-2753-4b0a-8ee2-514249dc3935
        name: native_zone_jinhao_vpn
        version: 2.0
