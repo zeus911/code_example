@@ -54,7 +54,7 @@ dataset_repository:
        os: linux
        type: lx-dataset
        ip: 10.75.1.74
-       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start"
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
           install_python_wu.sh: 'http://192.168.1.128/file-share/install_python.sh'          
@@ -63,8 +63,26 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           /root/install_EMS.sh
+          yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
 
-                 
+    vpnservice:
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 74be319f-2753-4b0a-8ee2-514249dc3935
+       name: native_zone_jinhao_vpn
+       version: 2.0
+       description: native_zone_jinhao_vpn
+       os: smartos
+       type: zone-dataset
+       ip: 10.75.1.74
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
+       programm_files:
+          test.sh: 'http://192.168.1.128/file-share/install_python.sh'          
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          
+          yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start                 
           
 
     dataset_test_NFS:

@@ -1,4 +1,4 @@
-{% set host_pubkey_dict = salt['mine.get']('*', 'get_ssh_authorized_keys', 'glob') %}
+{% set host_pubkey_dict = salt['mine.get']('*', 'shared_ssh_server_key_for_setting_ssh_authorized_keys', 'glob') %}
 /root/.ssh/authorized_keys:
   file.managed:
     - user: root
