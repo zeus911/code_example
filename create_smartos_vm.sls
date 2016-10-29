@@ -5,27 +5,27 @@
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 
 {% if module_property.type == 'zone-dataset' and module_property.os == 'smartos' %}
-/opt/{{ module }}_smartos_vm.sh:
+/opt/{{ module }}_create_native_zone.sh:
   file.managed:
     - user: root
     - group: root
     - mode: 755
     - contents: |
             set -e
-            tee /opt/{{ module }}_smartos_vm.json <<-'EOF'            
+            tee /opt/{{ module }}_native_zone.json <<-'EOF'            
             {
              "brand": "joyent",
              "image_uuid": "{{ module_property.image_uuid }}",
              "alias": "{{ module }}",
-             "hostname": "{{ module }}",
-             "max_physical_memory": 5120,
+             "hostname": "{{ module_property.name }}",
+             "max_physical_memory": {{ module_property.max_physical_memory }},
              "quota": 50,
              "resolvers": ["172.17.1.10", "114.114.114.114"],
              "nics": [
                 {
 
                         "nic_tag": "admin",
-                        "ip": "{{ module_property.image_uuid }}",
+                        "ip": "{{ module_property.ip }}",
                         "gateway": "10.75.1.1",
                         "netmask": "255.255.255.0",
                         "primary": true                    
@@ -42,7 +42,7 @@
               }
             }			
             EOF
-            vmadm  create -f /opt/{{ module }}_smartos_vm.json
+            vmadm  create -f /opt/{{ module }}_native_zone.json
             export {{ module }}=`vmadm list | grep {{ module }} | awk '{print \$1}'`
             echo ${{ module }}
 
@@ -50,10 +50,10 @@
 
 create_{{ module }}_vm:
   cmd.script:
-    - name: /opt/{{ module }}_smartos_vm.sh
+    - name: /opt/{{ module }}_create_native_zone.sh
     - timeout: 1200
     - require:
-       - file: /opt/{{ module }}_smartos_vm.sh
+       - file: /opt/{{ module }}_create_native_zone.sh
 {% endif %}
  
 {% if module_property.type == 'lx-dataset' and module_property.os == 'linux' %}

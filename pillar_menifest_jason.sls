@@ -1,7 +1,7 @@
 
 
 dataset_repository:
-    dataset_test_mustang:
+    mustang:
        salt_target: no-minion
        image_uuid: 17e009d8-91ed-11e6-825d-800c293c9b45
        name: mustang-dataset
@@ -9,6 +9,7 @@ dataset_repository:
        description: mustang
        os: smartos
        type: zone-dataset
+       max_physical_memory: 5120
        ip: 192.168.2.78
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
@@ -53,6 +54,7 @@ dataset_repository:
        description: lx_zone_version2_create_method_is_the_same_as_native_zone
        os: linux
        type: lx-dataset
+       max_physical_memory: 5120
        ip: 10.75.1.74
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
@@ -73,6 +75,7 @@ dataset_repository:
        description: laerospike-server
        os: linux
        type: lx-dataset
+       max_physical_memory: 5120
        ip: 10.75.1.74
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
@@ -93,6 +96,7 @@ dataset_repository:
        description: aerospike_Trading-server
        os: linux
        type: lx-dataset
+       max_physical_memory: 5120
        ip: 10.75.1.74
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
@@ -114,6 +118,7 @@ dataset_repository:
        description: native_zone_jinhao_vpn
        os: smartos
        type: zone-dataset
+       max_physical_memory: 5120
        ip: 10.75.1.74
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
@@ -134,6 +139,7 @@ dataset_repository:
        description: xiaotie
        os: smartos
        type: zone-dataset
+       max_physical_memory: 5120
        ip: 192.168.2.79
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;"
        programm_files:
@@ -157,6 +163,7 @@ dataset_repository:
        description: used-for-generating-lx-dataset
        os: smartos
        type: zvol
+       max_physical_memory: 5120
        ip: 10.75.1.3
        customer_metadata: "NULL"
        programm_files:
@@ -175,6 +182,7 @@ dataset_repository:
        description: xiaotie
        os: smartos
        type: lx-dataset
+       max_physical_memory: 5120
        ip: 192.168.2.79
        customer_metadata: "NULL"
        programm_files:
@@ -188,3 +196,72 @@ dataset_repository:
           #/root/install_file_server_nfs.sh
           echo abc
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
+          
+    wujunrong_leofs1:
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
+       name: wujunrong_leofs1
+       version: 2.0
+       description: wujunrong_leofs1
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.56
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
+   
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")                 
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+          
+          VERSION=rel
+          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          echo "http://release.project-fifo.net/pkg/${VERSION}" >> /opt/local/etc/pkgin/repositories.conf
+          rm -fr /var/db/pkgin/*
+          pkgin -fy up
+          pkgin -y install coreutils sudo gawk gsed
+          pkgin -y install leo_manager leo_gateway leo_storage
+       
+          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc          
+
+    leofs.2:
+       salt_target: ocp09.thu.briphant.com
+       image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
+       name: wujunrong_leofs.2
+       version: 2.0
+       description: wujunrong_leofs.2
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.57
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          mustang_local.sh: 'http://192.168.1.128/file-share/mustang.sh'
+          mustang.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Mustang_Real/install.sh'
+          mustang-Main.tar.gz: 'http://192.168.31.23/quant/master/mustang/mustang_master_962.tar.gz'
+          install_taurus.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Taurus/install.sh'
+          install_aries.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aries/install.sh'
+          install_lobster.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Lobster/install.sh'
+          install_giraffe.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Giraffe/install.sh'
+          install_nsq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/NSQ/install.sh'
+          install_rabbitmq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/RabbitMQ/install.sh'
+          install_monkey.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Monkey/install.sh'
+          install_python.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Python_Modules/install.sh'
+          install_python_wu.sh: 'http://192.168.1.128/file-share/install_python.sh'          
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+
+          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc          
+          
