@@ -221,7 +221,7 @@ dataset_repository:
           fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
    
        dataset_install_script: |
-          set -e
+          #set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")                 
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
@@ -232,46 +232,59 @@ dataset_repository:
           
           VERSION=rel
           cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
-          echo "http://release.project-fifo.net/pkg/${VERSION}" >> /opt/local/etc/pkgin/repositories.conf
+          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
           rm -fr /var/db/pkgin/*
           pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
           pkgin -y install leo_manager leo_gateway leo_storage
-       
+          
+          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
 
-    leofs.2:
+      
+
+    wujunrong_leofs2:
        salt_target: ocp09.thu.briphant.com
        image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
-       name: wujunrong_leofs.2
+       name: wujunrong_leofs2
        version: 2.0
-       description: wujunrong_leofs.2
+       description: wujunrong_leofs2
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
-       ip: 10.75.1.57
-       gateway: 10.75.1.1
+       ip: 192.168.1.49
+       gateway: 192.168.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          mustang_local.sh: 'http://192.168.1.128/file-share/mustang.sh'
-          mustang.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Mustang_Real/install.sh'
-          mustang-Main.tar.gz: 'http://192.168.31.23/quant/master/mustang/mustang_master_962.tar.gz'
-          install_taurus.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Taurus/install.sh'
-          install_aries.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aries/install.sh'
-          install_lobster.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Lobster/install.sh'
-          install_giraffe.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Giraffe/install.sh'
-          install_nsq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/NSQ/install.sh'
-          install_rabbitmq.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/RabbitMQ/install.sh'
-          install_monkey.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Monkey/install.sh'
-          install_python.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Python_Modules/install.sh'
-          install_python_wu.sh: 'http://192.168.1.128/file-share/install_python.sh'          
+          fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
+   
        dataset_install_script: |
-          set -e
+          #set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
-          exec &> >(tee "/root/$log_file_name")       
+          exec &> >(tee "/root/$log_file_name")                 
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
 
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+          
+          VERSION=rel
+          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
+          rm -fr /var/db/pkgin/*
+          pkgin -fy up
+          pkgin -y install coreutils sudo gawk gsed
+          pkgin -y install leo_manager leo_gateway leo_storage
+          
+          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
+
+          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc            
           
