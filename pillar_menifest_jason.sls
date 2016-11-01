@@ -11,6 +11,7 @@ dataset_repository:
        type: zone-dataset
        max_physical_memory: 5120
        ip: 192.168.2.78
+       gateway: 192.168.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           mustang_local.sh: 'http://192.168.1.128/file-share/mustang.sh'
@@ -56,6 +57,7 @@ dataset_repository:
        type: lx-dataset
        max_physical_memory: 5120
        ip: 10.75.1.74
+       gateway: 10.75.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
@@ -77,6 +79,7 @@ dataset_repository:
        type: lx-dataset
        max_physical_memory: 5120
        ip: 10.75.1.74
+       gateway: 10.75.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           aerospike-server.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aerospike_MD/aerospike-server.sh'
@@ -98,6 +101,7 @@ dataset_repository:
        type: lx-dataset
        max_physical_memory: 5120
        ip: 10.75.1.74
+       gateway: 10.75.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           aerospike-server.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Aerospike_Trading/aerospike-server.sh'
@@ -120,6 +124,7 @@ dataset_repository:
        type: zone-dataset
        max_physical_memory: 5120
        ip: 10.75.1.74
+       gateway: 10.75.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           test.sh: 'http://192.168.1.128/file-share/install_python.sh'          
@@ -141,6 +146,7 @@ dataset_repository:
        type: zone-dataset
        max_physical_memory: 5120
        ip: 192.168.2.79
+       gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default;"
        programm_files:
           install_file_server_nfs.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/FileServer-NFS/install.sh'
@@ -165,6 +171,7 @@ dataset_repository:
        type: zvol
        max_physical_memory: 5120
        ip: 10.75.1.3
+       gateway: 10.75.1.1
        customer_metadata: "NULL"
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
@@ -184,6 +191,7 @@ dataset_repository:
        type: lx-dataset
        max_physical_memory: 5120
        ip: 192.168.2.79
+       gateway: 10.75.1.1
        customer_metadata: "NULL"
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
@@ -206,7 +214,8 @@ dataset_repository:
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
-       ip: 10.75.1.56
+       ip: 192.168.1.49
+       gateway: 192.168.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
@@ -242,6 +251,7 @@ dataset_repository:
        type: zone-dataset
        max_physical_memory: 5120
        ip: 10.75.1.57
+       gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           mustang_local.sh: 'http://192.168.1.128/file-share/mustang.sh'

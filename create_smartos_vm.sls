@@ -26,7 +26,7 @@
 
                         "nic_tag": "admin",
                         "ip": "{{ module_property.ip }}",
-                        "gateway": "10.75.1.1",
+                        "gateway": "{{ module_property.gateway }}",
                         "netmask": "255.255.255.0",
                         "primary": true                    
                         
