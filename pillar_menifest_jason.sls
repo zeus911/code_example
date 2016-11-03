@@ -205,17 +205,17 @@ dataset_repository:
           echo abc
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
           
-    wujunrong_leofs1:
-       salt_target: ocp09.thu.briphant.com
+    alpha_test_leofs1:
+       salt_target: ocp12.thu.briphant.com
        image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
-       name: wujunrong_leofs1
+       name: alpha_test_leofs1
        version: 2.0
-       description: wujunrong_leofs1
+       description: alpha_test_leofs1
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
-       ip: 192.168.1.49
-       gateway: 192.168.1.1
+       ip: 10.75.1.80
+       gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
@@ -242,21 +242,21 @@ dataset_repository:
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
           sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
-          #echo abc          
+          #echo abc       
 
       
 
-    wujunrong_leofs2:
-       salt_target: ocp09.thu.briphant.com
+    alpha_test_leofs2:
+       salt_target: ocp12.thu.briphant.com
        image_uuid: 13f711f4-499f-11e6-8ea6-2b9fb858a619
-       name: wujunrong_leofs2
+       name: alpha_test_leofs2
        version: 2.0
-       description: wujunrong_leofs2
+       description: alpha_test_leofs2
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
-       ip: 192.168.1.49
-       gateway: 192.168.1.1
+       ip: 10.75.1.81
+       gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           fifo_test.gpg: 'http://192.168.1.128/file-share/mustang.sh'
@@ -285,6 +285,6 @@ dataset_repository:
           echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
 
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc            
           

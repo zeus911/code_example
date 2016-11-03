@@ -19,7 +19,7 @@
              "alias": "{{ module }}",
              "hostname": "{{ module_property.name }}",
              "max_physical_memory": {{ module_property.max_physical_memory }},
-             "quota": 50,
+             "quota": 500,
              "resolvers": ["172.17.1.10", "114.114.114.114"],
              "nics": [
                 {
