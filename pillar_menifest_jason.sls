@@ -218,9 +218,9 @@ dataset_repository:
        gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          leo_manager.conf: 'http://192.168.1.128/file-share/leo_manager.conf.leofs_1'
-          leo_gateway.conf: 'http://192.168.1.128/file-share/leo_gateway.conf.leofs_1'
-          leo_storage.conf: 'http://192.168.1.128/file-share/leo_storage.conf.leofs_1'
+          leo_manager.conf.bak: 'http://192.168.1.128/file-share/leo_manager.conf.leofs_1'
+          leo_gateway.conf.bak: 'http://192.168.1.128/file-share/leo_gateway.conf.leofs_1'
+          leo_storage.conf.bak: 'http://192.168.1.128/file-share/leo_storage.conf.leofs_1'
           
        dataset_install_script: |
           #set -e
@@ -235,7 +235,7 @@ dataset_repository:
           VERSION=rel
           cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
           sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
           rm -fr /var/db/pkgin/*
           pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
@@ -251,8 +251,8 @@ dataset_repository:
           
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
-          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc       
 
       
@@ -265,12 +265,12 @@ dataset_repository:
        description: alpha_test_leofs2
        os: smartos
        type: zone-dataset
-       max_physical_memory: 5120
+       max_physical_memory: 1024
        ip: 10.75.1.81
        gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          leo_manager.conf: 'http://192.168.1.128/file-share/leo_manager.conf.leofs_2'
+          leo_manager.conf.bak: 'http://192.168.1.128/file-share/leo_manager.conf.leofs_2'
    
        dataset_install_script: |
           #set -e
@@ -285,7 +285,7 @@ dataset_repository:
           VERSION=rel
           cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
           sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
           rm -fr /var/db/pkgin/*
           pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
@@ -295,8 +295,8 @@ dataset_repository:
           mv -f /root/leo_manager.conf    /opt/local/leo_manager/etc/leo_manager.conf
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
-          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
 
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
@@ -333,7 +333,7 @@ dataset_repository:
           VERSION=rel
           cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
           sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
           rm -fr /var/db/pkgin/*
           pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
@@ -349,8 +349,8 @@ dataset_repository:
           
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
-          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc       
 
       
@@ -383,7 +383,7 @@ dataset_repository:
           VERSION=rel
           cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
           sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://192.168.1.128/fifo-leofs/" >> /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.128/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
           rm -fr /var/db/pkgin/*
           pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
@@ -393,8 +393,8 @@ dataset_repository:
           mv -f /root/leo_manager.conf    /opt/local/leo_manager/etc/leo_manager.conf
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
-          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          
 
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
