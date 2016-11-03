@@ -57,8 +57,8 @@ dataset_install_{{ module }}:
     {% if module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' %}
     - name: |       
         echo in_cmd_run
-        zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
-        scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
+        #zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
+        #scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
     {% elif module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}
     - name: |       
         #kvm dataset is created from kvm vm
