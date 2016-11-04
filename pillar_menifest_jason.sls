@@ -274,6 +274,17 @@ dataset_repository:
           
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          
+          
+          svcadm enable epmd
+          svcadm enable leofs/manager
+          svcadm enable leofs/storage
+          
+          leofs-adm status
+          leofs-adm start
+          svcadm enable leofs/gateway
+          leofs-adm status
+          
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc       
@@ -318,6 +329,10 @@ dataset_repository:
           mv -f /root/leo_manager.conf    /opt/local/leo_manager/etc/leo_manager.conf
           
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          
+          svcadm enable epmd
+          svcadm enable leofs/manager
+          
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc          

@@ -134,10 +134,10 @@
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
 
-            nodename = manager_0@10.75.1.81
+            nodename = manager_1@10.75.1.81
             manager.mode = slave
             distributed_cookie = gg7WA4lTKIxFL/Kz
-            manager.partner = manager_1@10.75.1.80
+            manager.partner = manager_0@10.75.1.80
             
     - show_changes: True
     - append_if_not_found: True
