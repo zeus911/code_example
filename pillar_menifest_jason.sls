@@ -92,9 +92,9 @@ dataset_repository:
           yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start          
           
     aerospike_Trading-server:
-       salt_target: ocp09.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
-       name: aerospike-server
+       name: aerospike_Trading-server
        version: 2.0
        description: aerospike_Trading-server
        os: linux
@@ -112,6 +112,29 @@ dataset_repository:
           exec &> >(tee "/root/$log_file_name")       
           /root/aerospike-server.sh
           yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
+
+    midway:
+       salt_target: no-minion
+       image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
+       name: midway
+       version: 2.0
+       description: midway
+       os: linux
+       type: lx-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.74
+       gateway: 10.75.1.1
+       customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
+       programm_files:
+          install_midway.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/Midway/install.sh'
+                  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          /root/install_midway.sh
+          yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
+
 
           
     vpnservice:
@@ -304,7 +327,7 @@ dataset_repository:
 
 
     thinkpad_alpha_test_leofs1:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: thinkpad_alpha_test_leofs1
        version: 2.0
@@ -356,7 +379,7 @@ dataset_repository:
       
 
     thinkpad_alpha_test_leofs2:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: thinkpad_alpha_test_leofs2
        version: 2.0
@@ -399,4 +422,113 @@ dataset_repository:
 
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc                      
+
+
+
+    briphant_cloud_alpha_test_1:
+       salt_target: no-minion
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: briphant_cloud_alpha_test_1
+       version: 2.0
+       description: briphant_cloud_alpha_test_1
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.86
+       gateway: 10.75.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          test.sh: 'http://192.168.1.128/file-share/mustang.sh'
+  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+          #/root/mustang.sh mustang_master_962.tar.gz
+          #/root/install_taurus.sh
           
+          #sh /root/install_aries.sh
+          #sh /root/install_lobster.sh
+          #sh /root/install_giraffe.sh
+          #sh /root/install_nsq.sh
+          #sh /root/install_rabbitmq.sh
+          #sh /root/install_monkey.sh
+
+          #sh /root/install_python.sh
+          #sh install_python_wu.sh
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc
+
+
+
+    briphant_cloud_alpha_test_2:
+       salt_target: no-minion
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: briphant_cloud_alpha_test_2
+       version: 2.0
+       description: briphant_cloud_alpha_test_2
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.87
+       gateway: 10.75.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          test.sh: 'http://192.168.1.128/file-share/mustang.sh'
+  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+          #/root/mustang.sh mustang_master_962.tar.gz
+          #/root/install_taurus.sh
+          
+          #sh /root/install_aries.sh
+          #sh /root/install_lobster.sh
+          #sh /root/install_giraffe.sh
+          #sh /root/install_nsq.sh
+          #sh /root/install_rabbitmq.sh
+          #sh /root/install_monkey.sh
+
+          #sh /root/install_python.sh
+          #sh install_python_wu.sh
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc                    
+
+
+    briphant_cloud_alpha_test_3:
+       salt_target: no-minion
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: briphant_cloud_alpha_test_3
+       version: 2.0
+       description: briphant_cloud_alpha_test_3
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.75.1.88
+       gateway: 10.75.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          test.sh: 'http://192.168.1.128/file-share/mustang.sh'
+  
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+          #/root/mustang.sh mustang_master_962.tar.gz
+          #/root/install_taurus.sh
+          
+          #sh /root/install_aries.sh
+          #sh /root/install_lobster.sh
+          #sh /root/install_giraffe.sh
+          #sh /root/install_nsq.sh
+          #sh /root/install_rabbitmq.sh
+          #sh /root/install_monkey.sh
+
+          #sh /root/install_python.sh
+          #sh install_python_wu.sh
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc                              
