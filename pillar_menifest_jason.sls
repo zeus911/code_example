@@ -279,9 +279,10 @@ dataset_repository:
           svcadm enable epmd
           svcadm enable leofs/manager
           svcadm enable leofs/storage
-          
+          sleep 3
           leofs-adm status
           leofs-adm start
+          sleep 3
           svcadm enable leofs/gateway
           leofs-adm status
           
@@ -441,7 +442,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_1:
-       salt_target: no-minion
+       salt_target: ocp12.thu.briphant.com
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_1
        version: 2.0
@@ -454,21 +455,18 @@ dataset_repository:
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           test.sh: 'http://192.168.1.128/file-share/mustang.sh'
-  
        dataset_install_script: |
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
-          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          #/root/mustang.sh mustang_master_962.tar.gz
-          #/root/install_taurus.sh
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           
-          #sh /root/install_aries.sh
-          #sh /root/install_lobster.sh
-          #sh /root/install_giraffe.sh
-          #sh /root/install_nsq.sh
-          #sh /root/install_rabbitmq.sh
-          #sh /root/install_monkey.sh
+          wget -O /root/deploy.sh    http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
+          wget -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
+          curl -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
+          curl -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
+          
+ 
 
           #sh /root/install_python.sh
           #sh install_python_wu.sh
@@ -478,7 +476,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_2:
-       salt_target: no-minion
+       salt_target: ocp15.thu.briphant.com
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_2
        version: 2.0
@@ -491,26 +489,24 @@ dataset_repository:
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           test.sh: 'http://192.168.1.128/file-share/mustang.sh'
-  
        dataset_install_script: |
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
-          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          #/root/mustang.sh mustang_master_962.tar.gz
-          #/root/install_taurus.sh
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           
-          #sh /root/install_aries.sh
-          #sh /root/install_lobster.sh
-          #sh /root/install_giraffe.sh
-          #sh /root/install_nsq.sh
-          #sh /root/install_rabbitmq.sh
-          #sh /root/install_monkey.sh
+          wget -O /root/deploy.sh    http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
+          wget -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
+          curl -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
+          curl -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
+          
+ 
 
           #sh /root/install_python.sh
           #sh install_python_wu.sh
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
-          #echo abc                    
+          #echo abc
+                
 
 
     briphant_cloud_alpha_test_3:
