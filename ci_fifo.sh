@@ -2,9 +2,11 @@
 
 
 #创建配置fifo服务虚拟机
-#salt ocp12.thu.briphant.com state.sls_id   create_briphant_cloud_alpha_test_2_vm            create_fifo_vm     -t 600
-#salt ocp12.thu.briphant.com state.sls_id   dataset_install_briphant_cloud_alpha_test_1      config_smartos_vm -t 1800
+#salt ocp12.thu.briphant.com state.sls_id   create_briphant_cloud_alpha_test_1_vm            create_fifo_vm     -t 600
+#salt ocp12.thu.briphant.com state.sls_id   dataset_install_briphant_cloud_alpha_test_1      config_smartos_vm -t 3600
 
+#salt ocp15.thu.briphant.com state.sls_id   create_briphant_cloud_alpha_test_2_vm            create_fifo_vm     -t 600
+#salt ocp15.thu.briphant.com state.sls_id   dataset_install_briphant_cloud_alpha_test_2      config_smartos_vm -t 1800
 
 #创建配置leofs服务虚拟机
 salt -L 'smartos_thinkpad.zhixiang,ocp12.thu.briphant.com'   cmd.run 'vmadm list | grep  alpha_test_leofs | awk "{print \$1}" |xargs -I {} vmadm delete {}'

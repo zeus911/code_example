@@ -30,7 +30,7 @@
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |
-            distributed_cookie = {{ distributed_cookie }}
+            distributed_cookie = gg7WA4lTKIxFL/Kz
             
             managers = [manager_0@10.75.1.80, manager_1@10.75.1.81]
     - show_changes: True
@@ -61,7 +61,7 @@
     - content: |            
             nodename = manager_0@10.75.1.80
             manager.mode = master
-            distributed_cookie = {{ distributed_cookie }}
+            distributed_cookie = gg7WA4lTKIxFL/Kz
             
             manager.partner = manager_1@10.75.1.81
             
@@ -91,7 +91,7 @@
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
 
-            distributed_cookie = {{ distributed_cookie }}
+            distributed_cookie = gg7WA4lTKIxFL/Kz
             managers = [manager_0@10.75.1.80, manager_1@10.75.1.81]
             
     - show_changes: True
