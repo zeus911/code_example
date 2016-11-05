@@ -67,8 +67,10 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           /root/install_EMS.sh
+          yum -y install lrzsz
           yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-1.el7.noarch.rpm;echo 10.75.1.70 salt>>/etc/hosts;yum -y install salt-minion;service salt-minion start
-
+          
+          
     aerospike-server:
        salt_target: no-minion
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
@@ -487,7 +489,8 @@ dataset_repository:
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
           
  
-
+          mkdir -p /opt/pkg/
+          cp /root/*.tgz  /opt/pkg/
           chmod +x /root/deploy.sh
           
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
@@ -495,7 +498,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_2:
-       salt_target: no-minion
+       salt_target: ocp15.thu.briphant.com
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_2
        version: 2.0
@@ -519,8 +522,8 @@ dataset_repository:
           wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
           
- 
-
+          mkdir -p /opt/pkg/
+          cp /root/*.tgz  /opt/pkg/
           chmod +x /root/deploy.sh
           
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
@@ -529,16 +532,16 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_3:
-       salt_target: fifo-thinkpad.thinkpad
+       salt_target: ocp15.thu.briphant.com
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_3
        version: 2.0
        description: briphant_cloud_alpha_test_3
        os: smartos
        type: zone-dataset
-       max_physical_memory: 2048
-       ip: 192.168.1.133
-       gateway: 192.168.1.1
+       max_physical_memory: 5120
+       ip: 10.75.1.88
+       gateway: 10.75.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           deploy.sh: 'http://192.168.1.128/file-share/deploy.sh'
@@ -553,10 +556,12 @@ dataset_repository:
           wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
           
- 
-
+          mkdir -p /opt/pkg/
+          cp /root/*.tgz  /opt/pkg/
           chmod +x /root/deploy.sh
           
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc
+                
+
                 

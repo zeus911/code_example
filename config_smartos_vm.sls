@@ -59,6 +59,7 @@ dataset_install_{{ module }}:
         echo in_cmd_run
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
         scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
+        
     {% elif module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}
     - name: |       
         #kvm dataset is created from kvm vm
