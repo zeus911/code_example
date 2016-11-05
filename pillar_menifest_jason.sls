@@ -487,12 +487,22 @@ dataset_repository:
           wget --quiet -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
           wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
-          
+          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/release20161031/flowerrain/flowerrain_release20161031_1.tgz
  
           mkdir -p /opt/pkg/
           cp /root/*.tgz  /opt/pkg/
           chmod +x /root/deploy.sh
           
+          #install nginx
+          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
+          cp /opt/local/etc/nginx/nginx.conf /opt/local/etc/nginx/nginx.conf.bak
+          
+          mkdir -p /opt/local/www/
+          wget --quiet -O /opt/local/etc/nginx/nginx.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain_nginx.conf
+          
+          wget --quiet -O /opt/local/etc/nginx/flower.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain-flower.conf
+          
+          #install salt
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc
 
@@ -521,6 +531,8 @@ dataset_repository:
           wget --quiet -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
           wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
+          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/release20161031/flowerrain/flowerrain_release20161031_1.tgz
+          
           
           mkdir -p /opt/pkg/
           cp /root/*.tgz  /opt/pkg/
@@ -555,6 +567,7 @@ dataset_repository:
           wget --quiet -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
           wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
           wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
+          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/release20161031/flowerrain/flowerrain_release20161031_1.tgz
           
           mkdir -p /opt/pkg/
           cp /root/*.tgz  /opt/pkg/
