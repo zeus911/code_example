@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #安装监控
-#salt ocp15.thu.briphant.com state.sls_id   create_NSQ_briphant_cloud_alpha_test_vm            create_NSQ_vm     -t 600
+#salt ocp15.thu.briphant.com state.sls_id   create_NSQ_briphant_cloud_alpha_test_vm            create_Tachyon_vm     -t 600
+#salt ocp15.thu.briphant.com state.sls_id   create_Tachyon_Aggregator_briphant_cloud_alpha_test_vm         create_Tachyon_vm     -t 600
 
 #创建配置fifo服务虚拟机
 #salt ocp12.thu.briphant.com state.sls_id   create_briphant_cloud_alpha_test_1_vm            create_fifo_vm     -t 600
