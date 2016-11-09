@@ -3,7 +3,7 @@
 dataset_repository:
 
     dsapid_server_thinkpad:
-       salt_target: sapid_server_thinkpad
+       salt_target: no-minion
        image_uuid: a0e719d6-4e21-11e4-92eb-2bf6399552e7
        name: dsapid_server_thinkpad
        version: 2.0
@@ -74,7 +74,7 @@ dataset_repository:
 
           
     EMS:
-       salt_target: no-minion
+       salt_target: dsapid_server_thinkpad
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
        name: EMS
        version: 2.0
@@ -277,7 +277,7 @@ dataset_repository:
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
           
     alpha_test_leofs1:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs1
        version: 2.0
@@ -341,7 +341,7 @@ dataset_repository:
       
 
     alpha_test_leofs2:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs2
        version: 2.0
@@ -391,7 +391,7 @@ dataset_repository:
 
 
     leofs1_thinkpad:
-       salt_target: leofs1_thinkpad
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: leofs1_thinkpad
        version: 2.0
@@ -455,7 +455,7 @@ dataset_repository:
       
 
     leofs2_thinkpad:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: leofs1_thinkpad
        version: 2.0
@@ -507,7 +507,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_1:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_1
        version: 2.0
@@ -554,7 +554,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_2:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_2
        version: 2.0
@@ -590,7 +590,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_3:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_3
        version: 2.0
@@ -624,7 +624,7 @@ dataset_repository:
                 
 
     NSQ_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: NSQ_briphant_cloud_alpha_test
        version: 2.0
@@ -659,7 +659,7 @@ dataset_repository:
           #echo abc          
                 
     Tachyon_Aggregator_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: Tachyon_Aggregator_briphant_cloud_alpha_test
        version: 2.0
@@ -696,7 +696,7 @@ dataset_repository:
 
 
     DalmatinerDB_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: DalmatinerDB_briphant_cloud_alpha_test
        version: 2.0
