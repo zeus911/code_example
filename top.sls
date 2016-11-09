@@ -3,7 +3,7 @@ base:
     - match: list
     - pillar_smartos_ssh_client_share_keys
     - pillar_smartos_ssh_server_share_keys
-  'datasets.dsapid':
+  'datasets.dsapid,dsapid_server_thinkpad':
     - pillar_smartos_ssh_server_share_keys
     - match: list
   'centos7-qinghua':
