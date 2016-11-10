@@ -74,7 +74,7 @@ dataset_repository:
 
           
     EMS:
-       salt_target: dsapid_server_thinkpad
+       salt_target: fifo-thinkpad.thinkpad
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
        name: EMS
        version: 2.0
