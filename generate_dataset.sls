@@ -117,7 +117,7 @@ upload_repository_{{ module }}:
         cp  *.json  *.zfs.gz /var/tmp/{{ dataset_uuid }}  
     {% endif %}        
        
-        scp  -r /var/tmp/{{ dataset_uuid }}  root@10.75.1.75:/data/files
+        scp  -r /var/tmp/{{ dataset_uuid }}  root@192.168.1.75:/data/files
         ssh 192.168.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
         ssh 192.168.1.75  svcadm restart svc:/application/dsapid:default
     - timeout: 3600    
