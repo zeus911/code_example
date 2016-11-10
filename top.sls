@@ -1,5 +1,5 @@
 base:
-  'ocp09.thu.briphant.com,ocp12.thu.briphant.com,ocp15.thu.briphant.com,smartos_thinkpad.zhixiang':
+  'fifo-thinkpad.thinkpad,ocp09.thu.briphant.com,ocp12.thu.briphant.com,ocp15.thu.briphant.com,smartos_thinkpad.zhixiang':
     - match: list
     - pillar_smartos_ssh_client_share_keys
     - pillar_smartos_ssh_server_share_keys

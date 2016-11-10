@@ -82,8 +82,8 @@ dataset_repository:
        os: linux
        type: lx-dataset
        max_physical_memory: 5120
-       ip: 10.75.1.74
-       gateway: 10.75.1.1
+       ip: 192.168.1.55
+       gateway: 192.168.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'

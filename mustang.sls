@@ -5,7 +5,7 @@
 
 set_authorized_keys:
   salt.function:
-    - tgt: 'datasets.dsapid,centos7-qinghua,ocp09.thu.briphant.com,smartos_thinkpad.zhixiang,dataset_test_kvm'
+    - tgt: 'datasets.dsapid,dsapid_server_thinkpad,centos7-qinghua,ocp09.thu.briphant.com,dataset_test_kvm,fifo-thinkpad.thinkpad'
     - tgt_type: list    
     - name: state.sls
     - arg:
