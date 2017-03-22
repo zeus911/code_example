@@ -15,6 +15,9 @@
             tee /opt/{{ module }}_native_zone.json <<-'EOF'            
             {
              "brand": "joyent",
+             "autoboot": true, 
+             "tmpfs": 1024,
+             "max_swap": 1024, 
              "image_uuid": "{{ module_property.image_uuid }}",
              "alias": "{{ module }}",
              "hostname": "{{ module_property.name }}",
@@ -86,7 +89,7 @@ create_{{ module }}_vm:
               "nic_tag": "admin",
               "ip": "{{ module_property.ip }}",
               "netmask": "255.255.255.0",
-              "gateway": "{{ module_property.gateway }}",
+              "gateway": "10.75.1.1",
               "primary": true
             }
           ]

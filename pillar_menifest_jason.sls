@@ -2,12 +2,12 @@
 
 dataset_repository:
 
-    dsapid-server:
+    dsapid_server_thinkpad:
        salt_target: no-minion
        image_uuid: a0e719d6-4e21-11e4-92eb-2bf6399552e7
-       name: dsapid-server
+       name: dsapid_server_thinkpad
        version: 2.0
-       description: dsapid-server
+       description: dsapid_server_thinkpad
        os: smartos
        type: zone-dataset
        max_physical_memory: 1024
@@ -21,23 +21,12 @@ dataset_repository:
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
-          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          /root/mustang.sh mustang_master_962.tar.gz
-          #/root/install_taurus.sh
-          
-          #sh /root/install_aries.sh
-          #sh /root/install_lobster.sh
-          #sh /root/install_giraffe.sh
-          #sh /root/install_nsq.sh
-          #sh /root/install_rabbitmq.sh
-          #sh /root/install_monkey.sh
 
-          #sh /root/install_python.sh
           #sh install_python_wu.sh
-          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          /usr/bin/echo '10.75.1.70 salt'>>/etc/hosts;/usr/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/usr/bin/echo 'http://192.168.1.128/smartos/pkgin2014Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/usr/bin/sleep 10;salt-minion -d ;/usr/bin/sleep 20
           #echo abc          
 
-
+          
     mustang:
        salt_target: no-minion
        image_uuid: 17e009d8-91ed-11e6-825d-800c293c9b45
@@ -85,7 +74,7 @@ dataset_repository:
 
           
     EMS:
-       salt_target: no-minion
+       salt_target: fifo-thinkpad.thinkpad
        image_uuid: 07b33b7a-27a3-11e6-816f-df7d94eea009
        name: EMS
        version: 2.0
@@ -93,8 +82,8 @@ dataset_repository:
        os: linux
        type: lx-dataset
        max_physical_memory: 5120
-       ip: 10.75.1.74
-       gateway: 10.75.1.1
+       ip: 192.168.1.55
+       gateway: 192.168.1.1
        customer_metadata: "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  "
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
@@ -288,7 +277,7 @@ dataset_repository:
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
           
     alpha_test_leofs1:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs1
        version: 2.0
@@ -352,7 +341,7 @@ dataset_repository:
       
 
     alpha_test_leofs2:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs2
        version: 2.0
@@ -402,7 +391,7 @@ dataset_repository:
 
 
     leofs1_thinkpad:
-       salt_target: leofs1_thinkpad
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: leofs1_thinkpad
        version: 2.0
@@ -466,7 +455,7 @@ dataset_repository:
       
 
     leofs2_thinkpad:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: leofs1_thinkpad
        version: 2.0
@@ -518,7 +507,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_1:
-       salt_target: ocp12.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_1
        version: 2.0
@@ -565,7 +554,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_2:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_2
        version: 2.0
@@ -601,7 +590,7 @@ dataset_repository:
 
 
     briphant_cloud_alpha_test_3:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: briphant_cloud_alpha_test_3
        version: 2.0
@@ -635,7 +624,7 @@ dataset_repository:
                 
 
     NSQ_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: NSQ_briphant_cloud_alpha_test
        version: 2.0
@@ -670,7 +659,7 @@ dataset_repository:
           #echo abc          
                 
     Tachyon_Aggregator_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: Tachyon_Aggregator_briphant_cloud_alpha_test
        version: 2.0
@@ -707,7 +696,7 @@ dataset_repository:
 
 
     DalmatinerDB_briphant_cloud_alpha_test:
-       salt_target: ocp15.thu.briphant.com
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: DalmatinerDB_briphant_cloud_alpha_test
        version: 2.0
