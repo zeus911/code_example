@@ -26,12 +26,12 @@
     
 {{ module }}_config_leo_gateway_master:
   file.blockreplace:
-    - name: /zones/{{ vm_uuid_for_dataset }}/root/root/leo_gateway.conf
+    - name: /zones/{{ vm_uuid_for_dataset }}/root/opt/local/leo_gateway/etc/leo_gateway.conf
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |
-            distributed_cookie = gg7WA4lTKIxFL/Kz
-            
+            nodename = gateway_0@192.168.1.80
+            distributed_cookie = snIG4iyWg6fyabCR         
             managers = [manager_0@192.168.1.80, manager_1@192.168.1.81]
     - show_changes: True
     - append_if_not_found: True
@@ -55,13 +55,14 @@
 
 {{ module }}_config_leo_manager_master:
   file.blockreplace:
-    - name: /zones/{{ vm_uuid_for_dataset }}/root/root/leo_manager.conf
+    - name: /zones/{{ vm_uuid_for_dataset }}/root/opt/local/leo_manager/etc/leo_manager.conf
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
             nodename = manager_0@192.168.1.80
+            mnesia.dir = /var/db/leo_manager/mnesia/192.168.1.80
             manager.mode = master
-            distributed_cookie = gg7WA4lTKIxFL/Kz
+            distributed_cookie = snIG4iyWg6fyabCR
             
             manager.partner = manager_1@192.168.1.81
             
@@ -86,12 +87,12 @@
 #    - mode: 644
 {{ module }}_config_leo_storage_master:
   file.blockreplace:
-    - name: /zones/{{ vm_uuid_for_dataset }}/root/root/leo_storage.conf
+    - name: /zones/{{ vm_uuid_for_dataset }}/root/opt/local/leo_storage/etc/leo_storage.conf
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
-
-            distributed_cookie = gg7WA4lTKIxFL/Kz
+            nodename = storage_0@192.168.1.80
+            distributed_cookie = snIG4iyWg6fyabCR
             managers = [manager_0@192.168.1.80, manager_1@192.168.1.81]
             
     - show_changes: True
@@ -129,14 +130,15 @@
 
 {{ module }}_config_leo_manager_slave:
   file.blockreplace:
-    - name: /zones/{{ vm_uuid_for_dataset }}/root/root/leo_manager.conf
+    - name: /zones/{{ vm_uuid_for_dataset }}/root/opt/local/leo_manager/etc/leo_manager.conf
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
 
             nodename = manager_1@192.168.1.81
+            mnesia.dir = /var/db/leo_manager/mnesia/192.168.1.81
             manager.mode = slave
-            distributed_cookie = gg7WA4lTKIxFL/Kz
+            distributed_cookie = snIG4iyWg6fyabCR
             manager.partner = manager_0@192.168.1.80
             
     - show_changes: True

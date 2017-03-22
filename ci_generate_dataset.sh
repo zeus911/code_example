@@ -7,5 +7,5 @@ salt -L 'smartos_thinkpad.zhixiang,ocp09.thu.briphant.com'   cmd.run 'vmadm list
 salt smartos_thinkpad.zhixiang  cmd.run 'rm -fr /var/tmp/*'
 salt-run manage.down removekeys=True
 salt '*'  mine.update
-salt -L 'ocp09.thu.briphant.com,fifo-thinkpad.thinkpad,dataset_test_kvm' state.sls set_ssh_known_hosts
+salt -L 'ocp09.thu.briphant.com,smartos_thinkpad.zhixiang,dataset_test_kvm' state.sls set_ssh_known_hosts
 salt-run state.orchestrate  mustang  

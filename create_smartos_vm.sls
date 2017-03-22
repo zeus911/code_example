@@ -86,7 +86,7 @@ create_{{ module }}_vm:
               "nic_tag": "admin",
               "ip": "{{ module_property.ip }}",
               "netmask": "255.255.255.0",
-              "gateway": "{{ module_property.gateway }}",
+              "gateway": "10.75.1.1",
               "primary": true
             }
           ]
