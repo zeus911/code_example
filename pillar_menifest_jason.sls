@@ -400,6 +400,57 @@ dataset_repository:
           #echo abc   
 
 
+    fifo_test:
+       salt_target: jinhao
+       image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
+       name: fifo_shanghai
+       version: 2.0
+       description: fifo_shanghai
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 3072
+       ip: 192.168.1.85
+       gateway: 192.168.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          leo_manager.conf.template: 'http://192.168.1.148/file-share/leo_manager.conf.leofs_2'
+
+       dataset_install_script: |
+          #!/bin/bash
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")                 
+
+          zfs set mountpoint=/data zones/$(zonename)/data
+          
+          cd /data
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+
+          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://192.168.1.148/fifo-0.91/" >> /opt/local/etc/pkgin/repositories.conf
+          pkgin -fy up
+          pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
+
+          
+          svcadm enable epmd
+          svcadm enable snarl
+          svcadm enable sniffle
+          svcadm enable howl
+          sleep 60
+          svcs epmd snarl sniffle howl
+          
+          
+          snarl-admin init default MyOrg Users admin admin
+          
+          sniffle-admin init-leofs 192.168.1.80.xip.io
+          
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc   
+          
+          
+          
     leofs1_thinkpad:
        salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
