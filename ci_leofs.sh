@@ -34,34 +34,34 @@ set -e
 salt-run manage.down removekeys=True
 salt '*' saltutil.refresh_pillar
 
-salt jinhao state.sls_id   create_alpha_test_leofs1_vm        create_smartos_vm  -t 600
-salt jinhao state.sls_id   create_alpha_test_leofs2_vm        create_smartos_vm  -t 600
-salt jinhao state.sls_id   dataset_install_alpha_test_leofs1    config_smartos_vm -t 3600
-salt jinhao state.sls_id   dataset_install_alpha_test_leofs2    config_smartos_vm -t 3600
+salt jinhao state.sls_id   create_home_leofs1_vm        create_smartos_vm  -t 600
+salt jinhao state.sls_id   create_home_leofs2_vm        create_smartos_vm  -t 600
+salt jinhao state.sls_id   dataset_install_home_leofs1    config_smartos_vm -t 3600
+salt jinhao state.sls_id   dataset_install_home_leofs2    config_smartos_vm -t 3600
 
-salt jinhao  state.sls_id    alpha_test_leofs1_config_master     config_leofs_vm
-salt jinhao  state.sls_id    alpha_test_leofs2_config_slave      config_leofs_vm
+salt jinhao  state.sls_id    home_leofs1_config_master     config_leofs_vm
+salt jinhao  state.sls_id    home_leofs2_config_slave      config_leofs_vm
 
 #leofs1-manager:
-salt alpha_test_leofs1 cmd.run 'svcadm enable epmd' shell='/usr/bin/bash'
-salt alpha_test_leofs1 cmd.run 'svcadm enable leofs/manager' shell='/usr/bin/bash'
-sleep 5
-salt alpha_test_leofs1 cmd.run 'svcs   leofs/manager'  shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'svcadm enable epmd' shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'svcadm enable leofs/manager' shell='/usr/bin/bash'
+sleep 15
+salt home_leofs1 cmd.run 'svcs   leofs/manager'  shell='/usr/bin/bash'
 
 #leofs2-manager:
-salt alpha_test_leofs2 cmd.run  'svcadm enable epmd'  shell='/usr/bin/bash'
-salt alpha_test_leofs2 cmd.run  'svcadm enable leofs/manager'  shell='/usr/bin/bash'
-sleep 5
-salt alpha_test_leofs2 cmd.run  'svcs   leofs/manager'  shell='/usr/bin/bash'
+salt home_leofs2 cmd.run  'svcadm enable epmd'  shell='/usr/bin/bash'
+salt home_leofs2 cmd.run  'svcadm enable leofs/manager'  shell='/usr/bin/bash'
+sleep 15
+salt home_leofs2 cmd.run  'svcs   leofs/manager'  shell='/usr/bin/bash'
 
 #leofs1-storage:
-salt alpha_test_leofs1 cmd.run 'svcadm enable leofs/storage' shell='/usr/bin/bash'
-sleep 5
-salt alpha_test_leofs1 cmd.run 'svcs   leofs/storage' shell='/usr/bin/bash'
-salt alpha_test_leofs1 cmd.run 'leofs-adm status' shell='/usr/bin/bash'
-salt alpha_test_leofs1 cmd.run 'leofs-adm start' shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'svcadm enable leofs/storage' shell='/usr/bin/bash'
+sleep 15
+salt home_leofs1 cmd.run 'svcs   leofs/storage' shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'leofs-adm status' shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'leofs-adm start' shell='/usr/bin/bash'
 
-salt alpha_test_leofs1 cmd.run 'svcadm enable leofs/gateway' shell='/usr/bin/bash'
-salt alpha_test_leofs1 cmd.run 'svcs   leofs/gateway' shell='/usr/bin/bash'
-sleep 5
-salt alpha_test_leofs1 cmd.run 'leofs-adm status'  shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'svcadm enable leofs/gateway' shell='/usr/bin/bash'
+sleep 15
+salt home_leofs1 cmd.run 'svcs   leofs/gateway' shell='/usr/bin/bash'
+salt home_leofs1 cmd.run 'leofs-adm status'  shell='/usr/bin/bash'

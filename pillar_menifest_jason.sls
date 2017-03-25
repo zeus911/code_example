@@ -288,7 +288,7 @@ dataset_repository:
           #/opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
           
     alpha_test_leofs1:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs1
        version: 2.0
@@ -352,7 +352,7 @@ dataset_repository:
       
 
     alpha_test_leofs2:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: alpha_test_leofs2
        version: 2.0
@@ -401,7 +401,7 @@ dataset_repository:
 
 
     fifo_test:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
        name: fifo_shanghai
        version: 2.0
@@ -472,6 +472,10 @@ dataset_repository:
           exec &> >(tee "/root/$log_file_name")                 
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
 
+          
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          
           curl -O https://project-fifo.net/fifo.gpg
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
@@ -507,8 +511,7 @@ dataset_repository:
           #svcadm enable leofs/gateway
           #leofs-adm status
           
-          sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
+ 
           #echo abc       
 
       
@@ -516,9 +519,9 @@ dataset_repository:
     home_leofs2:
        salt_target: jinhao
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: alpha_test_leofs2
+       name: home_leofs2
        version: 2.0
-       description: alpha_test_leofs2
+       description: home_leofs2
        os: smartos
        type: zone-dataset
        max_physical_memory: 1024
@@ -534,6 +537,9 @@ dataset_repository:
           exec &> >(tee "/root/$log_file_name")                 
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
 
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          
           curl -O https://project-fifo.net/fifo.gpg
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
@@ -556,7 +562,6 @@ dataset_repository:
           #svcadm enable leofs/manager
           
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20     
 
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           #echo abc   
@@ -582,7 +587,8 @@ dataset_repository:
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")                 
-
+          
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           zfs set mountpoint=/data zones/$(zonename)/data
           
           cd /data
@@ -608,7 +614,7 @@ dataset_repository:
           
           sniffle-admin init-leofs 10.0.1.80.xip.io
           
-          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+   
           #echo abc   
           
           
