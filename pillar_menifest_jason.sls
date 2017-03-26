@@ -617,6 +617,69 @@ dataset_repository:
    
           #echo abc   
           
+    home_fifo2:
+       salt_target: home-smartos.wu
+       image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
+       name: home_fifo2
+       version: 2.0
+       description: home_fifo2
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 3072
+       ip: 10.0.1.86
+       gateway: 10.0.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          leo_manager.conf.template: 'http://salt/file-share/leo_manager.conf.leofs_2'
+
+       dataset_install_script: |
+          #!/bin/bash
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")                 
+          
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          zfs set mountpoint=/data zones/$(zonename)/data
+          
+          cd /data
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+
+          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://salt/fifo-0.91/" >> /opt/local/etc/pkgin/repositories.conf
+          pkgin -fy up
+          pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
+
+          
+          svcadm enable epmd
+          svcadm enable snarl
+          svcadm enable sniffle
+          svcadm enable howl
+          sleep 60
+          svcs epmd snarl sniffle howl
+          
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster join 'sniffle@10.0.1.85'
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster plan
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster commit
+          
+          /opt/local/fifo-howl/bin/howl-admin cluster join 'howl@10.0.1.85'
+          /opt/local/fifo-howl/bin/howl-admin cluster plan
+          /opt/local/fifo-howl/bin/howl-admin cluster commit
+          
+          /opt/local/fifo-snarl/bin/snarl-admin cluster join 'snarl@10.0.1.85'
+          /opt/local/fifo-snarl/bin/snarl-admin cluster plan
+          /opt/local/fifo-howl/bin/howl-admin   cluster commit
+          
+          /opt/local/fifo-snarl/bin/snarl-admin member-status
+          /opt/local/fifo-sniffle/bin/sniffle-admin member-status
+          /opt/local/fifo-howl/bin/howl-admin member-status
+          
+          #snarl-admin init default MyOrg Users admin admin
+          #sniffle-admin init-leofs 10.0.1.80.xip.io
+          
+   
+          #echo abc   
           
     leofs1_thinkpad:
        salt_target: no-minion

@@ -84,7 +84,7 @@ dataset_install_{{ module }}:
         scp  /root/centos-lx-brand-image-builder/*.gz  {{ global_zone_ip }}:/opt/centos-lx-brand-image-builder/
         
     {% endif %} 
-
+    - shell: /usr/bin/bash
     - timeout: 3600    
     - require:
       - file: generate_{{ module }}_script_file
