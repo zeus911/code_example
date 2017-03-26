@@ -5,11 +5,11 @@ log_file_name=chunter_install_`date +%F-%H_%M`.log
 exec &> >(tee "/opt/$log_file_name")                 
 
         
-#VERSION=rel
-#cd /opt
-#curl -O http://salt/chunter-fifo/fifo_zlogin-latest.gz 
-#gunzip fifo_zlogin-latest.gz
-#sh fifo_zlogin-latest
+VERSION=rel
+cd /opt
+curl -O http://salt/chunter-fifo/fifo_zlogin-latest.gz 
+gunzip fifo_zlogin-latest.gz
+sh fifo_zlogin-latest
 
 
 VERSION=rel
