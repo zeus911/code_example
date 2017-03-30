@@ -7,8 +7,13 @@ set -e
 #salt jinhao  state.sls_id   create_dsapid_server_vm        create_smartos_vm  -t 600
 #salt jinhao  state.sls_id   dataset_install_dsapid_server      config_smartos_vm -t 3600
 
+#svcadm disable dsapid
+#svcadm enable dsapid
+
 
 salt-run manage.down removekeys=True
 salt '*' saltutil.refresh_pillar
-salt home-smartos.wu state.sls_id   create_home_fifo2_vm        create_fifo_vm  -t 600
-salt home-smartos.wu state.sls_id   dataset_install_home_fifo2    config_smartos_vm -t 3600
+#salt home-smartos.wu state.sls_id   create_home_fifo2_vm        create_fifo_vm  -t 600
+#salt home-smartos.wu state.sls_id   dataset_install_home_fifo2    config_smartos_vm -t 3600
+
+salt jinhao  state.sls_id   create_old_fifo_home_1_vm        create_smartos_vm  -t 600
