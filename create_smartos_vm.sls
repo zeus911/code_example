@@ -20,7 +20,7 @@
              "hostname": "{{ module_property.name }}",
              "max_physical_memory": {{ module_property.max_physical_memory }},
              "quota": 500,
-             "resolvers": ["172.17.1.10", "114.114.114.114"],
+             "resolvers": ["10.0.1.1", "114.114.114.114"],
              "nics": [
                 {
 
@@ -43,6 +43,8 @@
             }			
             EOF
             vmadm  create -f /opt/{{ module }}_native_zone.json
+            sleep 2
+            echo export {{ module }}=`vmadm list | grep {{ module }} | awk '{print \$1}'`
             export {{ module }}=`vmadm list | grep {{ module }} | awk '{print \$1}'`
             echo ${{ module }}
 
