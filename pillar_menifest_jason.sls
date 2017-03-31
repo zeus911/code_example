@@ -680,11 +680,15 @@ dataset_repository:
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
-       ip: 10.0.1.185
+       ip: 10.0.1.195
        gateway: 10.0.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          deploy.sh: 'http://192.168.1.128/file-share/deploy.sh'
+          chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'
+          chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.8.2p5.gz'
+          
+
+
        dataset_install_script: |
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
@@ -694,7 +698,7 @@ dataset_repository:
           #install salt
           
           #echo abc
-          echo '192.168.1.148 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.148/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
 
     leofs1_thinkpad:
        salt_target: no-minion
