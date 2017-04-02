@@ -684,8 +684,41 @@ dataset_repository:
        gateway: 10.0.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'
+          chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'          
+          fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
+          fifo-howl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-howl-0.7.0.tgz'
+          fifo-sniffle-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-sniffle-0.7.0.tgz'
+          
+
+
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+ 
+ 
+          #install salt
+          
+          #echo abc
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
+
+    new_fifo_home_2:
+       salt_target: jinhao
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: new_fifo_home_2
+       version: 2.0
+       description: new_fifo_home_2
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 3072
+       ip: 10.0.1.195
+       gateway: 10.0.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
           chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.8.2p5.gz'
+          fifo-snarl-0.7.0.t: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz
+                                  
+
           
 
 
