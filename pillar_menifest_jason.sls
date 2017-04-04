@@ -556,6 +556,125 @@ dataset_repository:
           #echo abc   
 
 
+    home_hp_leofs1:
+       salt_target: jinhao
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: home_hp_leofs1
+       version: 2.0
+       description: home_hp_leofs1
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 5120
+       ip: 10.0.1.130
+       gateway: 10.0.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          leo_manager.conf.template: 'http://salt/file-share/leo_manager.conf.leofs_1'
+          leo_gateway.conf.template: 'http://salt/file-share/leo_gateway.conf.leofs_1'
+          leo_storage.conf.template: 'http://salt/file-share/leo_storage.conf.leofs_1'
+          
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")                 
+          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+
+          
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+          
+          VERSION=rel
+          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
+          rm -fr /var/db/pkgin/*
+          pkgin -fy up
+          pkgin -y install coreutils sudo gawk gsed
+          pkgin -y install leo_manager leo_gateway leo_storage
+          
+          cp  /opt/local/leo_manager/etc/leo_manager.conf  /opt/local/leo_manager/etc/leo_manager.conf.original
+          cp  /opt/local/leo_gateway/etc/leo_gateway.conf  /opt/local/leo_gateway/etc/leo_gateway.conf.original
+          cp  /opt/local/leo_storage/etc/leo_storage.conf  /opt/local/leo_storage/etc/leo_storage.conf.original
+          
+          mv -f /root/leo_manager.conf.template    /opt/local/leo_manager/etc/leo_manager.conf
+          mv -f /root/leo_gateway.conf.template    /opt/local/leo_gateway/etc/leo_gateway.conf
+          mv -f /root/leo_storage.conf.template    /opt/local/leo_storage/etc/leo_storage.conf
+          
+          
+          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          
+          
+          #svcadm enable epmd
+          #svcadm enable leofs/manager
+          #svcadm enable leofs/storage
+          #sleep 3
+          #leofs-adm status
+          #leofs-adm start
+          #sleep 3
+          #svcadm enable leofs/gateway
+          #leofs-adm status
+          
+ 
+          #echo abc       
+
+      
+
+    home_hp_leofs2:
+       salt_target: jinhao
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: home_hp_leofs2
+       version: 2.0
+       description: home_hp_leofs2
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 1024
+       ip: 10.0.1.131
+       gateway: 10.0.1.1
+       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          leo_manager.conf.template: 'http://salt/file-share/leo_manager.conf.leofs_2'
+   
+       dataset_install_script: |
+          set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")                 
+          #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+          
+          curl -O https://project-fifo.net/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+          
+          VERSION=rel
+          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
+          rm -fr /var/db/pkgin/*
+          pkgin -fy up
+          pkgin -y install coreutils sudo gawk gsed
+          pkgin -y install leo_manager leo_gateway leo_storage
+          
+          cp  /opt/local/leo_manager/etc/leo_manager.conf  /opt/local/leo_manager/etc/leo_manager.conf.original
+          mv -f /root/leo_manager.conf.template    /opt/local/leo_manager/etc/leo_manager.conf
+          
+          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          
+          #svcadm enable epmd
+          #svcadm enable leofs/manager
+          
+          #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
+
+          #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          #echo abc   
+
+
+
     home_fifo:
        salt_target: jinhao
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
@@ -686,9 +805,12 @@ dataset_repository:
        programm_files:
           chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'          
           fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
+          fifo-snarl-0.7.0p6.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0p6.tgz'
           fifo-howl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-howl-0.7.0.tgz'
+          fifo-howl-0.7.0p1.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-howl-0.7.0p1.tgz'
           fifo-sniffle-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-sniffle-0.7.0.tgz'
-          
+          fifo-sniffle-0.7.0p7.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-sniffle-0.7.0p7.tgz'
+          fifo-cerberus-0.7.0p9.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-cerberus-0.7.0p9.tgz'
 
 
        dataset_install_script: |
@@ -715,9 +837,11 @@ dataset_repository:
        gateway: 10.0.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.8.2p5.gz'
-          fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
-
+          chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.8.2/chunter-0.8.2p5.gz'
+          fifo-howl-0.8.2p4.tgz: 'http://10.0.1.38/fifo-0.8.2/fifo-howl-0.8.2p4.tgz'
+          fifo-snarl-0.8.2p1.tgz: 'http://10.0.1.38/fifo-0.8.2/fifo-snarl-0.8.2p1.tgz'
+          fifo-sniffle-0.8.2p4.tgz: 'http://10.0.1.38/fifo-0.8.2/fifo-sniffle-0.8.2p4.tgz'
+          fifo-cerberus-0.8.2p2.tgz: 'http://10.0.1.38/fifo-0.8.2/fifo-cerberus-0.8.2p2.tgz'
 
        dataset_install_script: |
           set -e
