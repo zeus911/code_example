@@ -716,10 +716,7 @@ dataset_repository:
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.8.2p5.gz'
-          fifo-snarl-0.7.0.t: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz
-                                  
-
-          
+          fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
 
 
        dataset_install_script: |
