@@ -14,7 +14,7 @@ sh fifo_zlogin-latest
 
 VERSION=rel
 cd /opt
-curl -O http://salt/chunter-fifo/chunter-latest.gz
+curl -O http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz
 gunzip chunter-latest.gz
 sh chunter-latest
 
