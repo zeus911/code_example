@@ -30,9 +30,9 @@
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |
-            nodename = gateway_0@10.0.1.80
+            nodename = gateway_0@10.0.1.130
             distributed_cookie = snIG4iyWg6fyabCR         
-            managers = [manager_0@10.0.1.80, manager_1@10.0.1.81]
+            managers = [manager_0@10.0.1.130, manager_1@10.0.1.131]
     - show_changes: True
     - append_if_not_found: True
     - backup: '.bak'
@@ -59,12 +59,12 @@
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
-            nodename = manager_0@10.0.1.80
-            mnesia.dir = /var/db/leo_manager/mnesia/10.0.1.80
+            nodename = manager_0@10.0.1.130
+            mnesia.dir = /var/db/leo_manager/mnesia/10.0.1.130
             manager.mode = master
             distributed_cookie = snIG4iyWg6fyabCR
             
-            manager.partner = manager_1@10.0.1.81
+            manager.partner = manager_1@10.0.1.131
             
     - show_changes: True
     - append_if_not_found: True
@@ -91,9 +91,9 @@
     - marker_start: "## BLOCK TOP : added by wujunrong"
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
-            nodename = storage_0@10.0.1.80
+            nodename = storage_0@10.0.1.130
             distributed_cookie = snIG4iyWg6fyabCR
-            managers = [manager_0@10.0.1.80, manager_1@10.0.1.81]
+            managers = [manager_0@10.0.1.130, manager_1@10.0.1.131]
             
     - show_changes: True
     - append_if_not_found: True
@@ -135,11 +135,11 @@
     - marker_end: "## BLOCK BOTTOM : added by wujunrong" 
     - content: |            
 
-            nodename = manager_1@10.0.1.81
-            mnesia.dir = /var/db/leo_manager/mnesia/10.0.1.81
+            nodename = manager_1@10.0.1.131
+            mnesia.dir = /var/db/leo_manager/mnesia/10.0.1.131
             manager.mode = slave
             distributed_cookie = snIG4iyWg6fyabCR
-            manager.partner = manager_0@10.0.1.80
+            manager.partner = manager_0@10.0.1.130
             
     - show_changes: True
     - append_if_not_found: True
