@@ -2,9 +2,17 @@
 #salt   ocp09.thu.briphant.com   state.sls create_smartos_vm  pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "wujunrong-salt-atuo-created", "hostname": "wu-test-qinghua"}'    --log-level=debug -t 120
 #salt-ssh -i samrtos-dataset state.sls config_smartos_vm
 #salt fifo-test.zhixiang environ.get mustang
+
+
+1bd84670-055a-11e5-aaa2-0346bb21d5a1:
+   smartos.image_present
+
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %} 
 
+
 {% if module_property.type == 'zone-dataset' and module_property.os == 'smartos' %}
+
+
 /opt/{{ module }}_create_native_zone.sh:
   file.managed:
     - user: root
@@ -26,15 +34,14 @@
              "quota": 8,
              "resolvers": ["8.8.8.8", "114.114.114.114"],
              "nics": [
-                {
 
-                        "nic_tag": "admin",
-                        "ip": "{{ module_property.ip }}",
-                        "gateway": "{{ module_property.gateway }}",
-                        "netmask": "255.255.255.0",
-                        "primary": true                    
+                {
+                        "nic_tag": "storage",
+                        "ips": ["dhcp"]              
                         
                 }
+
+                
              ],
              "internal_metadata": {
               "root_pw": "root",
@@ -58,6 +65,7 @@ create_{{ module }}_vm:
     - timeout: 1200
     - require:
        - file: /opt/{{ module }}_create_native_zone.sh
+       - 1bd84670-055a-11e5-aaa2-0346bb21d5a1
 {% endif %}
  
 {% if module_property.type == 'lx-dataset' and module_property.os == 'linux' %}

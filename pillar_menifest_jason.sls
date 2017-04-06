@@ -807,6 +807,8 @@ dataset_repository:
        gateway: 10.0.1.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
+          unixodbc-2.3.0nb2.tgz: 'http://10.0.1.38/fifo-old/unixodbc-2.3.0nb2.tgz'
+          perl-5.20.1.tgz: 'http://10.0.1.38/fifo-old/perl-5.20.1.tgz'
           chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'          
           fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
           fifo-snarl-0.7.0p6.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0p6.tgz'
@@ -829,8 +831,8 @@ dataset_repository:
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
           
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          echo 'http://salt/fifo-old/' >> /opt/local/etc/pkgin/repositories.conf
-          echo 'http://pkgsrc.joyent.com/packages/SmartOS/2014Q4/x86_64/All' >> /opt/local/etc/pkgin/repositories.conf
+          #echo 'http://salt/fifo-old/' >> /opt/local/etc/pkgin/repositories.conf
+          #echo 'http://pkgsrc.joyent.com/packages/SmartOS/2014Q4/x86_64/All' >> /opt/local/etc/pkgin/repositories.conf
 
           zfs set mountpoint=/data zones/$(zonename)/data
           
@@ -839,14 +841,15 @@ dataset_repository:
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
 
-          #pkg_add -U fifo-snarl-0.7.0p6.tgz
+        
           #pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
           cd /root
+          #pkg_add -U ./unixodbc-2.3.0nb2.tgz
+          #pkg_add -U ./perl-5.20.1.tgz
           pkg_add -U ./erlang-18.0nb1.tgz
           pkg_add -U ./fifo-snarl-0.7.0p6.tgz
           pkg_add -U ./fifo-howl-0.7.0p1.tgz 
           pkg_add -U ./fifo-sniffle-0.7.0p7.tgz
-
           svcadm enable epmd
           svcadm enable snarl
           svcadm enable sniffle
