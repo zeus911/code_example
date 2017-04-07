@@ -789,7 +789,7 @@ dataset_repository:
           
           #snarl-admin init default MyOrg Users admin admin
           #sniffle-admin init-leofs 10.0.1.80.xip.io
-          
+          #svcadm restart sniffle
    
           #echo abc   
      
@@ -850,12 +850,13 @@ dataset_repository:
           pkg_add -U ./fifo-snarl-0.7.0p6.tgz
           pkg_add -U ./fifo-howl-0.7.0p1.tgz 
           pkg_add -U ./fifo-sniffle-0.7.0p7.tgz
-          svcadm enable epmd
-          svcadm enable snarl
-          svcadm enable sniffle
-          svcadm enable howl
-          sleep 60
-          svcs epmd snarl sniffle howl
+          pkg_add -U ./fifo-cerberus-0.7.0p9.tgz
+          #svcadm enable epmd
+          #svcadm enable snarl
+          #svcadm enable sniffle
+          #svcadm enable howl
+          #sleep 60
+          #svcs epmd snarl sniffle howl
           
 
     new_fifo_home_2:
