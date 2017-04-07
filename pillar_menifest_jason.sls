@@ -490,15 +490,15 @@ dataset_repository:
           mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
           
           
-          #svcadm enable epmd
-          #svcadm enable leofs/manager
-          #svcadm enable leofs/storage
-          #sleep 3
-          #leofs-adm status
-          #leofs-adm start
-          #sleep 3
-          #svcadm enable leofs/gateway
-          #leofs-adm status
+          svcadm enable epmd
+          svcadm enable leofs/manager
+          svcadm enable leofs/storage
+          sleep 3
+          leofs-adm status
+          leofs-adm start
+          sleep 3
+          svcadm enable leofs/gateway
+          leofs-adm status
           
  
           #echo abc       
