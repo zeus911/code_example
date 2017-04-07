@@ -805,7 +805,7 @@ dataset_repository:
        max_physical_memory: 3072
        ip: 10.0.1.195
        gateway: 10.0.1.1
-       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       customer_metadata: "/usr/bin/sed  -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           unixodbc-2.3.0nb2.tgz: 'http://10.0.1.38/fifo-old/unixodbc-2.3.0nb2.tgz'
           perl-5.20.1.tgz: 'http://10.0.1.38/fifo-old/perl-5.20.1.tgz'
@@ -870,7 +870,7 @@ dataset_repository:
        max_physical_memory: 3072
        ip: 10.0.1.195
        gateway: 10.0.1.1
-       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       customer_metadata: "/usr/bin/sed  -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           chunter-0.8.2p5.gz: 'http://10.0.1.38/fifo-0.8.2/chunter-0.8.2p5.gz'
           fifo-howl-0.8.2p4.tgz: 'http://10.0.1.38/fifo-0.8.2/fifo-howl-0.8.2p4.tgz'
