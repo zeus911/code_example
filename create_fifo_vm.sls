@@ -32,11 +32,11 @@
              "hostname": "{{ module_property.name }}",
              "max_physical_memory": {{ module_property.max_physical_memory }},
              "quota": 8,
-             "resolvers": ["8.8.8.8", "114.114.114.114"],
+             "resolvers": ["10.0.1.38", "8.8.8.8"],
              "nics": [
 
                 {
-                        "nic_tag": "storage",
+                        "nic_tag": "admin",
                         "ips": ["dhcp"]              
                         
                 }

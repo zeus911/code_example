@@ -858,17 +858,80 @@ dataset_repository:
           #sleep 60
           #svcs epmd snarl sniffle howl
           
-
-    new_fifo_home_2:
+    old_fifo_home_2:
        salt_target: jinhao
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: new_fifo_home_2
+       name: old_fifo_home_2
        version: 2.0
-       description: new_fifo_home_2
+       description: old_fifo_home_2
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
-       ip: 10.0.1.195
+       ip: 10.0.1.196
+       gateway: 10.0.1.1
+       customer_metadata: "/usr/bin/sed  -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       programm_files:
+          unixodbc-2.3.0nb2.tgz: 'http://10.0.1.38/fifo-old/unixodbc-2.3.0nb2.tgz'
+          perl-5.20.1.tgz: 'http://10.0.1.38/fifo-old/perl-5.20.1.tgz'
+          chunter-0.7.0p4.gz: 'http://10.0.1.38/fifo-0.7.0/chunter-0.7.0p4.gz'          
+          fifo-snarl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0.tgz'
+          fifo-snarl-0.7.0p6.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-snarl-0.7.0p6.tgz'
+          fifo-howl-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-howl-0.7.0.tgz'
+          fifo-howl-0.7.0p1.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-howl-0.7.0p1.tgz'
+          fifo-sniffle-0.7.0.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-sniffle-0.7.0.tgz'
+          fifo-sniffle-0.7.0p7.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-sniffle-0.7.0p7.tgz'
+          fifo-cerberus-0.7.0p9.tgz: 'http://10.0.1.38/fifo-0.7.0/fifo-cerberus-0.7.0p9.tgz'
+          erlang-18.0nb1.tgz: 'http://10.0.1.38/fifo-old/erlang-18.0nb1.tgz'
+
+
+       dataset_install_script: |
+          #set -e
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name")       
+ 
+          
+
+          #install salt
+          echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
+          
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+          #echo 'http://salt/fifo-old/' >> /opt/local/etc/pkgin/repositories.conf
+          #echo 'http://pkgsrc.joyent.com/packages/SmartOS/2014Q4/x86_64/All' >> /opt/local/etc/pkgin/repositories.conf
+
+          zfs set mountpoint=/data zones/$(zonename)/data
+          
+          cd /data
+          curl -O http://pkgs.briphant.com/pkgsrc-fifo.bak/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+
+        
+          #pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
+          cd /root
+          #pkg_add -U ./unixodbc-2.3.0nb2.tgz
+          #pkg_add -U ./perl-5.20.1.tgz
+          pkg_add -U ./erlang-18.0nb1.tgz
+          pkg_add -U ./fifo-snarl-0.7.0p6.tgz
+          pkg_add -U ./fifo-howl-0.7.0p1.tgz 
+          pkg_add -U ./fifo-sniffle-0.7.0p7.tgz
+          pkg_add -U ./fifo-cerberus-0.7.0p9.tgz
+          #svcadm enable epmd
+          #svcadm enable snarl
+          #svcadm enable sniffle
+          #svcadm enable howl
+          #sleep 60
+          #svcs epmd snarl sniffle howl
+    
+    new_fifo_home_1:
+       salt_target: jinhao
+       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+       name: new_fifo_home_1
+       version: 2.0
+       description: new_fifo_home_1
+       os: smartos
+       type: zone-dataset
+       max_physical_memory: 3072
+       ip: 10.0.1.196
        gateway: 10.0.1.1
        customer_metadata: "/usr/bin/sed  -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
@@ -883,11 +946,38 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
  
- 
+
           #install salt
-          
-          #echo abc
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
+          
+          sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
+          #echo 'http://salt/fifo-old/' >> /opt/local/etc/pkgin/repositories.conf
+          #echo 'http://pkgsrc.joyent.com/packages/SmartOS/2014Q4/x86_64/All' >> /opt/local/etc/pkgin/repositories.conf
+
+          zfs set mountpoint=/data zones/$(zonename)/data
+          
+          cd /data
+          curl -O http://pkgs.briphant.com/pkgsrc-fifo.bak/fifo.gpg
+          gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < fifo.gpg
+          gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
+
+        
+          #pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
+          cd /root
+          #pkg_add -U ./unixodbc-2.3.0nb2.tgz
+          #pkg_add -U ./perl-5.20.1.tgz
+          #pkg_add -U ./erlang-18.0nb1.tgz
+          pkg_add -U ./fifo-snarl-0.8.2p1.tgz
+          pkg_add -U ./fifo-howl-0.8.2p4.tgz 
+          pkg_add -U ./fifo-sniffle-0.8.2p4.tgz
+          pkg_add -U ./fifo-cerberus-0.8.2p2.tgz
+          #svcadm enable epmd
+          #svcadm enable snarl
+          #svcadm enable sniffle
+          #svcadm enable howl
+          #sleep 60
+          #svcs epmd snarl sniffle howl
+
 
     leofs1_thinkpad:
        salt_target: no-minion
