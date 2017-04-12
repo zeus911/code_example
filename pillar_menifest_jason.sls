@@ -906,21 +906,23 @@ dataset_repository:
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
 
         
+          #http://pkgsrc.joyent.com:80/packages/SmartOS/2014Q4/x86_64/All  
+          #http://pkgs.briphant.com/pkgsrc-joyent/SmartOS/2014Q4/x86_64/All/
           #pkgin -y install fifo-snarl fifo-sniffle fifo-howl fifo-cerberus
           cd /root
           #pkg_add -U ./unixodbc-2.3.0nb2.tgz
           #pkg_add -U ./perl-5.20.1.tgz
-          pkg_add -U ./erlang-18.0nb1.tgz
+          #pkg_add -U ./erlang-18.0nb1.tgz
           pkg_add -U ./fifo-snarl-0.7.0p6.tgz
           pkg_add -U ./fifo-howl-0.7.0p1.tgz 
           pkg_add -U ./fifo-sniffle-0.7.0p7.tgz
           pkg_add -U ./fifo-cerberus-0.7.0p9.tgz
-          #svcadm enable epmd
-          #svcadm enable snarl
-          #svcadm enable sniffle
-          #svcadm enable howl
-          #sleep 60
-          #svcs epmd snarl sniffle howl
+          svcadm enable epmd
+          svcadm enable snarl
+          svcadm enable sniffle
+          svcadm enable howl
+          sleep 60
+          svcs epmd snarl sniffle howl
     
     new_fifo_home_1:
        salt_target: jinhao
