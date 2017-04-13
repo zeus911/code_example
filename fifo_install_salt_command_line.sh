@@ -10,7 +10,7 @@ set -e
 #svcadm disable dsapid
 #svcadm enable dsapid
 
-#salt -L jinhao   cmd.run "vmadm list  | grep new_fifo_home_1  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
+salt -L jinhao   cmd.run "vmadm list  | grep old_fifo_home_2  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
 
 
 salt-run manage.down removekeys=True

@@ -20,7 +20,7 @@
              "hostname": "{{ module_property.name }}",
              "max_physical_memory": {{ module_property.max_physical_memory }},
              "quota": 500,
-             "resolvers": ["10.0.1.1", "114.114.114.114"],
+             "resolvers": ["10.0.1.101", "114.114.114.114"],
              "nics": [
                 {
 

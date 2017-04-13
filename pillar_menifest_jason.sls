@@ -889,7 +889,9 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
  
-          
+          route delete default 10.0.1.1
+          route add  default 10.0.1.101
+          netstat -r
 
           #install salt
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
