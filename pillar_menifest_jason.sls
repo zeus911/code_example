@@ -465,7 +465,7 @@ dataset_repository:
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
-          curl -O https://project-fifo.net/fifo.gpg
+          curl -O http://10.0.1.38/file-share/fifo.gpg
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
           
@@ -529,7 +529,7 @@ dataset_repository:
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
-          curl -O https://project-fifo.net/fifo.gpg
+          curl -O http://10.0.1.38/file-share/fifo.gpg
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
           
@@ -568,14 +568,14 @@ dataset_repository:
        max_physical_memory: 5120
        ip: 10.0.1.130
        gateway: 10.0.1.1
-       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           leo_manager.conf.template: 'http://salt/file-share/leo_manager.conf.leofs_1'
           leo_gateway.conf.template: 'http://salt/file-share/leo_gateway.conf.leofs_1'
           leo_storage.conf.template: 'http://salt/file-share/leo_storage.conf.leofs_1'
           
        dataset_install_script: |
-          set -e
+          #set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")                 
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
@@ -584,6 +584,8 @@ dataset_repository:
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
+          route delete default 10.0.1.1 
+          route  add default 10.0.1.101
           curl -O https://project-fifo.net/fifo.gpg
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
@@ -635,12 +637,12 @@ dataset_repository:
        max_physical_memory: 1024
        ip: 10.0.1.131
        gateway: 10.0.1.1
-       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           leo_manager.conf.template: 'http://salt/file-share/leo_manager.conf.leofs_2'
    
        dataset_install_script: |
-          set -e
+          #set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")                 
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
@@ -648,7 +650,10 @@ dataset_repository:
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
+          route delete default 10.0.1.1 
+          route  add default 10.0.1.101
           curl -O https://project-fifo.net/fifo.gpg
+
           gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import < /root/fifo.gpg
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
           
@@ -678,12 +683,12 @@ dataset_repository:
 
 
 
-    home_fifo:
+    home_fifo_9_1:
        salt_target: jinhao
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
-       name: home_fifo
+       name: home_fifo_9_1
        version: 2.0
-       description: home_fifo
+       description: home_fifo_9_1
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
@@ -729,12 +734,12 @@ dataset_repository:
    
           #echo abc   
           
-    home_fifo2:
+    home_fifo2_9_1:
        salt_target: home-smartos.wu
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
-       name: home_fifo2
+       name: home_fifo2_9_1
        version: 2.0
-       description: home_fifo2
+       description: home_fifo2_9_1
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
@@ -781,7 +786,8 @@ dataset_repository:
           
           /opt/local/fifo-snarl/bin/snarl-admin cluster join 'snarl@10.0.1.85'
           /opt/local/fifo-snarl/bin/snarl-admin cluster plan
-          /opt/local/fifo-howl/bin/howl-admin   cluster commit
+          /opt/local/fifo-snarl/bin/snarl-admin   cluster commit
+
           
           /opt/local/fifo-snarl/bin/snarl-admin member-status
           /opt/local/fifo-sniffle/bin/sniffle-admin member-status
@@ -794,12 +800,12 @@ dataset_repository:
           #echo abc   
      
 
-    old_fifo_home_1:
+    old_fifo_0_7_home_1:
        salt_target: jinhao
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: old_fifo_home_1
+       name: old_fifo_0_7_home_1
        version: 2.0
-       description: old_fifo_home_1
+       description: old_fifo_0_7_home_1
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
@@ -825,7 +831,10 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
  
-          
+          route delete default 10.0.1.1 
+          route  add default 10.0.1.101
+          netstat -r
+
 
           #install salt
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20
@@ -851,19 +860,19 @@ dataset_repository:
           pkg_add -U ./fifo-howl-0.7.0p1.tgz 
           pkg_add -U ./fifo-sniffle-0.7.0p7.tgz
           pkg_add -U ./fifo-cerberus-0.7.0p9.tgz
-          #svcadm enable epmd
-          #svcadm enable snarl
-          #svcadm enable sniffle
-          #svcadm enable howl
-          #sleep 60
-          #svcs epmd snarl sniffle howl
+          svcadm enable epmd
+          svcadm enable snarl
+          svcadm enable sniffle
+          svcadm enable howl
+          sleep 60
+          svcs epmd snarl sniffle howl
           
-    old_fifo_home_2:
+    old_fifo_0_7_home_2:
        salt_target: jinhao
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: old_fifo_home_2
+       name: old_fifo_0_7_home_2
        version: 2.0
-       description: old_fifo_home_2
+       description: old_fifo_0_7_home_2
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
@@ -925,13 +934,38 @@ dataset_repository:
           svcadm enable howl
           sleep 60
           svcs epmd snarl sniffle howl
+
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster join 'sniffle@10.0.1.19'
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster plan
+          /opt/local/fifo-sniffle/bin/sniffle-admin cluster commit
+          
+          /opt/local/fifo-howl/bin/howl-admin cluster join 'howl@10.0.1.19'
+          /opt/local/fifo-howl/bin/howl-admin cluster plan
+          /opt/local/fifo-howl/bin/howl-admin cluster commit
+          
+          /opt/local/fifo-snarl/bin/snarl-admin cluster join 'snarl@10.0.1.19'
+          /opt/local/fifo-snarl/bin/snarl-admin cluster plan
+          /opt/local/fifo-snarl/bin/snarl-admin   cluster commit
+          
+          sleep 10
+
+          /opt/local/fifo-snarl/bin/snarl-admin member-status
+          /opt/local/fifo-sniffle/bin/sniffle-admin member-status
+          /opt/local/fifo-howl/bin/howl-admin member-status
+          
+          #snarl-admin init default MyOrg Users admin admin
+          #sniffle-admin init-leofs 10.0.1.80.xip.io
+          #svcadm restart sniffle
+   
+
+
     
-    new_fifo_home_1:
+    new_fifo_home_8_2:
        salt_target: jinhao
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: new_fifo_home_1
+       name: new_fifo_home_8_2
        version: 2.0
-       description: new_fifo_home_1
+       description: new_fifo_home_8_2
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072

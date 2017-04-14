@@ -31,16 +31,18 @@ set -e
 #salt ocp12.thu.briphant.com state.sls_id   dataset_install_alpha_test_leofs2   config_smartos_vm   -t 600
 #salt ocp12.thu.briphant.com state.sls_id   dataset_install_alpha_test_leofs1   config_smartos_vm   -t 600
 
+
+salt -L 'jinhao'   cmd.run 'vmadm list | grep  home_hp_leofs | awk "{print \$1}" |xargs -I {} vmadm delete {}'
 salt-run manage.down removekeys=True
 salt '*' saltutil.refresh_pillar
 
-salt leofs.wu state.sls_id   create_home_hp_leofs1_vm        create_smartos_vm  -t 600
-salt leofs.wu state.sls_id   create_home_hp_leofs2_vm        create_smartos_vm  -t 600
-salt leofs.wu state.sls_id   dataset_install_home_hp_leofs1    config_smartos_vm -t 3600
-salt leofs.wu state.sls_id   dataset_install_home_hp_leofs2    config_smartos_vm -t 3600
+salt jinhao state.sls_id   create_home_hp_leofs1_vm        create_smartos_vm  -t 600
+salt jinhao state.sls_id   create_home_hp_leofs2_vm        create_smartos_vm  -t 600
+salt jinhao state.sls_id   dataset_install_home_hp_leofs1    config_smartos_vm -t 3600
+salt jinhao state.sls_id   dataset_install_home_hp_leofs2    config_smartos_vm -t 3600
 
-salt leofs.wu  state.sls_id    home_hp_leofs1_config_master     config_leofs_vm
-salt leofs.wu  state.sls_id    home_hp_leofs2_config_slave      config_leofs_vm
+salt jinhao  state.sls_id    home_hp_leofs1_config_master     config_leofs_vm
+salt jinhao  state.sls_id    home_hp_leofs2_config_slave      config_leofs_vm
 
 #leofs1-manager:
 salt home_hp_leofs1 cmd.run 'svcadm enable epmd' shell='/usr/bin/bash'
