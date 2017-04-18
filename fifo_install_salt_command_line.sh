@@ -10,7 +10,7 @@ set -e
 #svcadm disable dsapid
 #svcadm enable dsapid
 
-salt -L jinhao   cmd.run "vmadm list  | grep fifo_0_7_home  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
+#salt -L jinhao   cmd.run "vmadm list  | grep fifo_0_7_home  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
 
 
 salt-run manage.down removekeys=True
@@ -18,12 +18,16 @@ salt '*' saltutil.refresh_pillar
 #salt home-smartos.wu state.sls_id   create_home_fifo2_vm        create_fifo_vm  -t 600
 #salt home-smartos.wu state.sls_id   dataset_install_home_fifo2    config_smartos_vm -t 3600
 
-salt jinhao     state.sls_id   create_old_fifo_0_7_home_1_vm          create_fifo_vm  -t 600
-salt jinhao     state.sls_id   dataset_install_old_fifo_0_7_home_1    config_smartos_vm -t 3600
-
-salt jinhao      state.sls_id   create_old_fifo_0_7_home_2_vm          create_fifo_vm  -t 600
-salt jinhao      state.sls_id   dataset_install_old_fifo_0_7_home_2    config_smartos_vm -t 3600
+#salt jinhao     state.sls_id   create_old_fifo_0_7_home_1_vm          create_fifo_vm  -t 600
+#salt jinhao     state.sls_id   dataset_install_old_fifo_0_7_home_1    config_smartos_vm -t 3600
+#
+#salt jinhao      state.sls_id   create_old_fifo_0_7_home_2_vm          create_fifo_vm  -t 600
+#salt jinhao      state.sls_id   dataset_install_old_fifo_0_7_home_2    config_smartos_vm -t 3600
 
 
 #salt jinhao      state.sls_id   create_new_fifo_home_1_vm          create_fifo_vm  -t 600
 #salt jinhao      state.sls_id   dataset_install_new_fifo_home_1    config_smartos_vm -t 3600
+
+
+salt jinhao     state.sls_id   create_fifo_1_aio_9_1_home_vm          create_fifo_vm  -t 600
+salt jinhao     state.sls_id   dataset_install_fifo_1_aio_9_1_home    config_smartos_vm -t 3600
