@@ -65,7 +65,7 @@ create_{{ module }}_vm:
     - timeout: 1200
     - require:
        - file: /opt/{{ module }}_create_native_zone.sh
-       - 1bd84670-055a-11e5-aaa2-0346bb21d5a1
+
 {% endif %}
  
 {% if module_property.type == 'lx-dataset' and module_property.os == 'linux' %}
