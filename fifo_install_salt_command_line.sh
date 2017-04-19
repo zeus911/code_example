@@ -31,12 +31,16 @@ salt '*' saltutil.refresh_pillar
 
 
 salt jinhao     state.sls_id   create_fifo_1_aio_9_1_home_vm          create_fifo_vm  -t 600
-salt jinhao    cmd.script salt://script/upgrade_fifo_zone.sh shell='/bin/bash'
 salt jinhao     state.sls_id   dataset_install_fifo_1_aio_9_1_home    config_smartos_vm -t 3600
+#升级配置数据
 salt fifo_1_aio_9_1_home state.sls config_fifo_zone
 
 
 
 salt jinhao     state.sls_id   create_fifo_2_aio_9_1_home_vm          create_fifo_vm  -t 600
 salt jinhao     state.sls_id   dataset_install_fifo_2_aio_9_1_home    config_smartos_vm -t 3600
+#升级配置数据
 salt fifo_2_aio_9_1_home state.sls config_fifo_zone
+#迁移数据
+salt jinhao    cmd.script salt://script/upgrade_fifo_zone.sh shell='/bin/bash'
+salt 'fifo_*_aio_9_1_home' cmd.run "svcadm restart epmd;svcadm restart snarl; svcadm restart howl;svcadm restart sniffle"
