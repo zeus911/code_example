@@ -813,9 +813,9 @@ dataset_repository:
        gateway: 10.0.1.1
        customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          snarl.conf.new: 'http://salt/fifo-0.91/snarl.conf.new'
-          sniffle.conf.new: 'http://salt/fifo-0.91/sniffle.conf.new'
-          howl.conf.new: 'http://salt/fifo-0.91/howl.conf.new'
+          snarl.conf.template: 'http://salt/fifo-0.91/snarl.conf.0.9.1'
+          sniffle.conf.template: 'http://salt/fifo-0.91/sniffle.conf.0.9.1'
+          howl.conf.template: 'http://salt/fifo-0.91/howl.conf.0.9.1'
 
        dataset_install_script: |
           #!/bin/bash
@@ -844,9 +844,9 @@ dataset_repository:
        gateway: 10.0.1.1
        customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          snarl.conf.new: 'http://salt/fifo-0.91/snarl.conf.new'
-          sniffle.conf.new: 'http://salt/fifo-0.91/sniffle.conf.new'
-          howl.conf.new: 'http://salt/fifo-0.91/howl.conf.new'
+          snarl.conf.template: 'http://salt/fifo-0.91/snarl.conf.0.9.1'
+          sniffle.conf.template: 'http://salt/fifo-0.91/sniffle.conf.0.9.1'
+          howl.conf.template: 'http://salt/fifo-0.91/howl.conf.0.9.1'
 
        dataset_install_script: |
           #!/bin/bash
