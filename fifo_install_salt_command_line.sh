@@ -11,7 +11,7 @@ set -e
 #svcadm enable dsapid
 
 #salt -L jinhao   cmd.run "vmadm list  | grep fifo_0_7_home  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
-salt -L jinhao   cmd.run "vmadm list  | grep fifo_1_aio_9  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
+salt -L jinhao   cmd.run "vmadm list  | grep fifo_.*_aio_9  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
 
 
 salt-run manage.down removekeys=True
@@ -32,4 +32,10 @@ salt '*' saltutil.refresh_pillar
 
 salt jinhao     state.sls_id   create_fifo_1_aio_9_1_home_vm          create_fifo_vm  -t 600
 salt jinhao     state.sls_id   dataset_install_fifo_1_aio_9_1_home    config_smartos_vm -t 3600
-#salt fifo_1_aio_9_1_home state.sls config_fifo_zone
+salt fifo_1_aio_9_1_home state.sls config_fifo_zone
+
+
+
+salt jinhao     state.sls_id   create_fifo_2_aio_9_1_home_vm          create_fifo_vm  -t 600
+salt jinhao     state.sls_id   dataset_install_fifo_2_aio_9_1_home    config_smartos_vm -t 3600
+salt fifo_2_aio_9_1_home state.sls config_fifo_zone
