@@ -43,8 +43,12 @@ salt jinhao     state.sls_id   dataset_install_fifo_2_aio_9_1_home    config_sma
 salt fifo_2_aio_9_1_home state.sls config_fifo_zone
 #迁移数据
 salt jinhao    cmd.script salt://script/upgrade_fifo_zone.sh shell='/bin/bash'
+
+salt 'fifo_*_aio_9_1_home' cmd.run "svcadm restart snarl; svcadm restart howl;svcadm restart sniffle"
+
+#salt 'fifo_*_aio_9_1_home' cmd.run "svcadm disable snarl; svcadm disable howl;svcadm disable sniffle"
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm clear snarl; svcadm clear howl;svcadm clear sniffle"
-salt 'fifo_*_aio_9_1_home' cmd.run "svcadm restart epmd;svcadm restart snarl; svcadm restart howl;svcadm restart sniffle"
+#salt 'fifo_*_aio_9_1_home' cmd.run "svcadm enable snarl; svcadm enable howl;svcadm enable sniffle"
 sleep 10
 salt 'fifo_*_aio_9_1_home'  state.sls fifo_0_9_rsyslog5_conf_blockreplace
 salt 'fifo_*_aio_9_1_home' cmd.run "svcs epmd snarl sniffle howl"
