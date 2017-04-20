@@ -809,7 +809,7 @@ dataset_repository:
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
-       ip: 10.0.1.86
+       ip: 10.0.1.21
        gateway: 10.0.1.1
        customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
@@ -825,11 +825,11 @@ dataset_repository:
           
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2015Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
 
-          fifo-config
-          svcadm enable epmd
-          svcadm enable snarl
-          svcadm enable howl
-          svcadm enable sniffle
+          #fifo-config
+          #svcadm enable epmd
+          #svcadm enable snarl
+          #svcadm enable howl
+          #svcadm enable sniffle
 
     fifo_2_aio_9_1_home:
        salt_target: home-smartos.wu
@@ -840,7 +840,7 @@ dataset_repository:
        os: smartos
        type: zone-dataset
        max_physical_memory: 3072
-       ip: 10.0.1.86
+       ip: 10.0.1.22
        gateway: 10.0.1.1
        customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
@@ -856,11 +856,11 @@ dataset_repository:
           
           echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2015Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
 
-          fifo-config
-          svcadm enable epmd
-          svcadm enable snarl
-          svcadm enable howl
-          svcadm enable sniffle
+          #fifo-config
+          #svcadm enable epmd
+          #svcadm enable snarl
+          #svcadm enable howl
+          #svcadm enable sniffle
 
     old_fifo_0_7_home_1:
        salt_target: jinhao

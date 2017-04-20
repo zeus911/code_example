@@ -36,9 +36,14 @@
              "nics": [
 
                 {
+ 
+
                         "nic_tag": "admin",
-                        "ips": ["dhcp"]              
-                        
+                        "ip": "{{ module_property.ip }}",
+                        "gateway": "{{ module_property.gateway }}",
+                        "netmask": "255.255.255.0",
+                        "primary": true                    
+
                 }
 
                 
