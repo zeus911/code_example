@@ -53,5 +53,6 @@ salt 'fifo_*_aio_9_1_home' cmd.run "svcadm enable epmd;svcadm enable snarl; svca
 sleep 10
 salt 'fifo_*_aio_9_1_home'  state.sls fifo_0_9_rsyslog5_conf_blockreplace
 salt 'fifo_*_aio_9_1_home' cmd.run "svcs epmd snarl sniffle howl"
+sleep 20
 salt 'fifo_*_aio_9_1_home' cmd.run "howl-admin status;sniffle-admin status;snarl-admin status;"
 salt 'fifo_*_aio_9_1_home' cmd.run "snarl-admin member-status;howl-admin member-status;sniffle-admin member-status"
