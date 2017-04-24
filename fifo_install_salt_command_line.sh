@@ -6,7 +6,7 @@ set -e
 #salt -L  'home_fifo,home_fifo2'   cmd.run      'svcadm restart howl'
 #salt jinhao  state.sls_id   create_dsapid_server_vm        create_smartos_vm  -t 600
 #salt jinhao  state.sls_id   dataset_install_dsapid_server      config_smartos_vm -t 3600
-
+#zlogin f8a0f6bc-cf39-43da-8448-80dae8072d91 salt-minion -d
 #svcadm disable dsapid
 #svcadm enable dsapid
 

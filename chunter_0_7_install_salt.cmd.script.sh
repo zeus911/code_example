@@ -1,5 +1,5 @@
-#salt    home-smartos.wu    cmd.script salt://script/chunter_install_salt.cmd.script.sh  
-#sudo    salt-cp  lakala.wu   /srv/salt/script/chunter_install_salt.cmd.script.sh  /root/
+#salt    home-smartos.wu    cmd.script salt://script/chunter_0_7_install_salt.cmd.script.sh  
+#sudo    salt-cp  lakala.wu   /srv/salt/script/chunter_0_7_install_salt.cmd.script.sh  /root/
 #!/bin/bash
 set -e
 log_file_name=chunter_install_`date +%F-%H_%M`.log
@@ -19,9 +19,10 @@ VERSION=rel
 cd /opt
 curl -O http://salt/fifo-0.7.0/chunter-0.7.0p3.gz
 gunzip chunter-0.7.0p3.gz
-sh chunter-0.7.0p3 
-
-
+sh chunter-0.7.0p3
+cp /opt/chunter/etc/chunter.conf.example /opt/chunter/etc/chunter.conf
+sed -i.bak s/127.0.0.1/10.0.1.88/g /opt/chunter/etc/chunter.conf
+sleep 5
 svcadm enable epmd
 sleep 5
 svcs epmd
@@ -30,4 +31,4 @@ svcs epmd
 #svcs fifo/zlogin
 svcadm enable chunter
 sleep 5
-svcs chunter
+svcs epmd chunter
