@@ -41,6 +41,14 @@ chunter_rsyslog:
        $InputFileFacility local6
        #$InputFilePersistStateInterval 1
        $InputRunFileMonitor
+
+       $InputFileName /var/svc/log/network-chunter:default.log
+       $InputFileTag chunter-svcadm
+       $InputFileStateFile fifo-chunter-svc-statefile
+       $InputFileSeverity info
+       $InputFileFacility local6
+       #$InputFilePersistStateInterval 1
+       $InputRunFileMonitor
        
        #$template HostAudit, "/var/log/rsyslog/%HOSTNAME%/webservices.log"
        #$template auditFormat, "%msg%\n"
