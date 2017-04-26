@@ -18,6 +18,11 @@ for fifo_zone_number in 1 2
 do
 	echo on $fifo_zone_number
 
+    for_old_1=`vmadm list | grep old_fifo_0_7_home_$fifo_zone_number |awk '{print $1}' `
+    for_new_1=`vmadm list | grep fifo_$fifo_zone_number_aio_9_1_home |awk '{print $1}' `
+    echo for_old_uuid: $for_old_1 
+    echo for_new_uuid: $for_new_1
+
 done
 mkdir -p /zones/"$new_1"/root/data/snarl/db   /zones/$new_1/root/data/sniffle/db    /zones/$new_1/root/data/howl/db 
 cp  -r /zones/"$old_1"/root/var/db/snarl/*     /zones/"$new_1"/root/data/snarl/db
