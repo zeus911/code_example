@@ -11,7 +11,8 @@ exec &> >(tee "/opt/$log_file_name")
  
 VERSION=rel
 cd /opt
-rm -fr fifo_zlogin-latest chunter-latest
+rm -fr chunter/
+rm -fr fifo_zlogin-latest.gz  chunter-latest
 curl -O http://salt/fifo-0.91/fifo_zlogin-latest.gz
 gunzip fifo_zlogin-latest.gz
 sh fifo_zlogin-latest
@@ -46,4 +47,4 @@ svcs chunter
 #svcadm clear  chunter
 #svcadm enable chunter
 #sleep 5
-#svcs chunter
+#svcs chunter zlogin
