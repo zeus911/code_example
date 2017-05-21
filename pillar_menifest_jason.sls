@@ -13,7 +13,7 @@ dataset_repository:
        max_physical_memory: 1024
        ip: 10.0.1.75
        gateway: 10.0.1.1
-       customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
+       customer_metadata: "/usr/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
           mustang_local.sh: 'http://10.0.1.38/file-share/mustang.sh'
          
