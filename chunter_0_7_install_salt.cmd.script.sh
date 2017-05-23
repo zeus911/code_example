@@ -7,7 +7,7 @@ exec &> >(tee "/opt/$log_file_name")
 
 #salt-run manage.down removekeys=True       
 
- 
+svcadm disable chunter
 #VERSION=rel
 #cd /opt
 #curl -O http://salt/chunter-fifo/fifo_zlogin-latest.gz 

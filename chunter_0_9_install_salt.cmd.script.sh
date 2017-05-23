@@ -5,14 +5,14 @@
 set -e
 log_file_name=chunter_0.9.1_install_`date +%F-%H_%M`.log
 exec &> >(tee "/opt/$log_file_name")                 
-
+svcadm disable chunter
 #salt-run manage.down removekeys=True       
 #zfs snapshot zones/opt@fifo-7.0-9.1-2017-4-26
  
 VERSION=rel
 cd /opt
-rm -fr chunter/
-rm -fr fifo_zlogin-latest.gz  chunter-latest
+rm -fr chunter/ fifo_zlogin/
+rm -fr fifo_zlogin-latest.gz  chunter-latest fifo_zlogin-latest
 curl -O http://salt/fifo-0.91/fifo_zlogin-latest.gz
 gunzip fifo_zlogin-latest.gz
 sh fifo_zlogin-latest
