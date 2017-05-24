@@ -1,13 +1,15 @@
-#salt    home-smartos.wu    cmd.script salt://script/chunter_0_7_install_salt.cmd.script.sh  
+#salt    jinhao    cmd.script salt://script/chunter_0_7_install_salt.cmd.script.sh  -t 600
 #sudo    salt-cp  lakala.wu   /srv/salt/script/chunter_0_7_install_salt.cmd.script.sh  /root/
 #!/bin/bash
 set -e
 log_file_name=chunter_install_`date +%F-%H_%M`.log
 exec &> >(tee "/opt/$log_file_name")                 
-
+vmadm  list | grep 9_1 | awk '{print $1}' |xargs -I{} vmadm stop {}
 #salt-run manage.down removekeys=True       
-
- 
+sleep 3
+svcadm disable chunter
+sleep 5
+rm -fr /opt/chunter
 #VERSION=rel
 #cd /opt
 #curl -O http://salt/chunter-fifo/fifo_zlogin-latest.gz 
@@ -21,7 +23,9 @@ curl -O http://salt/fifo-0.7.0/chunter-0.7.0p3.gz
 gunzip chunter-0.7.0p3.gz
 sh chunter-0.7.0p3
 cp /opt/chunter/etc/chunter.conf.example /opt/chunter/etc/chunter.conf
-sed -i.bak s/127.0.0.1/10.0.1.88/g /opt/chunter/etc/chunter.conf
+address=`/opt/salt/bin/appdata/salt-2016.3.3.solaris-2_11-i86pc_64bit/salt-call --out=json  network.ip_addrs 2>&1 | grep -v WAR | json local[0]`
+sed -i.bak s/127.0.0.1/$address/g /opt/chunter/etc/chunter.conf
+
 sleep 5
 svcadm enable epmd
 sleep 5
