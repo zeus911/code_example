@@ -9,7 +9,10 @@ vmadm  list | grep 9_1 | awk '{print $1}' |xargs -I{} vmadm stop {}
 sleep 3
 svcadm disable chunter
 sleep 5
-rm -fr /opt/chunter
+rm -rf chunter-0.7.0p3.gz
+rm -fr /opt/chunter 
+rm -fr /opt/chunter-0.7.0p3
+
 #VERSION=rel
 #cd /opt
 #curl -O http://salt/chunter-fifo/fifo_zlogin-latest.gz 
@@ -21,7 +24,7 @@ VERSION=rel
 cd /opt
 curl -O http://salt/fifo-0.7.0/chunter-0.7.0p3.gz
 gunzip chunter-0.7.0p3.gz
-sh chunter-0.7.0p3
+yes 'yes' |sh chunter-0.7.0p3
 cp /opt/chunter/etc/chunter.conf.example /opt/chunter/etc/chunter.conf
 address=`/opt/salt/bin/appdata/salt-2016.3.3.solaris-2_11-i86pc_64bit/salt-call --out=json  network.ip_addrs 2>&1 | grep -v WAR | json local[0]`
 sed -i.bak s/127.0.0.1/$address/g /opt/chunter/etc/chunter.conf
@@ -36,3 +39,4 @@ svcs epmd
 svcadm enable chunter
 sleep 5
 svcs epmd chunter
+vmadm  list | grep  old_fifo_0_7_home  | awk '{print $1}' |xargs -I{} vmadm start {}
