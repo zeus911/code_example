@@ -96,11 +96,12 @@ setfifo_rsyslog.conf:
   cmd.run:
     - name: |
        svcadm disable svc:/system/system-log:default
+       sleep 5
        rm /var/run/fifo-*statefile
        svcadm enable svc:/system/system-log:default
     - onchanges: 
        - file: rsyslog.conf-blockreplace
-    - shell: /usr/bin/bash
+    - shell: '/usr/bin/bash'
 
            
     
