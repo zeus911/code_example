@@ -56,16 +56,17 @@ chunter_rsyslog:
     - backup: minion
     - makedirs: True
 
-setfifo_rsyslog.conf:
+clear_rsyslog_state_and_restart:
   cmd.run:
     - name: |
        svcadm disable svc:/system/system-log:default
+       sleep 5
        rm /var/run/fifo-chunter*
        svcadm enable svc:/system/system-log:default
        
     - onchanges: 
        - file: chunter_rsyslog
-    - shell: /usr/bin/bash
+    - shell: '/usr/bin/bash'
 
            
     
