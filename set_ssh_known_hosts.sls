@@ -4,6 +4,7 @@
     - group: root
     - mode: 644
     - makedirs: True
+    - backup: minion
     - contents: |
          {{ '' }}       
          {#- Loop over targetted minions -#}
@@ -15,8 +16,11 @@
            {%- for ip in ip4 -%}
              {%- do names.append(ip) -%}
            {%- endfor -%}
-           
-           {%- for line in keys.split('\n') -%}  
+ 
+           {%- set json_src = keys|load_json %}
+           {%- set json_server = json_src.server %}          
+
+           {%- for line in json_server.split('\n') -%}  
            {%- if line -%}
          {{ ','.join(names) }} {{ line }}
          {% endif -%}
