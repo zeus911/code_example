@@ -235,16 +235,16 @@ dataset_repository:
 
     dataset_test_kvm:
        salt_target: jinhao
-       image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
+       image_uuid: 66d919a8-132a-11e7-a7b8-5b99fa122880
        name: kvm-test
        version: 2.0
        description: used-for-generating-lx-dataset
        os: smartos
        type: zvol
        max_physical_memory: 1024
-       ip: 10.75.1.3
-       gateway: 10.75.1.1
-       customer_metadata: "NULL"
+       ip: 10.0.1.73
+       gateway: 10.0.1.1
+       customer_metadata: "echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;wget -O /etc/yum.repos.d/centos7_software.repo http://10.0.1.38/yum-repo-centos7/centos7_software.repo;sudo yum -y clean expire-cache;sudo yum --disablerepo='*' --enablerepo='wujunrongrepo' -y install salt-minion; sudo systemctl start salt-minion"
        programm_files:
           install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
        dataset_install_script: |       

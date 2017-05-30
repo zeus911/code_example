@@ -88,7 +88,7 @@ create_{{ module }}_vm:
               "nic_tag": "admin",
               "ip": "{{ module_property.ip }}",
               "netmask": "255.255.255.0",
-              "gateway": "10.75.1.1",
+              "gateway": "{{ module_property.gateway }}",
               "primary": true
             }
           ]
@@ -124,9 +124,9 @@ create_{{ module }}_vm:
             "nics": [
               {
                 "nic_tag": "admin",
-                "ip": "10.0.1.73",
+                "ip": "{{ module_property.ip }}",
                 "netmask": "255.255.255.0",
-                "gateway": "10.0.1.1",
+                "gateway": "{{ module_property.gateway }}",
                 "model": "virtio",
                 "primary": true
               }
@@ -136,7 +136,7 @@ create_{{ module }}_vm:
                "admin_pw": "admin"
               },
             "customer_metadata" : {
-                "user-script" : "sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;  ",            
+                "user-script" : "{{ module_property.customer_metadata }}",            
                 "root_authorized_keys":
                 "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGVztN1NgEp5WHWkfaCRvq8kvUPdlwRrfpSSyoBk9xi4q4yg/PP6C121YywYJtGRDdfwYXxTkY6qn6yAzvPyVYfeWvoEeEnnedyNQMGDSbz2mIpQRUH6ZI5Zdvopu6huuPa3K+OAYdVO4rgLLd9pYlpWIngbSZNVmC5loT+4HR5camrgTYF7mybowrXSCauOCjJTSaLhFBIdDS8Eh7m92dmrGcWLdf5xZaLLHkkzgFa3titMS9FUrvjL/gdg5qzCD7HezjJ//GXDzYn+z1+tStJ1DIa7YiXyoRHIqPB66jHVYfnMJ8UiDl1ENFLP9CbOkhsQg+SZuqQQvsWzAws0Lf Frank@Frank-PC"
               },
