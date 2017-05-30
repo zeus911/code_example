@@ -2,15 +2,15 @@
 # salt-run state.orchestrate  mustang pillar='{"image_uuid": "13f711f4-499f-11e6-8ea6-2b9fb858a619","alias": "auto-created-by-salt", "hostname": "wu"}'
 #salt ocp09.thu.briphant.com state.sls_id create_dataset_test_lx_vm create_smartos_vm -t 120
 #salt-run manage.down removekeys=True
-
-set_authorized_keys:
-  salt.function:
-    - tgt: 'datasets.dsapid,dsapid_server_thinkpad,centos7-qinghua,ocp09.thu.briphant.com,dataset_test_kvm,fifo-thinkpad.thinkpad'
-    - tgt_type: list    
-    - name: state.sls
-    - arg:
-      - set_ssh_authorized_keys
-    - timeout: 60
+#salt-run state.orchestrate orchestrate_all_dataset_from_pillar
+#set_authorized_keys:
+#  salt.function:
+#    - tgt: 'datasets.dsapid,dsapid_server_thinkpad,centos7-qinghua,ocp09.thu.briphant.com,dataset_test_kvm,fifo-thinkpad.thinkpad'
+#    - tgt_type: list    
+#    - name: state.sls
+#    - arg:
+#      - set_ssh_authorized_keys
+#    - timeout: 60
 
 
 
@@ -44,7 +44,7 @@ set_authorized_keys:
     - timeout: 3600
     - require:
       - salt: {{ module }}_vm_ping
-      - salt: set_authorized_keys
+ #     - salt: set_authorized_keys
 
 
       
@@ -58,7 +58,7 @@ set_authorized_keys:
     - timeout: 7200
     - require:
       - salt: {{ module }}_install_package
-      - salt: set_authorized_keys
+#      - salt: set_authorized_keys
       
 {% endif %} 
 {% if module_property.type == "lx-dataset" and module_property.salt_target != "no-minion" %}
@@ -90,7 +90,7 @@ set_authorized_keys:
     - timeout: 3600
     - require:
       - salt: {{ module }}_vm_ping
-      - salt: set_authorized_keys
+#      - salt: set_authorized_keys
 
 
       
@@ -104,7 +104,7 @@ set_authorized_keys:
     - timeout: 7200
     - require:
       - salt: {{ module }}_install_package
-      - salt: set_authorized_keys
+ #     - salt: set_authorized_keys
       
 {% endif %} 
 
@@ -128,7 +128,7 @@ set_authorized_keys:
     - timeout: 3600
     - require:
       - salt: {{ module }}_vm_ping
-      - salt: set_authorized_keys    
+#      - salt: set_authorized_keys    
 
 {{ module }}_prepare_dataset:
   salt.function:
@@ -152,17 +152,27 @@ set_authorized_keys:
     - timeout: 7200
     - require:
       - salt: {{ module }}_prepare_dataset
-      - salt: set_authorized_keys    
+ #     - salt: set_authorized_keys    
     
 {% endif %} 
 {% if module_property.type == "zvol" and module_property.salt_target != "no-minion" %}
- 
 
-{{ module }}_vm_ping:
+
+{{ module }}_create_nativezone:
   salt.function:
-    - tgt: 'dataset_test_kvm'
-    - name: test.ping
-    - timeout: 720 
+    - name: state.sls_id
+    - tgt: '{{ module_property.salt_target }}'
+    - arg:
+      - create_{{ module }}_vm
+      - create_smartos_vm   
+    - timeout: 720
+
+
+#{{ module }}_vm_ping:
+#  salt.function:
+#    - tgt: 'dataset_test_kvm'
+#    - name: test.ping
+#    - timeout: 720 
 
   
 

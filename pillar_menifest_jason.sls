@@ -3,7 +3,7 @@
 dataset_repository:
 
     dsapid_server:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: a0e719d6-4e21-11e4-92eb-2bf6399552e7
        name: dsapid_server
        version: 2.0
@@ -189,9 +189,9 @@ dataset_repository:
     vpnservice:
        salt_target: no-minion
        image_uuid: 74be319f-2753-4b0a-8ee2-514249dc3935
-       name: native_zone_jinhao_vpn
+       name: native_zone_no-minion_vpn
        version: 2.0
-       description: native_zone_jinhao_vpn
+       description: native_zone_no-minion_vpn
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
@@ -234,14 +234,14 @@ dataset_repository:
           /opt/local/bin/echo '10.75.1.70 salt'>>/etc/hosts;/opt/local/bin/sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;/opt/local/bin/sleep 10;/usr/sbin/svcadm enable svc:/pkgsrc/salt:minion;/opt/local/bin/sleep 20
 
     dataset_test_kvm:
-       salt_target: no-minion
+       salt_target: jinhao
        image_uuid: dd31507e-031e-11e6-be8a-8f2707b5b3ee
        name: kvm-test
        version: 2.0
        description: used-for-generating-lx-dataset
        os: smartos
        type: zvol
-       max_physical_memory: 5120
+       max_physical_memory: 1024
        ip: 10.75.1.3
        gateway: 10.75.1.1
        customer_metadata: "NULL"
@@ -440,7 +440,7 @@ dataset_repository:
           #echo abc   
           
     home_leofs1:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_leofs1
        version: 2.0
@@ -507,7 +507,7 @@ dataset_repository:
       
 
     home_leofs2:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_leofs2
        version: 2.0
@@ -559,7 +559,7 @@ dataset_repository:
 
  
     home_hp_leofs1:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_hp_leofs1
        version: 2.0
@@ -628,7 +628,7 @@ dataset_repository:
       
 
     home_hp_leofs2:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_hp_leofs2
        version: 2.0
@@ -685,7 +685,7 @@ dataset_repository:
 
 
     home_fifo_9_1:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
        name: home_fifo_9_1
        version: 2.0
@@ -736,7 +736,7 @@ dataset_repository:
           #echo abc   
           
     home_fifo2_9_1:
-       salt_target: home-smartos.wu
+       salt_target: no-minion
        image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
        name: home_fifo2_9_1
        version: 2.0
@@ -802,7 +802,7 @@ dataset_repository:
      
 
     fifo_1_aio_9_1_home:
-       salt_target: home-smartos.wu
+       salt_target: no-minion
        image_uuid: f097790d-183d-44fa-b795-44ab5f82c64f
        name: fifo_1_aio_9_1_home
        version: 2.0
@@ -833,7 +833,7 @@ dataset_repository:
           #svcadm enable sniffle
 
     fifo_2_aio_9_1_home:
-       salt_target: home-smartos.wu
+       salt_target: no-minion
        image_uuid: f097790d-183d-44fa-b795-44ab5f82c64f
        name: fifo_2_aio_9_1_home
        version: 2.0
@@ -864,7 +864,7 @@ dataset_repository:
           #svcadm enable sniffle
 
     old_fifo_0_7_home_1:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: old_fifo_0_7_home_1
        version: 2.0
@@ -931,7 +931,7 @@ dataset_repository:
           svcs epmd snarl sniffle howl
           
     old_fifo_0_7_home_2:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: old_fifo_0_7_home_2
        version: 2.0
@@ -1024,7 +1024,7 @@ dataset_repository:
 
     
     new_fifo_home_8_2:
-       salt_target: jinhao
+       salt_target: no-minion
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: new_fifo_home_8_2
        version: 2.0
