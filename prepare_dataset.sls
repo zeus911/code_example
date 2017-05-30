@@ -13,8 +13,8 @@
 
 {{ module }}_generate_dataset_file:
   cmd.run:
-    - name: |
     {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %} 
+    - name: |
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
         {% set kvm_server_ip         = host_ip_dic['dataset_test_kvm'] %}
 
@@ -29,13 +29,14 @@
         chmod +x create-manifest
         /opt/centos-lx-brand-image-builder/create-lx-image -t  `ls /opt/centos-lx-brand-image-builder/*.gz`  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
     - require:  
-       - file: {{ module }}_centos-lx-brand-image-builder 
-    {% endif %}        
+       - file: {{ module }}_centos-lx-brand-image-builder       
     
-    {% if module_property.type == 'zvol' %}        
-        vm_uuid_for_dataset     =  `vmadm list | grep {{ module }} | awk "{print \$1}" ` 
-        snapshot_name           =  `date -u '+%Y-%m-%dT%H:%M:%SZ' `   
-        dataset_uuid = `python -c 'import uuid; print uuid.uuid1()'`
+    {% elif module_property.type == 'zvol' %}        
+    - name: |
+        set -e
+        vm_uuid_for_dataset=`vmadm list | grep {{ module }} | awk '{print $1}' ` 
+        snapshot_name=`date -u '+%Y-%m-%dT%H:%M:%SZ' `   
+        dataset_uuid=`python -c 'import uuid; print uuid.uuid1()'`
 
         mkdir -p /var/tmp/$vm_uuid_for_dataset
         echo $dataset_uuid>/var/tmp/"$vm_uuid_for_dataset"/dataset_uuid.txt
@@ -45,7 +46,7 @@
     
     {% endif %}  
     - timeout: 360    
-
+    - shell: '/usr/bin/bash'
 
     
    {% endif %}  
