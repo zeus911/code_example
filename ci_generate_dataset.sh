@@ -12,7 +12,7 @@
 
 salt -L 'jinhao'   cmd.run 'vmadm list | grep  dataset_test_kvm | awk "{print \$1}" |xargs -I {} vmadm delete {}'
 salt-run manage.down removekeys=True
-#salt '*' saltutil.refresh_pillar
+salt '*' saltutil.refresh_pillar
 salt-run state.orchestrate orchestrate_all_dataset_from_pillar
 
 #cmd: echo {\"server\":\"`cat  /var/ssh/ssh_host_rsa_key.pub | cut -f -2 -d " "`\"  ,  \"client\":\"`cat /root/.ssh/id_rsa.pub 2>/dev/null`\"}|json

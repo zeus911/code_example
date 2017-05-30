@@ -15,11 +15,11 @@
         {% elif module_property.type == 'zvol' or module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}
               {% set file_name_to_run        = '/root/'+module+'_install.sh' %}
               
-{{ module }}_centos-lx-brand-image-builder:
-  file.recurse:
-    - name: /root/centos-lx-brand-image-builder
-    - source: salt://files/centos-lx-brand-image-builder
-    - file_mode: 755                      
+#{{ module }}_centos-lx-brand-image-builder:
+#  file.recurse:
+#    - name: /root/centos-lx-brand-image-builder
+#    - source: salt://files/centos-lx-brand-image-builder
+#    - file_mode: 755                      
         {% endif %}   
 
         
@@ -59,7 +59,11 @@ dataset_install_{{ module }}:
         echo in_cmd_run
         zlogin {{ vm_uuid_for_dataset }} /root/{{ module }}_install.sh >/dev/null
         #scp  /zones/{{ vm_uuid_for_dataset }}/root/root/*.log  10.75.1.50:/var/www/html/log/
-        
+    
+    {% elif module_property.type == 'zvol' %}
+    - name: |       
+        echo in_cmd_run_zovl    
+
     {% elif module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}
     - name: |       
         #kvm dataset is created from kvm vm

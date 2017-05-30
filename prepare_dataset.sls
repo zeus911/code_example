@@ -1,6 +1,6 @@
 
 {% for module, module_property in salt['pillar.get']('dataset_repository', {}).items() %}  
-   {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}           
+   {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' or module_property.type == 'zvol' %}           
 
    
 {{ module }}_centos-lx-brand-image-builder:
@@ -14,10 +14,7 @@
 {{ module }}_generate_dataset_file:
   cmd.run:
     - name: |
-    
-
     {% if module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %} 
-    
         {% set host_ip_dic = salt['mine.get']('*', 'network.interface_ip', 'glob') %}
         {% set kvm_server_ip         = host_ip_dic['dataset_test_kvm'] %}
 
@@ -31,14 +28,25 @@
         chmod +x create-lx-image
         chmod +x create-manifest
         /opt/centos-lx-brand-image-builder/create-lx-image -t  `ls /opt/centos-lx-brand-image-builder/*.gz`  -k 3.13.0 -m 20160117T201601Z -i test-lx-centos-7.2 -d "CentOS 7.2 64-bit lx-brand image." -u https://docs.joyent.com/images/container-native-linux
- 
-    {% endif %}        
-       
-    - timeout: 3600    
     - require:  
-       - file: {{ module }}_centos-lx-brand-image-builder
-
+       - file: {{ module }}_centos-lx-brand-image-builder 
+    {% endif %}        
     
+    {% if module_property.type == 'zvol' %}        
+        vm_uuid_for_dataset     =  `vmadm list | grep {{ module }} | awk "{print \$1}" ` 
+        snapshot_name           =  `date -u '+%Y-%m-%dT%H:%M:%SZ' `   
+        dataset_uuid = `python -c 'import uuid; print uuid.uuid1()'`
+
+        mkdir -p /var/tmp/$vm_uuid_for_dataset
+        echo $dataset_uuid>/var/tmp/"$vm_uuid_for_dataset"/dataset_uuid.txt
+        vmadm stop $vm_uuid_for_dataset
+        zfs snapshot zones/"$vm_uuid_for_dataset"-disk0@{{ module }}$snapshot_name
+        zfs send     zones/"$vm_uuid_for_dataset"-disk0@{{ module }}$snapshot_name | gzip > /var/tmp/"$vm_uuid_for_dataset"/{{ module_property.name }}.zvol.gz
+    
+    {% endif %}  
+    - timeout: 360    
+
+
     
    {% endif %}  
 {% endfor %}   

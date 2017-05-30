@@ -158,7 +158,7 @@
 {% if module_property.type == "zvol" and module_property.salt_target != "no-minion" %}
 
 
-{{ module }}_create_nativezone:
+{{ module }}_create_kvm_zone:
   salt.function:
     - name: state.sls_id
     - tgt: '{{ module_property.salt_target }}'
@@ -168,13 +168,36 @@
     - timeout: 720
 
 
-#{{ module }}_vm_ping:
-#  salt.function:
-#    - tgt: 'dataset_test_kvm'
-#    - name: test.ping
-#    - timeout: 720 
+{{ module }}_vm_ping:
+  salt.function:
+    - tgt: 'centos-7'
+    - name: test.ping
+    - timeout: 30 
+    - require:
+      - salt: {{ module }}_create_kvm_zone
 
-  
+{{ module }}_install_package:
+  salt.function:
+    - tgt: 'centos-7'
+    - name: state.sls_id
+    - arg:
+      - dataset_install_{{ module }} 
+      - config_smartos_vm 
+    - timeout: 360
+    - require:
+      - salt: {{ module }}_vm_ping
+#      - salt: set_authorized_keys
+ 
+{{ module }}_prepare_dataset:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - {{ module }}_generate_dataset_file
+      - prepare_dataset 
+    - timeout: 360
+    - require:
+      - salt: {{ module }}_install_package
 
             
       

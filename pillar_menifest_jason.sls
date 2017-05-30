@@ -244,9 +244,9 @@ dataset_repository:
        max_physical_memory: 1024
        ip: 10.0.1.73
        gateway: 10.0.1.1
-       customer_metadata: "echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;wget -O /etc/yum.repos.d/centos7_software.repo http://10.0.1.38/yum-repo-centos7/centos7_software.repo;sudo yum -y clean expire-cache;sudo yum --disablerepo='*' --enablerepo='wujunrongrepo' -y install salt-minion; sudo systemctl start salt-minion"
+       customer_metadata: "echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;wget -O /etc/yum.repos.d/centos7_software.repo http://10.0.1.38/yum-repo-centos7/centos7_software.repo;sudo yum -y clean expire-cache;sudo yum --disablerepo='*' --enablerepo='wujunrongrepo' -y install salt-minion; sudo systemctl start salt-minion;"
        programm_files:
-          install_EMS.sh: 'http://192.168.10.56:5000/devops/megatron/raw/master/EMS/install.sh'
+          install_EMS.sh: 'http://10.0.1.38/yum-repo-centos7/centos7_software.repo'
        dataset_install_script: |       
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
