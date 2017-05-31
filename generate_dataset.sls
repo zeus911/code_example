@@ -103,6 +103,83 @@
             json.dump(data, f)
 
     {% endif %} 
+
+{% endif %} 
+{% if module_property.type == 'zvol' and module_property.salt_target != "no-minion" %}
+
+{% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
+{% set dataset_uuid = salt['cmd.run']('cat /var/tmp/'~ vm_uuid_for_dataset ~'/dataset_uuid.txt') %}
+{{ salt['cmd.run']('mkdir -p /var/tmp/'~ dataset_uuid ~';mv /var/tmp/'~ vm_uuid_for_dataset ~'/*.gz   /var/tmp/'~ dataset_uuid ~' ') }}
+
+/var/tmp/{{ dataset_uuid }}/manifest.json:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs : True
+    - contents: |
+       {
+         "uuid": "{{ dataset_uuid }}",
+         "provider": "joyent",
+         "owner": "a979f956-12cb-4216-bf4c-ae73e6f14dde",
+         "name": "{{ module_property.name }}{{ salt['cmd.run']("date +%FT%TZ") }}",
+         "version": "{{ module_property.version }}",
+         "description": "{{ module_property.description }}",
+         "homepage": "https://docs.joyent.com/images/linux/centos",
+         "urn": "smartos:smartos:centos-7:20170327",
+         "state": "active",
+         "public": true,
+         "disabled": false,
+         "type": "zvol",
+         "os": "linux",
+         "published_at": "{{ salt['cmd.run']("date +%FT%TZ") }}",
+         "created_at": "{{ salt['cmd.run']("date +%FT%TZ") }}",
+         "requirements": {
+           "networks": [
+             {
+               "description": "public",
+               "name": "net0"
+             }
+           ],
+           "ssh_key": true
+         },
+         "users": [
+           {
+             "name": "root"
+           }
+         ],
+         "tags": {
+           "role": "os"
+         },
+         "options": {
+           "cpu_type": "host",
+           "disk_driver": "virtio",
+           "image_size": 10240,
+           "nic_driver": "virtio"
+         },
+         "metadata_info": [],
+         "builder_info": {},
+         "sync_info": {
+           "from": "http://datasets.at/api/datasets/?name=centos-7;version=20170327",
+           "time": "2017-05-25T21:26:39Z",
+           "type": "dsapi"
+         },
+         "files": [
+           {
+             "path": "{{ module_property.name }}.zvol.gz",
+             "size": {{ salt['cmd.run']('ls -la  /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zvol.gz | awk "{ print \$5}" ') }},
+             "sha1": "{{ salt['cmd.run']('digest -a sha1 /var/tmp/'~ dataset_uuid ~'/'~ module_property.name ~'.zvol.gz') }}",
+             "compression": "gzip"
+           }
+         ]
+       }
+       
+
+
+
+{% endif %}  
+
+{% if ( module_property.type == 'zone-dataset' or module_property.type == 'lx-dataset' or module_property.type == 'zvol') and module_property.salt_target != "no-minion" %}
 upload_repository_{{ module }}:
   cmd.run:
     - name: |
@@ -117,9 +194,9 @@ upload_repository_{{ module }}:
         cp  *.json  *.zfs.gz /var/tmp/{{ dataset_uuid }}  
     {% endif %}        
        
-        scp  -r /var/tmp/{{ dataset_uuid }}  root@192.168.1.75:/data/files
-        ssh 192.168.1.75  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
-        ssh 192.168.1.75  svcadm restart svc:/application/dsapid:default
+        scp  -r /var/tmp/{{ dataset_uuid }}  root@10.0.1.160:/data/files
+        ssh 10.0.1.160  chown  -R dsapid:dsapid /data/files/{{ dataset_uuid }}
+        ssh 10.0.1.160  svcadm restart svc:/application/dsapid:default
     - timeout: 3600    
     - require:
        {% if vm_uuid_for_dataset %}
@@ -129,7 +206,7 @@ upload_repository_{{ module }}:
        - file: /opt/{{ module }}-update_lxzone_dataset_manifest_file.py
        
     {% endif %}  
-{% endif %} 
+{% endif %}  
 
 
 

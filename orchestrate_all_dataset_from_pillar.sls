@@ -199,7 +199,18 @@
     - require:
       - salt: {{ module }}_install_package
 
-            
+{{ module }}_create_kvm_dataset:
+  salt.function:
+    - tgt: '{{ module_property.salt_target }}'
+    - name: state.sls_id
+    - arg:
+      - upload_repository_{{ module }}
+      - generate_dataset   
+    - timeout: 720
+    - require:
+      - salt: {{ module }}_prepare_dataset
+ #     - salt: set_authorized_keys
+                
       
 {% endif %} 
 {% endfor %}
