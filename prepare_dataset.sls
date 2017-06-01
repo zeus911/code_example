@@ -36,10 +36,9 @@
         set -e
         vm_uuid_for_dataset=`vmadm list | grep {{ module }} | awk '{print $1}' ` 
         snapshot_name=`date -u '+%Y-%m-%dT%H:%M:%SZ' `   
-        dataset_uuid=`python -c 'import uuid; print uuid.uuid1()'`
-
+      
         mkdir -p /var/tmp/$vm_uuid_for_dataset
-        echo $dataset_uuid>/var/tmp/"$vm_uuid_for_dataset"/dataset_uuid.txt
+        #echo $dataset_uuid>/var/tmp/"$vm_uuid_for_dataset"/dataset_uuid.txt
         vmadm stop $vm_uuid_for_dataset
         zfs snapshot zones/"$vm_uuid_for_dataset"-disk0@{{ module }}$snapshot_name
         zfs send     zones/"$vm_uuid_for_dataset"-disk0@{{ module }}$snapshot_name | gzip > /var/tmp/"$vm_uuid_for_dataset"/{{ module_property.name }}.zvol.gz

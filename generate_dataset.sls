@@ -108,8 +108,8 @@
 {% if module_property.type == 'zvol' and module_property.salt_target != "no-minion" %}
 
 {% set vm_uuid_for_dataset     =  salt['cmd.run']('vmadm list | grep '~ module ~' | awk "{print \$1}"  ')  %}
-{% set dataset_uuid = salt['cmd.run']('cat /var/tmp/'~ vm_uuid_for_dataset ~'/dataset_uuid.txt') %}
-{{ salt['cmd.run']('mkdir -p /var/tmp/'~ dataset_uuid ~';mv /var/tmp/'~ vm_uuid_for_dataset ~'/*.gz   /var/tmp/'~ dataset_uuid ~' ') }}
+{% set dataset_uuid = salt['cmd.run']("python -c 'import uuid; print uuid.uuid1()'") %}
+{{ salt['cmd.run']('mkdir -p /var/tmp/'~ dataset_uuid ~';cp /var/tmp/'~ vm_uuid_for_dataset ~'/*.gz   /var/tmp/'~ dataset_uuid ~' ') }}
 
 /var/tmp/{{ dataset_uuid }}/manifest.json:
   file.managed:

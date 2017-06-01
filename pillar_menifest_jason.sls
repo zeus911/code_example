@@ -250,7 +250,39 @@ dataset_repository:
        dataset_install_script: |       
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name") 
-          echo abc
+          yum -y --disablerepo='*' --enablerepo='wujunrongrepo' install nfs-utils nfs-utils-lib
+          systemctl enable rpcbind
+          systemctl enable nfs-server
+          systemctl enable nfs-lock
+          systemctl enable nfs-idmap
+          
+          systemctl start rpcbind
+          systemctl start nfs-server
+          systemctl start nfs-lock
+          systemctl start nfs-idmap          
+          systemctl disable firewalld
+          systemctl stop firewalld
+          cat>/etc/exports<<EOF
+          /root            10.0.1.38(rw,sync,no_root_squash,no_all_squash)
+          EOF
+
+    kvm_nfs_test:
+       salt_target: no-minion
+       image_uuid:  bc2074f8-468b-11e7-8b5f-b8aeed712acc
+       name: kvm_nfs_test
+       version: 2.0
+       description: used-for-generating-lx-dataset
+       os: smartos
+       type: zvol
+       max_physical_memory: 1024
+       ip: 10.0.1.74
+       gateway: 10.0.1.1
+       customer_metadata: "echo abc"
+       programm_files:
+          install_EMS.sh: 'http://10.0.1.38/yum-repo-centos7/centos7_software.repo'
+       dataset_install_script: |       
+          log_file_name=dataset_install_`date +%F-%H_%M`.log
+          exec &> >(tee "/root/$log_file_name") 
 
          
     dataset_test_lx:

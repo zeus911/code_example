@@ -15,6 +15,9 @@ salt-run manage.down removekeys=True
 salt '*' saltutil.refresh_pillar
 salt-run state.orchestrate orchestrate_all_dataset_from_pillar
 
+#salt -L 'jinhao'   cmd.run 'vmadm list | grep  kvm_nfs_test | awk "{print \$1}" |xargs -I {} vmadm delete {}'
+#salt jinhao     state.sls_id   create_kvm_nfs_test_vm          create_smartos_vm  -t 600
+
 #cmd: echo {\"server\":\"`cat  /var/ssh/ssh_host_rsa_key.pub | cut -f -2 -d " "`\"  ,  \"client\":\"`cat /root/.ssh/id_rsa.pub 2>/dev/null`\"}|json
 #salt jinhao  state.sls set_ssh_known_hosts                       #json server:  cat  /var/ssh/ssh_host_rsa_key.pub | cut -f -2 -d " "`\"  
 #salt datasets.dsapid sate.sls set_ssh_authorized_keys            #json client:  cat /root/.ssh/id_rsa.pub 2>/dev/null

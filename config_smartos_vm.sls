@@ -63,7 +63,7 @@ dataset_install_{{ module }}:
     {% elif module_property.type == 'zvol' %}
     - name: |       
         echo in_cmd_run_zovl    
-
+        /root/{{ module }}_install.sh
     {% elif module_property.type == 'lx-os-dataset-but-not-include-custem-programm' %}
     - name: |       
         #kvm dataset is created from kvm vm
