@@ -122,7 +122,7 @@
          "uuid": "{{ dataset_uuid }}",
          "provider": "joyent",
          "owner": "a979f956-12cb-4216-bf4c-ae73e6f14dde",
-         "name": "{{ module_property.name }}{{ salt['cmd.run']("date +%FT%TZ") }}",
+         "name": "{{ module_property.name }}-{{ salt['cmd.run']("date +%FT%TZ") }}",
          "version": "{{ module_property.version }}",
          "description": "{{ module_property.description }}",
          "homepage": "https://docs.joyent.com/images/linux/centos",

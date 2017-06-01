@@ -170,7 +170,7 @@
 
 {{ module }}_vm_ping:
   salt.function:
-    - tgt: 'centos-7'
+    - tgt: '{{ module_property.salt_target_for_KVM_zone }}'
     - name: test.ping
     - timeout: 30 
     - require:
@@ -178,7 +178,7 @@
 
 {{ module }}_install_package:
   salt.function:
-    - tgt: 'centos-7'
+    - tgt: '{{ module_property.salt_target_for_KVM_zone }}'
     - name: state.sls_id
     - arg:
       - dataset_install_{{ module }} 

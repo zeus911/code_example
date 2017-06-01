@@ -235,16 +235,17 @@ dataset_repository:
 
     dataset_test_kvm:
        salt_target: jinhao
+       salt_target_for_KVM_zone: NFS
        image_uuid: 66d919a8-132a-11e7-a7b8-5b99fa122880
-       name: kvm-test
+       name: NFS-Server-On-centos7
        version: 2.0
-       description: used-for-generating-lx-dataset
+       description: NFS-Server-On-centos7_modify_/etc/exports_then_systemctl_restart_nfs-server
        os: smartos
        type: zvol
        max_physical_memory: 1024
        ip: 10.0.1.73
        gateway: 10.0.1.1
-       customer_metadata: "echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;wget -O /etc/yum.repos.d/centos7_software.repo http://10.0.1.38/yum-repo-centos7/centos7_software.repo;sudo yum -y clean expire-cache;sudo yum --disablerepo='*' --enablerepo='wujunrongrepo' -y install salt-minion; sudo systemctl start salt-minion;"
+       customer_metadata: "hostname NFS;echo NFS > /etc/hostname;hostname;echo '10.0.1.38 salt'>>/etc/hosts;sed -i.bak  's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart;wget -O /etc/yum.repos.d/centos7_software.repo http://10.0.1.38/yum-repo-centos7/centos7_software.repo;sudo yum -y clean expire-cache;sudo yum --disablerepo='*' --enablerepo='wujunrongrepo' -y install salt-minion; sudo systemctl start salt-minion;"
        programm_files:
           install_EMS.sh: 'http://10.0.1.38/yum-repo-centos7/centos7_software.repo'
        dataset_install_script: |       
