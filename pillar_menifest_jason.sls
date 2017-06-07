@@ -1381,14 +1381,14 @@ dataset_repository:
           wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/b-dev/flowerrain/flowerrain_b-dev_99.tgz
           #wget --quiet -O /root/chunter.gz  http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
  
-          
+          pkgin -y install   erlang nginx
           mkdir -p /opt/pkg/
           #cp /root/*.tgz  /opt/pkg/
           #chmod +x /root/deploy.sh
           
-          pkg_add -U -v  /root/fifo_howl.tgz 
-          pkg_add -U -v  /root/fifo_snarl.tgz 
-          pkg_add -U -v  /root/fifo_sniffle.tgz
+          pkg_add -U /root/fifo_howl.tgz 
+          pkg_add -U /root/fifo_snarl.tgz 
+          pkg_add -U /root/fifo_sniffle.tgz
           
 
           #snarl-admin init default MyOrg Users admin admin
