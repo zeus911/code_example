@@ -1386,9 +1386,17 @@ dataset_repository:
           #cp /root/*.tgz  /opt/pkg/
           #chmod +x /root/deploy.sh
           
-          pkg_add -U /root/fifo_howl.tgz 
-          pkg_add -U /root/fifo_snarl.tgz 
-          pkg_add -U /root/fifo_sniffle.tgz
+          pkg_add -U -v -n /root/fifo_howl.tgz 
+          pkg_add -U -v -n /root/fifo_snarl.tgz 
+          pkg_add -U -v -n /root/fifo_sniffle.tgz
+          
+
+          #snarl-admin init default MyOrg Users admin admin
+          #sniffle-admin init-leofs 10.20.2.130.xip.io
+          #svcadm restart sniffle
+          #sleep 10
+          #svcs epmd snarl sniffle howl
+          #sniffle-admin config show
 
           #install nginx
           #sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
