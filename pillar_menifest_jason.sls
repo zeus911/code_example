@@ -715,7 +715,7 @@ dataset_repository:
 
 
     home_beijing_office_leofs1:
-       salt_target: no-minion
+       salt_target: beijing_office
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_beijing_office_leofs1
        version: 2.0
@@ -784,7 +784,7 @@ dataset_repository:
       
 
     home_beijing_office_leofs2:
-       salt_target: no-minion
+       salt_target: beijing_office
        image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
        name: home_beijing_office_leofs2
        version: 2.0
@@ -1351,47 +1351,52 @@ dataset_repository:
           
 
 
-    briphant_cloud_alpha_test_1:
-       salt_target: no-minion
-       image_uuid: 1bd84670-055a-11e5-aaa2-0346bb21d5a1
-       name: briphant_cloud_alpha_test_1
+    briphant_cloud_beijing_1:
+       salt_target: beijing_office
+       image_uuid: 70e3ae72-96b6-11e6-9056-9737fd4d0764
+       name: briphant_cloud_beijing_1
        version: 2.0
-       description: briphant_cloud_alpha_test_1
+       description: briphant_cloud_beijing_1
        os: smartos
        type: zone-dataset
        max_physical_memory: 5120
-       ip: 10.75.1.86
-       gateway: 10.75.1.1
+       ip: 10.20.2.86
+       gateway: 10.20.2.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          deploy.sh: 'http://192.168.1.128/file-share/deploy.sh'
+          deploy.sh: 'http://10.20.5.23/cloud/b-dev/howl/fifo_howl_0.9.2_b-dev_115.tgz'
        dataset_install_script: |
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           
-          #wget --quiet -O /root/deploy.sh    http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
-          wget --quiet -O /root/fifo_howl.tgz  http://10.20.5.23/cloud/release20161031/howl/fifo_howl_0.8.2_release20161031_10.tgz
-          wget --quiet -O /root/fifo_snarl.tgz     http://10.20.5.23/cloud/release20161031/snarl/fifo_snarl_0.8.2_release20161031_7.tgz
-          wget --quiet -O /root/fifo_sniffle.tgz   http://10.20.5.23/cloud/release20161031/sniffle/fifo_sniffle_0.8.3_release20161031_3.tgz
-          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/release20161031/flowerrain/flowerrain_release20161031_1.tgz
-          wget --quiet -O /root/chunter.gz  http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
+          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf
+          echo 'http://192.168.31.12:8000/2014Q4/x86_64/All/' >> /opt/local/etc/pkgin/repositories.conf
+          rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
+
+
+          #wget --quiet -O /root/deploy.sh             http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
+          wget --quiet -O /root/fifo_howl.tgz          http://10.20.5.23/cloud/b-dev/howl/fifo_howl_0.9.2_b-dev_115.tgz
+          wget --quiet -O /root/fifo_snarl.tgz         http://10.20.5.23/cloud/b-dev/snarl/fifo_snarl_0.9.2_b-dev_75.tgz
+          wget --quiet -O /root/fifo_sniffle.tgz       http://10.20.5.23/cloud/b-dev/sniffle/fifo_sniffle_0.9.2_b-dev_163.tgz
+          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/b-dev/flowerrain/flowerrain_b-dev_99.tgz
+          #wget --quiet -O /root/chunter.gz  http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
  
- 
+          
           mkdir -p /opt/pkg/
           cp /root/*.tgz  /opt/pkg/
-          chmod +x /root/deploy.sh
+          #chmod +x /root/deploy.sh
           
           #install nginx
-          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
-          pkgin install nginx;svcadm enable svc:/pkgsrc/nginx:default
-          cp /opt/local/etc/nginx/nginx.conf /opt/local/etc/nginx/nginx.conf.bak
+          #sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
+          #pkgin install nginx;svcadm enable svc:/pkgsrc/nginx:default
+          #cp /opt/local/etc/nginx/nginx.conf /opt/local/etc/nginx/nginx.conf.bak
           
           mkdir -p /opt/local/www/
-          wget --quiet -O /opt/local/etc/nginx/nginx.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain_nginx.conf         
-          wget --quiet -O /opt/local/etc/nginx/flower.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain-flower.conf
-          cd /opt/local/www/;tar -xvzf ./flowerrain_release.tgz
+          #wget --quiet -O /opt/local/etc/nginx/nginx.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain_nginx.conf         
+          #wget --quiet -O /opt/local/etc/nginx/flower.conf http://192.168.1.128/file-share/briphant_cloud_flowerrain-flower.conf
+          #cd /opt/local/www/;tar -xvzf ./flowerrain_release.tgz
           
           #install salt
           #echo '10.75.1.70 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2016Q2/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
