@@ -1370,11 +1370,9 @@ dataset_repository:
           log_file_name=dataset_install_`date +%F-%H_%M`.log
           exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
-          
-          sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf
-          echo 'http://192.168.31.12:8000/2014Q4/x86_64/All/' >> /opt/local/etc/pkgin/repositories.conf
-          rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
-
+          #echo 'http://192.168.31.12:8000/2014Q4/x86_64/All/' >> /opt/local/etc/pkgin/repositories.conf;
+          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          zfs set mountpoint=/data zones/$(zonename)/data
 
           #wget --quiet -O /root/deploy.sh             http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
           wget --quiet -O /root/fifo_howl.tgz          http://10.20.5.23/cloud/b-dev/howl/fifo_howl_0.9.2_b-dev_115.tgz
@@ -1385,9 +1383,13 @@ dataset_repository:
  
           
           mkdir -p /opt/pkg/
-          cp /root/*.tgz  /opt/pkg/
+          #cp /root/*.tgz  /opt/pkg/
           #chmod +x /root/deploy.sh
           
+          pkg_add -U /root/fifo_howl.tgz 
+          pkg_add -U /root/fifo_snarl.tgz 
+          pkg_add -U /root/fifo_sniffle.tgz
+
           #install nginx
           #sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://192.168.1.128/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up
           #pkgin install nginx;svcadm enable svc:/pkgsrc/nginx:default

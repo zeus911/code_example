@@ -173,10 +173,10 @@ create_{{ module }}_vm:
     - require:
        - file: /opt/{{ module }}_kvm_vm.sh
 
-centos-lx-brand-image-builder:
-  file.recurse:
-    - name: /root/centos-lx-brand-image-builder
-    - source: salt://files/centos-lx-brand-image-builder
+#centos-lx-brand-image-builder:
+#  file.recurse:
+#    - name: /root/centos-lx-brand-image-builder
+#    - source: salt://files/centos-lx-brand-image-builder
           
        
 {% endif %}
