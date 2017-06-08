@@ -49,9 +49,9 @@ salt 'briphant_cloud_beijing_1' cmd.run "svcadm enable epmd;svcadm enable snarl;
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm disable snarl; svcadm disable howl;svcadm disable sniffle"
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm clear snarl; svcadm clear howl;svcadm clear sniffle"
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm enable snarl; svcadm enable howl;svcadm enable sniffle"
-sleep 10
-
-salt 'briphant_cloud_beijing_1' cmd.run "snarl-admin init default MyOrg Users admin admin;sniffle-admin init-leofs 10.20.2.130.xip.io;svcadm restart sniffle;sleep 10;svcs epmd snarl sniffle howl;sniffle-admin config show"
+sleep 20
+salt 'briphant_cloud_beijing_1' cmd.run "snarl-admin init default MyOrg Users admin admin"
+salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin init-leofs 10.20.2.130.xip.io;svcadm restart sniffle;sleep 10;svcs epmd snarl sniffle howl;sniffle-admin config show"
 
 
 sleep 10
