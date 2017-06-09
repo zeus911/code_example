@@ -738,7 +738,7 @@ dataset_repository:
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
 
           
-          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
           #route delete default 10.0.1.1 
@@ -748,11 +748,11 @@ dataset_repository:
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
           
           VERSION=rel
-          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
-          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
-          rm -fr /var/db/pkgin/*
-          pkgin -fy up
+          #cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          #sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
+          #rm -fr /var/db/pkgin/*
+          #pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
           pkgin -y install leo_manager leo_gateway leo_storage
           
@@ -765,7 +765,7 @@ dataset_repository:
           mv -f /root/leo_storage.conf.template    /opt/local/leo_storage/etc/leo_storage.conf
           
           
-          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          #mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
           
           
           #svcadm enable epmd
@@ -804,7 +804,7 @@ dataset_repository:
           exec &> >(tee "/root/$log_file_name")                 
           #sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
 
-          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
+          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak2 '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2014Q4/' >> /opt/local/etc/pkgin/repositories.conf;echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;salt-minion -d ;sleep 20  
           #sed -i.bak2  '$d' /opt/local/etc/pkgin/repositories.conf
           
           #route delete default 10.0.1.1 
@@ -815,18 +815,18 @@ dataset_repository:
           gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint
           
           VERSION=rel
-          cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
-          sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
-          echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
-          rm -fr /var/db/pkgin/*
-          pkgin -fy up
+          #cp /opt/local/etc/pkgin/repositories.conf /opt/local/etc/pkgin/repositories.conf.original
+          #sed -i.bak  '$d' /opt/local/etc/pkgin/repositories.conf
+          #echo "http://salt/fifo-leofs-for-minimal-64-lts-14.4.2/" >> /opt/local/etc/pkgin/repositories.conf
+          #rm -fr /var/db/pkgin/*
+          #pkgin -fy up
           pkgin -y install coreutils sudo gawk gsed
           pkgin -y install leo_manager leo_gateway leo_storage
           
           cp  /opt/local/leo_manager/etc/leo_manager.conf  /opt/local/leo_manager/etc/leo_manager.conf.original
           mv -f /root/leo_manager.conf.template    /opt/local/leo_manager/etc/leo_manager.conf
           
-          mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
+          #mv -f /opt/local/etc/pkgin/repositories.conf.original  /opt/local/etc/pkgin/repositories.conf
           
           #svcadm enable epmd
           #svcadm enable leofs/manager
