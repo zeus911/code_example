@@ -52,15 +52,14 @@ salt 'briphant_cloud_beijing_1' cmd.run "svcadm enable epmd;svcadm enable snarl;
 sleep 20
 salt 'briphant_cloud_beijing_1' cmd.run "snarl-admin init default MyOrg Users admin admin"  -t 600
 sleep 10;
-salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin init-leofs 10.20.2.130.xip.io;svcs epmd snarl sniffle howl;sniffle-admin config show" 
+#salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin init-leofs 10.20.2.130.xip.io;svcs epmd snarl sniffle howl;sniffle-admin config show" 
 
-
-# salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set       storage.s3.access_key                               4218d530b9ff5b78214f" 
-# salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set       storage.s3.secret_key           5130e6a33a8b1db9b39bf2c4437eec7fb3d9b04c" 
-# salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set   storage.s3.general_bucket                                               fifo" 
-# salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set     storage.s3.image_bucket                                        fifo-images" 
-# salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set  storage.s3.snapshot_bucket                                       fifo-backups"
-
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set       storage.s3.access_key                               4218d530b9ff5b78214f" 
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set       storage.s3.secret_key           5130e6a33a8b1db9b39bf2c4437eec7fb3d9b04c" 
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set   storage.s3.general_bucket                                               fifo" 
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set     storage.s3.image_bucket                                        fifo-images" 
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin    config set  storage.s3.snapshot_bucket                                       fifo-backups"
+ salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin config show" 
 
 sleep 10
 #salt 'briphant_cloud_beijing_1'  state.sls fifo_0_9_rsyslog5_conf_blockreplace

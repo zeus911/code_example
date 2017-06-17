@@ -1390,6 +1390,10 @@ dataset_repository:
           pkg_add -U /root/fifo_snarl.tgz 
           pkg_add -U /root/fifo_sniffle.tgz
           
+          mkdir -p /opt/local/www
+          tar xvf /root/flowerrain_release.tgz -C /opt/local/www
+          mkdir /opt/local/etc/nginx/includes
+          cp /opt/local/www/flower.conf /opt/local/etc/nginx/includes
 
           #snarl-admin init default MyOrg Users admin admin
           #sniffle-admin init-leofs 10.20.2.130.xip.io
