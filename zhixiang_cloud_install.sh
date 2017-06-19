@@ -69,6 +69,6 @@ salt 'briphant_cloud_beijing_1' cmd.run "howl-admin status;sniffle-admin status;
 salt 'briphant_cloud_beijing_1' cmd.run "snarl-admin member-status;howl-admin member-status;sniffle-admin member-status"
 
 
-salt 'briphant_cloud_beijing_1'  state.single      file.managed  name='/opt/local/etc/nginx/nignx.conf'   source='salt://file/nginx.conf.zhixiang_cloud'  backup='minion'
-salt 'briphant_cloud_beijing_1'  state.single      file.managed  name=' /opt/local/etc/nginx/includes/flower.conf'   source='salt://file/flower.conf.zhixiang_cloud'  backup='minion'
-#salt 'briphant_cloud_beijing_1'  cmd.run           ""
+salt 'briphant_cloud_beijing_1'  state.single      file.managed  template=jinja name='/opt/local/etc/nginx/nginx.conf'   source='salt://file/nginx.conf.zhixiang_cloud'  backup='minion'
+salt 'briphant_cloud_beijing_1'  state.single      file.managed  template=jinja name=' /opt/local/etc/nginx/includes/flower.conf'   source='salt://file/flower.conf.zhixiang_cloud'  backup='minion'
+salt 'briphant_cloud_beijing_1'  cmd.run           "svcadm enable nginx"

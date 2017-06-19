@@ -1379,7 +1379,7 @@ dataset_repository:
           wget --quiet -O /root/fifo_snarl.tgz         http://10.20.5.23/cloud/b-dev/snarl/fifo_snarl_0.9.2_b-dev_75.tgz
           wget --quiet -O /root/fifo_sniffle.tgz       http://10.20.5.23/cloud/b-dev/sniffle/fifo_sniffle_0.9.2_b-dev_163.tgz
           wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/b-dev/flowerrain/flowerrain_b-dev_99.tgz
-          #wget --quiet -O /root/chunter.gz  http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
+          #wget --quiet -O /root/chunter.gz            http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
  
           pkgin -y install   erlang nginx
           mkdir -p /opt/pkg/
