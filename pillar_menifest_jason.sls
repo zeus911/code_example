@@ -1375,10 +1375,10 @@ dataset_repository:
           zfs set mountpoint=/data zones/$(zonename)/data
 
           #wget --quiet -O /root/deploy.sh             http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
-          wget --quiet -O /root/fifo_howl.tgz          http://10.20.5.23/cloud/b-dev/howl/fifo_howl_0.9.2_b-dev_115.tgz
-          wget --quiet -O /root/fifo_snarl.tgz         http://10.20.5.23/cloud/b-dev/snarl/fifo_snarl_0.9.2_b-dev_75.tgz
-          wget --quiet -O /root/fifo_sniffle.tgz       http://10.20.5.23/cloud/b-dev/sniffle/fifo_sniffle_0.9.2_b-dev_163.tgz
-          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/b-dev/flowerrain/flowerrain_b-dev_99.tgz
+          wget --quiet -O /root/fifo_howl.tgz          http://10.20.5.23/cloud/v7.1.0/howl/fifo_howl_0.9.2_v7.1.0_27.tgz
+          wget --quiet -O /root/fifo_snarl.tgz         http://10.20.5.23/cloud/v7.1.0/snarl/fifo_snarl_0.9.2_v7.1.0_26.tgz
+          wget --quiet -O /root/fifo_sniffle.tgz       http://10.20.5.23/cloud/v7.1.0/sniffle/fifo_sniffle_0.9.2_v7.1.0_16.tgz
+          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/v7.1.0/flowerrain/flowerrain_v7.1.0_44.tgz
           #wget --quiet -O /root/chunter.gz            http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
  
           pkgin -y install   erlang nginx

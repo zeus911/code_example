@@ -1,5 +1,5 @@
 #salt    home-smartos.wu    cmd.script salt://script/chunter_install_salt.cmd.script.sh  
-#salt   honeymoon.honeymoon   cmd.script salt://script/zhixiang_cloud_chunter_0_9_install_salt.cmd.script.s -t 600
+#salt   honeymoon.honeymoon   cmd.script salt://script/zhixiang_cloud_chunter_0_9_install_salt.cmd.script.sh -t 600
 #sudo    salt-cp  lakala.wu   /srv/salt/script/chunter_install_salt.cmd.script.sh  /root/
 #!/bin/bash
 set -e
@@ -19,11 +19,11 @@ sh fifo_zlogin-latest
 
 VERSION=rel
 cd /opt
-curl -o /opt/chunter-latest.gz  http://10.20.5.23/cloud/b-dev/chunter/chunter_0.9.2_b-dev_174.gz
+curl -o /opt/chunter-latest.gz  http://10.20.5.23/cloud/v7.1.0/chunter/fifo_chunter_0.9.2_v7.1.0_36.tgz
 gunzip chunter-latest.gz
 sh chunter-latest
 
-cp  /opt/chunter/etc/chunter.conf  /opt/chunter.conf.0.70
+cp  /opt/chunter/etc/chunter.conf  /opt/chunter.conf.bak
 cp  /opt/chunter/etc/chunter.conf.example  /opt/chunter/etc/chunter.conf
 address=`/opt/salt/bin/appdata/salt-2016.3.3.solaris-2_11-i86pc_64bit/salt-call --out=json  network.ip_addrs 2>&1 | grep -v WAR | json local[0]`
 sed -i.bak s/127.0.0.1/$address/g /opt/chunter/etc/chunter.conf

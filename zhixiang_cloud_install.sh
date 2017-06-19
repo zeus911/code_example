@@ -11,7 +11,7 @@ set -e
 #svcadm enable dsapid
 
 #salt -L jinhao   cmd.run "vmadm list  | grep fifo_0_7_home  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
-salt -L honeymoon.honeymoon   cmd.run "vmadm list  | grep briphant_cloud_beijing_1  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
+salt -L honeymoon.honeymoon   cmd.run "vmadm list  | grep briphant_cloud_beijing_*  | awk '{print $1 }' |xargs -I {} sh -c 'vmadm update {}   indestructible_delegated=false;vmadm delete {}'"
 
 
 salt-run manage.down removekeys=True
