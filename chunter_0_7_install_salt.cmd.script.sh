@@ -39,4 +39,4 @@ svcs epmd
 svcadm enable chunter
 sleep 5
 svcs epmd chunter
-vmadm  list | grep  old_fifo_0_7_home  | awk '{print $1}' |xargs -I{} vmadm start {}
+#vmadm  list | grep  old_fifo_0_7_home  | awk '{print $1}' |xargs -I{} vmadm start {}
