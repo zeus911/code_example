@@ -13,17 +13,19 @@ VERSION=rel
 cd /opt
 rm -fr chunter/ fifo_zlogin/
 rm -fr fifo_zlogin-latest.gz  chunter-latest fifo_zlogin-latest
+
 curl -O http://salt/fifo-0.91/fifo_zlogin-latest.gz
 gunzip fifo_zlogin-latest.gz
 sh fifo_zlogin-latest
 
 VERSION=rel
 cd /opt
+#curl -o /opt/chunter-latest.gz http://10.20.5.23/cloud/v7.1.0/chunter/fifo_chunter_0.9.2_v7.1.0_36.tgz
 curl -O http://salt/fifo-0.91/chunter-latest.gz
 gunzip chunter-latest.gz
 sh chunter-latest
 
-cp  /opt/chunter/etc/chunter.conf  /opt/chunter.conf.0.70
+cp  /opt/chunter/etc/chunter.conf  /opt/chunter.conf.0.9.2
 cp  /opt/chunter/etc/chunter.conf.example  /opt/chunter/etc/chunter.conf
 address=`/opt/salt/bin/appdata/salt-2016.3.3.solaris-2_11-i86pc_64bit/salt-call --out=json  network.ip_addrs 2>&1 | grep -v WAR | json local[0]`
 sed -i.bak s/127.0.0.1/$address/g /opt/chunter/etc/chunter.conf

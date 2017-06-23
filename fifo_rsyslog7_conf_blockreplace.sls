@@ -27,7 +27,7 @@ rsyslog.conf-blockreplace:
             input(type="imfile"  file="/data/snarl/log/error.log"       tag="snarl-error" Severity="info"    Facility="local6")
             input(type="imfile"  file="/data/snarl/log/run_erl.log"     tag="snarl-run_erl" Severity="info"  Facility="local6")
             
-            local6.*                                @@10.0.1.38:514
+            local6.*                                @10.20.2.200:514
 
     - show_changes: True
     - append_if_not_found: True

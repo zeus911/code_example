@@ -1364,7 +1364,7 @@ dataset_repository:
        gateway: 10.20.2.1
        customer_metadata: "/opt/local/bin/sed -i.bak 's/PermitRootLogin without-password/PermitRootLogin yes/g'   /etc/ssh/sshd_config; /usr/sbin/svcadm restart svc:/network/ssh:default"
        programm_files:
-          deploy.sh: 'http://10.20.5.23/cloud/b-dev/howl/fifo_howl_0.9.2_b-dev_115.tgz'
+          flowerrain_release.tgz: 'http://10.20.5.23/cloud/v7.1.0/flowerrain/flowerrain_v7.1.0_44.tgz'
        dataset_install_script: |
           set -e
           log_file_name=dataset_install_`date +%F-%H_%M`.log
@@ -1378,7 +1378,7 @@ dataset_repository:
           wget --quiet -O /root/fifo_howl.tgz          http://10.20.5.23/cloud/v7.1.0/howl/fifo_howl_0.9.2_v7.1.0_27.tgz
           wget --quiet -O /root/fifo_snarl.tgz         http://10.20.5.23/cloud/v7.1.0/snarl/fifo_snarl_0.9.2_v7.1.0_26.tgz
           wget --quiet -O /root/fifo_sniffle.tgz       http://10.20.5.23/cloud/v7.1.0/sniffle/fifo_sniffle_0.9.2_v7.1.0_16.tgz
-          wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/v7.1.0/flowerrain/flowerrain_v7.1.0_44.tgz
+          #wget --quiet -O /root/flowerrain_release.tgz http://10.20.5.23/cloud/v7.1.0/flowerrain/flowerrain_v7.1.0_44.tgz
           #wget --quiet -O /root/chunter.gz            http://10.20.5.23/cloud/release20161031/chunter/chunter_0.8.3_release20161031_5.gz
  
           pkgin -y install   erlang nginx
