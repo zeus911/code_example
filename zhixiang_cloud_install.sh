@@ -62,7 +62,8 @@ sleep 10;
  salt 'briphant_cloud_beijing_1' cmd.run "sniffle-admin config show" 
 
 sleep 10
-#salt 'briphant_cloud_beijing_1'  state.sls fifo_0_9_rsyslog5_conf_blockreplace
+salt 'briphant_cloud_beijing_1'  state.sls fifo_rsyslog7_conf_blockreplace
+salt 'briphant_cloud_beijing_1' cmd.run "ls -ltr /data/*/log/"  shell='/bin/bash'
 salt 'briphant_cloud_beijing_1' cmd.run "svcs epmd snarl sniffle howl"
 sleep 20
 salt 'briphant_cloud_beijing_1' cmd.run "howl-admin status;sniffle-admin status;snarl-admin status;"

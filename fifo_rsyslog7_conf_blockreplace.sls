@@ -37,6 +37,7 @@ setfifo_rsyslog.conf:
   cmd.run:
     - name: |
        svcadm disable svc:/pkgsrc/rsyslog:default
+       sleep 5
        rm /imfile-state\:-data-*
        svcadm enable svc:/pkgsrc/rsyslog:default
     - onchanges: 
