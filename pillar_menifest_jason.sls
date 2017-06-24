@@ -1371,7 +1371,7 @@ dataset_repository:
           exec &> >(tee "/root/$log_file_name")       
           sed -i.bak "s/VERIFIED_INSTALLATION=.*/VERIFIED_INSTALLATION=never/" /opt/local/etc/pkg_install.conf
           #
-          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2016Q3' >> /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
+          echo '10.20.2.200 salt'>>/etc/hosts;sed -i.bak '$d' /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/smartos/pkgin2016Q3' >> /opt/local/etc/pkgin/repositories.conf;echo 'http://salt/salt-2016Q3/' >> /opt/local/etc/pkgin/repositories.conf;rm -fr /var/db/pkgin/*;/opt/local/bin/pkgin -fy up;/opt/local/bin/pkgin -y install salt lrzsz;/usr/bin/hostname>/opt/local/etc/salt/minion_id;sleep 10;svcadm enable svc:/pkgsrc/salt:minion;sleep 20
           zfs set mountpoint=/data zones/$(zonename)/data
 
           #wget --quiet -O /root/deploy.sh             http://192.168.10.56:5000/cloud/deploy-script/raw/master/deploy.sh
