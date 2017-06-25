@@ -1,0 +1,48 @@
+{% set fifo_zone_hostname = salt['cmd.run']('hostname') %}
+{% set fifo_zone_ip_list = salt['network.ip_addrs']() %}
+{% set fifo_zone_ip =  fifo_zone_ip_list[0]  %}
+
+
+
+server {
+    listen       80;
+    server_name  _;
+
+    #charset koi8-r;
+
+    access_log  /var/log/nginx/flower.access.log  main;
+    error_log   /var/log/nginx/zhixiang_flower.error.log debug;
+    root /opt/local/www;
+
+    location / {
+        #index  index-prod.html;
+        try_files $uri /index-prod.html;
+    }
+
+    location /api/ {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+
+        proxy_pass http://{{ fifo_zone_ip }}:8080/api/;
+        proxy_redirect off;
+
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+     }
+
+     location /images {
+        proxy_set_header X-NginX-Proxy true;
+
+        proxy_pass http://10.20.2.75/api/datasets;
+        proxy_redirect off; 
+    }
+    # set site favicon  
+    #location /favicon.ico {  
+    #    root html;
+    #}
+}
+   
