@@ -13,7 +13,7 @@ VERSION=rel
 cd /opt
 rm -fr /opt/chunter/ /opt/fifo_zlogin/
 rm -fr fifo_zlogin-latest.gz  chunter-latest fifo_zlogin-latest
-curl -O http://salt/fifo-0.91/fifo_zlogin-latest.gz
+curl -O http://salt/fifo-0.9.2/fifo_zlogin-latest.gz
 gunzip fifo_zlogin-latest.gz
 sh fifo_zlogin-latest
 
@@ -47,4 +47,4 @@ svcs chunter
 #svcadm clear  chunter
 #svcadm enable chunter
 #sleep 5
-#svcs chunter zlogin
+#svcs chunter zlogin chunter
