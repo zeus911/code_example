@@ -65,5 +65,5 @@ salt ci_beijing_office_leofs1 cmd.run 'leofs-adm start' shell='/usr/bin/bash'
 
 salt ci_beijing_office_leofs1 cmd.run 'svcadm enable leofs/gateway' shell='/usr/bin/bash'
 sleep 15
-salt ci_beijing_office_leofs1 cmd.run 'svcs   leofs/gateway' shell='/usr/bin/bash'
+salt ci_beijing_office_leofs1 cmd.run 'svcs  leofs/storage leofs/manager leofs/gateway' shell='/usr/bin/bash'
 salt ci_beijing_office_leofs1 cmd.run 'leofs-adm status'  shell='/usr/bin/bash'

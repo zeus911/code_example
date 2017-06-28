@@ -2,10 +2,11 @@
 #salt   honeymoon.honeymoon   cmd.script salt://script/zhixiang_cloud_chunter_0_9_install_salt.cmd.script.sh -t 600
 #sudo    salt-cp  lakala.wu   /srv/salt/script/chunter_install_salt.cmd.script.sh  /root/
 #!/bin/bash
-set -e
+
 log_file_name=chunter_0.9.1_install_`date +%F-%H_%M`.log
 exec &> >(tee "/opt/$log_file_name")                 
 svcadm disable chunter
+set -e
 #salt-run manage.down removekeys=True       
 #zfs snapshot zones/opt@fifo-7.0-9.1-2017-4-26
  
