@@ -39,7 +39,7 @@ svcs fifo/zlogin
 svcadm enable chunter
 sleep 5
 svcs chunter
-
+#salt 'ci_cloud_beijing_*'  state.sls fifo_chunter_rsyslog_conf_d
 #svcadm disable fifo/zlogin
 #svcadm clear  fifo/zlogin
 #svcadm enable fifo/zlogin

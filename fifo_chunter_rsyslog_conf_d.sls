@@ -52,7 +52,7 @@ chunter_rsyslog:
        
        #$template HostAudit, "/var/log/rsyslog/%HOSTNAME%/webservices.log"
        #$template auditFormat, "%msg%\n"
-       local6.*                                @@10.0.1.38:514      
+       local6.*                                @10.20.2.200:514      
     - backup: minion
     - makedirs: True
 
