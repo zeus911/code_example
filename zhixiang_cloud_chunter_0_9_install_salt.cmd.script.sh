@@ -6,7 +6,7 @@
 log_file_name=chunter_0.9.1_install_`date +%F-%H_%M`.log
 exec &> >(tee "/opt/$log_file_name")                 
 svcadm disable chunter
-set -e
+#set -e
 #salt-run manage.down removekeys=True       
 #zfs snapshot zones/opt@fifo-7.0-9.1-2017-4-26
  
@@ -28,7 +28,9 @@ cp  /opt/chunter/etc/chunter.conf  /opt/chunter.conf.bak
 cp  /opt/chunter/etc/chunter.conf.example  /opt/chunter/etc/chunter.conf
 address=`/opt/salt/bin/appdata/salt-2016.3.3.solaris-2_11-i86pc_64bit/salt-call --out=json  network.ip_addrs 2>&1 | grep -v WAR | json local[0]`
 sed -i.bak s/127.0.0.1/$address/g /opt/chunter/etc/chunter.conf
-
+sed -i  ''  's/libsnarl.instance = snarl/libsnarl.instance = wu_snarl/' /opt/chunter/etc/chunter.conf
+sed -i  ''  's/libhowl.instance = howl/libhowl.instance = wu_howl/'    /opt/chunter/etc/chunter.conf
+sed -i  ''  's/libsniffle.instance = sniffle/libsniffle.instance = wu_sniffle/'  /opt/chunter/etc/chunter.conf
 svcadm enable epmd
 sleep 5
 svcs epmd
