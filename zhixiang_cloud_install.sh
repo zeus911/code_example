@@ -48,9 +48,10 @@ done
 
 salt 'briphant_cloud_beijing_*' cmd.run "svcadm enable epmd;svcadm enable snarl; svcadm enable howl;svcadm enable sniffle"
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm restart snarl; svcadm restart howl;svcadm restart sniffle"
-#salt 'fifo_*_aio_9_1_home' cmd.run "svcadm disable snarl; svcadm disable howl;svcadm disable sniffle"
+#salt 'briphant_cloud_beijing_*' cmd.run "svcadm disable snarl; svcadm disable howl;svcadm disable sniffle"
+#salt 'briphant_cloud_beijing_*' cmd.run "svcadm enable snarl; svcadm enable howl;svcadm enable sniffle"
 #salt 'fifo_*_aio_9_1_home' cmd.run "svcadm clear snarl; svcadm clear howl;svcadm clear sniffle"
-#salt 'fifo_*_aio_9_1_home' cmd.run "svcadm enable snarl; svcadm enable howl;svcadm enable sniffle"
+
 
 
 sleep 30
