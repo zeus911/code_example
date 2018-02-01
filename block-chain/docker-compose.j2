@@ -1,0 +1,80 @@
+#
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+services:
+
+{% for dict_item in simple['network-config'] %}
+
+{{ dict_item }}.example.com:
+    image: hyperledger/fabric-ca:x86_64-1.0.4
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.{{ dict_item }}.example.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/org{{ dict_item }}ca_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.{{ dict_item }}.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/org{{ dict_item }}ca_sk
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ./channel/crypto-config/peerOrganizations/{{ dict_item }}.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg{{ dict_item }}
+
+  peer0.{{ dict_item }}.example.com:
+    container_name: peer0.{{ dict_item }}.example.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.{{ dict_item }}.example.com
+      - CORE_PEER_LOCALMSPID=Org{{ dict_item }}MSP
+      - CORE_PEER_ADDRESS=peer0.{{ dict_item }}.example.com:7051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0{{ dict_item }}:5984
+    ports:
+      - 7051:7051
+      - 7053:7053
+    volumes:
+        - ./channel/crypto-config/peerOrganizations/{{ dict_item }}.example.com/peers/peer0.{{ dict_item }}.example.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      # - orderer.example.com
+      - couchdb0{{ dict_item }}
+
+  peer1.{{ dict_item }}.example.com:
+    container_name: peer1.{{ dict_item }}.example.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.{{ dict_item }}.example.com
+      - CORE_PEER_LOCALMSPID=Org{{ dict_item }}MSP
+      - CORE_PEER_ADDRESS=peer1.{{ dict_item }}.example.com:7051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1{{ dict_item }}:5984
+    ports:
+      - 9056:7051
+      - 9058:7053
+    volumes:
+        - ./channel/crypto-config/peerOrganizations/{{ dict_item }}.example.com/peers/peer1.{{ dict_item }}.example.com/:/etc/hyperledger/crypto/peer
+    depends_on:
+      # - orderer.example.com
+      - couchdb1{{ dict_item }}
+
+  couchdb0{{ dict_item }}:
+    container_name: couchdb0{{ dict_item }}
+    image: hyperledger/fabric-couchdb:x86_64-1.0.4
+    ports:
+      - "5984:5984"
+
+  couchdb1{{ dict_item }}:
+    container_name: couchdb1{{ dict_item }}
+    image: hyperledger/fabric-couchdb:x86_64-1.0.4
+    ports:
+      - "6984:5984"
+
+{% endfor %}
