@@ -82,3 +82,7 @@ sudo systemctl restart nginx.service
 sudo apt install -y python-pip
 pip install --upgrade pip
 pip install jinja2
+sudo apt install -y jq
+
+# cd /home/org13/repository_air_trace/AT_node_client/
+# npm rebuild node-sass --force
