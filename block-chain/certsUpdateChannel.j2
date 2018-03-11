@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+export CHANNEL_NAME1=mychannel
+mv -f  ./channel/cryptogen.yaml ../../artifacts/channel/ 
+mv -f  ./channel/configtx.yaml ../../artifacts/channel/
+
+cd ../../artifacts/channel
+export FABRIC_CFG_PATH=$(pwd)
+pwd
+BIN_PATH=../../bin_linux
+
+echo cleaning old cert/block/channel.tx .....
+rm -rf crypto-config/
+rm *block
+rm *tx
+
+echo generate certs
+pwd
+${BIN_PATH}/cryptogen generate --config=./cryptogen.yaml
+
+echo renaming certs
+current="${PWD}"
+
+
+
+{% for dict_item in simple['network-config'] %}
+
+    {%- if dict_item == 'orderer' %} 
+        {% continue %} 
+    {% endif %}
+
+    cd "./crypto-config/peerOrganizations/{{ simple['network-config'][dict_item]['domain'] }}/ca"
+    file=$(ls *_sk)
+    mv "${file}" {{ dict_item }}ca_sk
+
+{% endfor %}
+
+cd "${current}"
+pwd
+
+# cp "../crypto-config/peerOrganizations/org1.example.com/ca" ./orgcryptoconfig
+# cp "../crypto-config/ordererOrganizations/example.com/ca" ./orderercryptoconfig
+# rm -rf "../crypto-config/peerOrganizations/org1.example.com/ca"
+
+
+
+
+# echo generate genesis.block
+# ${BIN_PATH}/configtxgen -profile threeOrgsAllConsortiumOrdererGenesis -outputBlock ./genesis.block
+
+# echo generate channel.tx
+# ${BIN_PATH}/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./$CHANNEL_NAME1.tx -channelID $CHANNEL_NAME1
