@@ -45,44 +45,80 @@ npm rebuild node-sass --force;
 sudo apt-get -y update
 sudo apt-get -y install nginx
 
-sudo tee /etc/nginx/conf.d/air-trace.conf<<'EOF'  
-    server {
-        error_log /var/log/nginx/error.log info;
-        rewrite_log on;
-
-        listen       4200 default_server;
+sudo tee /etc/nginx/conf.d/air-trace.conf<<'EOF'
+server {
+    error_log /var/log/nginx/error.log info;
+    rewrite_log on;
+    listen       4200 default_server;
 #        listen       [::]:80 default_server;
-        server_name  _;
-        root         /var/www/html;
-
-        # Load configuration files for the default server block.
-        include /etc/nginx/default.d/*.conf;
-
-        location / {
-                 index  index.html;
-                 error_log /var/log/nginx/location-error.log info;
-                 root  /var/www/html;
-                 #try_files $uri $uri/index.html;
-                 autoindex on;
-        }
-
-
-        error_page 404 /404.html;
-            location = /40x.html {
-        }
-
-        error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-        }
+    server_name  _;
+    root         /var/www/html;
+    # Load configuration files for the default server block.
+    include /etc/nginx/default.d/*.conf;
+    location / {
+             index  index.html;
+             error_log /var/log/nginx/location-error.log info;
+             root  /var/www/html;
+             #try_files $uri $uri/index.html;
+             autoindex on;
     }
-
+    error_page 404 /index.html;
+        location = /index.html {
+              root  /var/www/html;
+              internal;
+    }
+#   error_page 404 /404.html;
+#       location = /40x.html {
+#   }
+    error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+    }
+}
 EOF
 sudo systemctl restart nginx.service
 
 sudo apt install -y python-pip
 pip install --upgrade pip
-pip install jinja2
+sudo pip install jinja2
 sudo apt install -y jq
 
 # cd /home/org13/repository_air_trace/AT_node_client/
 # npm rebuild node-sass --force
+
+
+
+#ubuntu
+echo "=========install selenium ========"
+#https://medium.com/@griggheo/running-selenium-webdriver-tests-using-firefox-headless-mode-on-ubuntu-d32500bb6af2
+sudo apt-get install -y python-pip
+pip install --upgrade pip
+sudo pip install selenium # 或sudo -H pip install selenium
+sudo apt-get install -y firefox xvfb
+Xvfb :10 -ac &
+export DISPLAY=:10
+
+#Test that you can run firefox in the foreground with no errors
+#firefox
+#(kill it with Ctrl-C)
+
+
+#firefox
+wget https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz
+sudo sh -c 'tar -x geckodriver -zf  geckodriver-v0.19.0-linux64.tar.gz -O > /usr/bin/geckodriver'
+sudo chmod +x /usr/bin/geckodriver
+
+#ubuntu chrome,https://sites.google.com/a/chromium.org/chromedriver/home
+wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
+sudo apt-get install  -y unzip
+unzip chromedriver_linux64.zip
+sudo cp chromedriver /usr/bin/
+sudo chmod +x /usr/bin/chromedriver
+
+
+#https://www.linuxbabe.com/ubuntu/install-google-chrome-ubuntu-16-04-lts
+curl -sS -o - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add
+sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+sudo apt-get -y update
+sudo apt-get -y install google-chrome-stable
+
+echo "========= selenium installation complete========"
