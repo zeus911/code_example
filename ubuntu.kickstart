@@ -76,3 +76,15 @@ network --bootproto=dhcp --device=eth0
 firewall --disabled --trust=eth0 --ssh
 #Do not configure the X Window System
 skipx
+
+
+# update grub after installation so that we can see the console later
+# # The new filesystem is under /target. e.g. /root is now /target/root
+# # and https://help.ubuntu.com/community/KickstartCompatibility
+%post --nochroot
+ (
+     sed -i "s;quiet;quiet console=ttyS0;"  /target/etc/default/grub
+     sed -i "s;quiet;quiet console=ttyS0;g" /target/boot/grub/grub.cfg
+             
+ ) 1> /target/root/post_install.log 2>&1
+%end
