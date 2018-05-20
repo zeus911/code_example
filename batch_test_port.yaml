@@ -8,3 +8,80 @@
        port: 8100
        timeout: 1
     - debug: msg="System {{ ansible_hostname }} has uuid {{ ansible_product_uuid }}"
+
+
+
+cat > ./ansible-shell-command.yaml <<AnsibleEOF
+- hosts: 'office'
+  gather_facts: no
+  tasks:
+    - name: init orderer for dynamic org
+      shell: 
+        cmd: |
+          cat > ~/.bash_aliases <<EOF
+          alias sdk='cd ~/repository_air_trace/AT_node_sdk/'
+          alias dyn='cd ~/repository_air_trace/AT_node_sdk/testCloudArtifacts/DynamicOrg'
+          alias trace='cd ~/repository_air_trace/AT_partstraceability'
+          alias init='cd ~/repository_air_trace/AT_node_sdk/deployScripts'
+          EOF
+          source ~/.bashrc        
+
+      args:
+        executable: /bin/bash
+      register: ps
+    - debug: var=ps.stdout_lines
+
+AnsibleEOF
+ansible-playbook ./ansible-shell-command.yaml
+
+
+cat > /Users/fwu066/Documents/share/tmp/ansible-file-command.yaml <<ansibleEOF
+- hosts: 'org3-AT'
+  gather_facts: no
+  tasks:
+    - name: init orderer for dynamic org
+      shell: 
+        cmd: |
+          cat > ~/repository_air_trace/AT_node_sdk/testCloudArtifacts/DynamicOrg/user_input.yaml <<EOF
+          orderer_ip: 23.102.236.94
+          orderer_domain: orderer.example.com
+          orderer_name: Orderer
+          deploy_orderer: false
+          org_domain: testorg2.com
+          org_ip: 23.102.237.22
+          org_name: Testorg2
+          EOF
+      args:
+        executable: /bin/bash
+      register: ps
+    - debug: var=ps.stdout_lines
+ansibleEOF
+ansible-playbook /Users/fwu066/Documents/share/tmp/ansible-file-command.yaml 
+
+
+cat > /Users/fwu066/Documents/share/tmp/ansible-alias-command.sh <<ansibleEOF
+#!/bin/bash
+
+sudo apt install -y python-pip
+pip install --upgrade pip
+pip install jinja2
+sudo apt install -y jq
+ansibleEOF
+ansible 'extra' -m shell -a "sudo chown \${HOME#/home/}:\${HOME#/home/} -R \$HOME"
+ansible extra -m  script -a "/Users/fwu066/Documents/share/tmp/ansible-alias-command.sh "
+
+
+cat >> /Users/fwu066/Documents/share/tmp/ansible-ping-port.yaml <<ansibleEOF
+- name:  port test
+  hosts: org1-AT
+  gather_facts: True
+  tasks:
+    - name: port
+      wait_for:
+       host: "{{ ansible_hostname }}"
+       port: 8200
+       timeout: 1
+    - debug: msg="System {{ ansible_hostname }} has uuid {{ ansible_product_uuid }}"
+ansibleEOF
+ansible-playbook /Users/fwu066/Documents/share/tmp/ansible-ping-port.yaml 
+
