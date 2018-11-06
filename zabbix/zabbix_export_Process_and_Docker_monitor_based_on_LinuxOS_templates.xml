@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.0</version>
-    <date>2018-11-01T08:18:03Z</date>
+    <date>2018-11-06T07:35:34Z</date>
     <groups>
         <group>
             <name>Templates/Operating systems</name>
@@ -791,7 +791,7 @@
                 </item>
                 <item>
                     <name>CPU iowait time</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
                     <key>system.cpu.util[,iowait]</key>
@@ -1101,7 +1101,7 @@
                 </item>
                 <item>
                     <name>CPU user time</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
                     <key>system.cpu.util[,user]</key>
