@@ -9,4 +9,6 @@ cd  ./my_doc
    git pull
    git push
 
+echo ssh-copy-id -i ~/.ssh/id_rsa.pub frank@40.114.78.241
+
 
