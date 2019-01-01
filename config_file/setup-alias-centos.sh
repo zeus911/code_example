@@ -1,4 +1,4 @@
-#!/bin/bash
+
 cat > ~/.bash_aliases <<'EOF'
           alias sdk='cd ~/repository_air_trace/AT_node_sdk/'
           alias dyn='cd ~/repository_air_trace/AT_node_sdk/testCloudArtifacts/DynamicOrg'
