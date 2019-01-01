@@ -1,0 +1,37 @@
+IgnoreUnknown UseKeychain
+Host k8s
+        HostName 10.0.1.41
+        IdentityFile  ~/.ssh/id_rsa
+        User root
+        AddKeysToAgent yes
+        UseKeychain yes
+
+
+Host surface
+        HostName 10.0.1.101
+        IdentityFile  ~/.ssh/id_rsa
+        User root
+        AddKeysToAgent yes
+        UseKeychain yes
+
+
+Host vpn
+        HostName 66.42.49.243
+        IdentityFile  ~/.ssh/id_rsa
+        User root
+        AddKeysToAgent yes
+        UseKeychain yes
+
+Host hp-centos
+        HostName 10.0.1.198
+        IdentityFile  ~/.ssh/id_rsa
+        User root
+        AddKeysToAgent yes
+        UseKeychain yes
+
+Host pwc
+        HostName 10.0.1.59
+        IdentityFile  ~/.ssh/id_rsa
+        User fwu066
+        AddKeysToAgent yes
+        UseKeychain yes
