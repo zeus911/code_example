@@ -1,4 +1,4 @@
-cd  ./code_example/
+#cd  ./code_example/
    git commit -a -m "$1"
    git pull
    git push
