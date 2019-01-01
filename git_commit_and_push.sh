@@ -3,7 +3,7 @@
    git pull
    git push
    cp config_file/ssh-host-config ~/.ssh/config
-   cp config_file/.zshrc          ~/.zshrc
+
 cd ../
 cd  ./my_doc
    git commit -a -m "$1"
