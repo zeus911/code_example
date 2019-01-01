@@ -27,4 +27,5 @@ cat > ~/.bash_aliases <<'EOF'
 EOF
     chmod +x ~/.bash_aliases
 	echo ". ~/.bash_aliases" >>~/.bashrc
-	source ~/.bashrc
+    echo ". ~/.bash_aliases" >>~/.zshrc
+	source ~/.zshrc
