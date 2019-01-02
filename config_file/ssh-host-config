@@ -29,6 +29,13 @@ Host hp-centos
         AddKeysToAgent yes
         UseKeychain yes
 
+Host hp
+        HostName 10.0.1.99
+        IdentityFile  ~/.ssh/id_rsa
+        User root
+        AddKeysToAgent yes
+        UseKeychain yes
+
 Host pwc
         HostName 10.0.1.59
         IdentityFile  ~/.ssh/id_rsa
