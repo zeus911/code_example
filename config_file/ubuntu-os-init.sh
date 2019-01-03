@@ -1,3 +1,4 @@
+apt-get update
 apt-get -y install proxychains
 cp /usr/local/etc/proxychains.conf /usr/local/etc/proxychains.conf.$(date "+%b_%d_%Y_%H.%M.%S")
 sed 's/socks4  127.0.0.1 8000/socks5  127.0.0.1 1080/' /usr/local/etc/proxychains.conf
