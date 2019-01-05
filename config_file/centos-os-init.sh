@@ -19,3 +19,8 @@ curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/mas
     cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
     sed -i  's/^  git/  history dircycle systemd/' ~/.zshrc
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
+
+systemctl stop firewalld
+systemctl disable firewalld
+
+systemctl status firewalld
