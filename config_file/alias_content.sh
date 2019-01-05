@@ -23,6 +23,6 @@ cat > ~/.bash_aliases <<'EOF'
           alias rn='sudo systemctl restart nginx.service'
           alias ltr='sudo ls -ltr'
           alias vpn='autossh -M 2000 -D localhost:1080  frank@40.114.78.241'
-          alias vpn='autossh -M 2000 -D localhost:1080   root@vultr
+          alias vpn2='autossh -M 2003 -D localhost:1080   root@vultr'
 
 EOF
