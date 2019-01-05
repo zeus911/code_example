@@ -49,3 +49,10 @@ Host pwc
         User fwu066
         AddKeysToAgent yes
         UseKeychain yes
+
+Host vultr
+        HostName 66.42.49.243
+        IdentityFile  ~/.ssh/id_rsa
+        User fwu066
+        AddKeysToAgent yes
+        UseKeychain yes
