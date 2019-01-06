@@ -7,5 +7,8 @@ proxychains curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/o
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
     cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
-    sed -i  's/^  git/  history dircycle systemd/' ~/.zshrc
+    sed -i  's/^  git/  history dircycle systemd autosuggestions/' ~/.zshrc
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
+    
+    cd ~/.oh-my-zsh/custom/plugins
+    git clone https://github.com/zsh-users/zsh-autosuggestions
