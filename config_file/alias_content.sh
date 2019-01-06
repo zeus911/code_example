@@ -23,7 +23,7 @@ cat > ~/.bash_aliases <<'EOF'
           alias rn='sudo systemctl restart nginx.service'
           alias ltr='sudo ls -ltr'
           alias vpn=' autossh -M 2000 -L 5901:localhost:1000  -L 5902:localhost:1002  -D localhost:1080   vultr'
-          alias vncsurface=' autossh -M 3000 -R 127.0.0.1:1000:127.0.0.1:5901   -D localhost:1080 vultr'
+          alias vncsurface=' autossh -M 3000 -R 127.0.0.1:1000:127.0.0.1:3389   -D localhost:1080 vultr'
           alias vncmacmini=' autossh -M 4000 -R 127.0.0.1:1002:127.0.0.1:5902   -D localhost:1080 vultr'
 
 EOF
