@@ -25,6 +25,6 @@ cat > ~/.bash_aliases <<'EOF'
           alias vpn='autossh -M 2000 -D localhost:1080  frank@40.114.78.241'
           alias vpn2='autossh -M 2003 -D localhost:1080   root@vultr'
           alias vnc='autossh -M 3000 -R     1000:127.0.0.1:5901   vultr'
-          alias vnc2='autossh -M 4000 -R     1000:127.0.0.1:5902   vultr'
+          alias vnc2='autossh -M 4000 -R     1002:127.0.0.1:5902   vultr'
 
 EOF
