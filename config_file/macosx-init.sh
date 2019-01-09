@@ -2,15 +2,15 @@
 #sudo passwd root
 
 sudo sh -c  'echo "fwu066 ALL=(ALL) NOPASSWD: ALL" >/private/etc/sudoers.d/frank_sudo'
+# setup sock4 proxy
+    sudo chown -R $(whoami) /usr/local/lib/pkgconfig
+    brew install lrzsz zsh zsh-completions telnet autossh proxychains-ng
 
-sudo chown -R $(whoami) /usr/local/lib/pkgconfig
-brew install lrzsz zsh zsh-completions telnet autossh proxychains-ng
-
-cp /usr/local/etc/proxychains.conf /usr/local/etc/proxychains.conf.$(date "+%b_%d_%Y_%H.%M.%S")
-sudo sed -i .bak 's/9050/1080/g' /usr/local/etc/proxychains.conf
+    cp /usr/local/etc/proxychains.conf /usr/local/etc/proxychains.conf.$(date "+%b_%d_%Y_%H.%M.%S")
+    sudo sed -i .bak 's/9050/1080/g' /usr/local/etc/proxychains.conf
 
 
-#setup https proxy using go
+#setup https proxy using go which is based on sock5 proxy
   #setup go proxy
     http_proxy=socks5://127.0.0.1:1080 go get -v golang.org/x/net/proxy
     git config --global http.proxy socks5://127.0.0.1:1080
