@@ -31,3 +31,8 @@ sudo sed -i .bak 's/9050/1080/g' /usr/local/etc/proxychains.conf
     curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
+
+    cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
+    sed -i .bak 's/^  git/  history dircycle zsh-autosuggestions/' ~/.zshrc
+    sed -i .bak 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
+    source ~/.zshrc
