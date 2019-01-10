@@ -25,7 +25,7 @@ sudo sh -c  'echo "fwu066 ALL=(ALL) NOPASSWD: ALL" >/private/etc/sudoers.d/frank
     go build main.go
     ./main  -socks 127.0.0.1:1080 -port 2080 -v
 
-    export https_proxy='https://127.0.0.1:2080/'
+    export https_proxy='http://127.0.0.1:2080/'
 
 #install zsh
     curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
