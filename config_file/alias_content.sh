@@ -26,5 +26,7 @@ cat > ~/.bash_aliases <<'EOF'
           alias vpn2=' autossh -M 2000 -L 5901:localhost:1000  -L 5902:localhost:1002  -D localhost:1080    frank@40.114.78.241'
           alias surface=' autossh -M 3000 -R 127.0.0.1:1000:127.0.0.1:3389   -D localhost:1080 vultr'
           alias macmini=' autossh -M 4000 -R 127.0.0.1:1002:127.0.0.1:5902   -D localhost:1080 vultr'
+          alias gitadd='ssh-add ~/.ssh/id_rsa_frank_private'
+
 
 EOF

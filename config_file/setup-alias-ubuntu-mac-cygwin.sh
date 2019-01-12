@@ -9,3 +9,5 @@
 ./alias_content.sh
 chmod +x ~/.bash_aliases
 echo ". ~/.bash_aliases" >>~/.zshrc
+
+#run "source ~/.zshrc" manually
