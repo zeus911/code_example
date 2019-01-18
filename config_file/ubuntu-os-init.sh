@@ -1,3 +1,4 @@
+#sed s/^proxychains//g ./ubuntu-os-init.sh
 apt-get update
 apt-get -y install proxychains
 cp /etc/proxychains.conf /etc/proxychains.conf.$(date "+%b_%d_%Y_%H.%M.%S")
