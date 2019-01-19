@@ -1,3 +1,4 @@
+#!/bin/bash
 
       mkdir -p ~/.ssh
       cat > ~/.ssh/id_rsa <<EOF
