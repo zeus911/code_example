@@ -15,8 +15,8 @@ Host surface
         UseKeychain yes
 
 
-Host vpn
-        HostName 66.42.49.243
+Host azure
+        HostName 137.135.94.34
         IdentityFile  ~/.ssh/id_rsa
         User root
         AddKeysToAgent yes
