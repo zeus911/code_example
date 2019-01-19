@@ -18,7 +18,7 @@ Host surface
 Host azure
         HostName 137.135.94.34
         IdentityFile  ~/.ssh/id_rsa
-        User root
+        User frank
         AddKeysToAgent yes
         UseKeychain yes
 
