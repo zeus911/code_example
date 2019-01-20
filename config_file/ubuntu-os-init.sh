@@ -14,3 +14,8 @@ proxychains curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/o
     
     cd ~/.oh-my-zsh/custom/plugins
     git clone https://github.com/zsh-users/zsh-autosuggestions
+
+    mkdir -p ~/.zsh-my-plugin
+    cd ~/.zsh-my-plugin
+    git clone https://github.com/seebi/dircolors-solarized 
+    echo 'eval `dircolors  ~/.zsh-my-plugin/dircolors-solarized/dircolors.256dark`' >> ~/.zshrc
