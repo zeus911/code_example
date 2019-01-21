@@ -3,7 +3,7 @@ systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
 
-
+cp ./ssh-host-config ~/.ssh/config
 yum update
 yum -y install git
 

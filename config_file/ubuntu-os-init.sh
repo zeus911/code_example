@@ -1,6 +1,7 @@
 #sed -i s/^sudo proxychains/sudo /g ./ubuntu-os-init.sh
 sudo sh -c  'echo "frank ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/frank_sudo'
 sudo apt-get update
+cp ./ssh-host-config ~/.ssh/config
 sudo apt-get -y install proxychains
 sudo cp /etc/proxychains.conf /etc/proxychains.conf.$(date "+%b_%d_%Y_%H.%M.%S")
 sudo sed -i 's/socks4  127.0.0.1 8000/socks5  127.0.0.1 1080/' /etc/proxychains.conf
