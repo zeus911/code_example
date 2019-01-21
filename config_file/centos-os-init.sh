@@ -1,8 +1,15 @@
+
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl status firewalld
+
+cp ./ssh-host-config ~/.ssh/config
 yum update
 yum -y install git
 
-
+cd ~
 sudo yum -y groupinstall  "Development Tools"
+cp ./ssh-host-config ~/.ssh/config
 git clone https://github.com/rofl0r/proxychains-ng.git
 cd proxychains-ng/
 ./configure
@@ -13,17 +20,8 @@ cp /usr/local/etc/proxychains.conf /usr/local/etc/proxychains.conf.$(date "+%b_%
 sudo sed -i 's/9050/1080/g' /usr/local/etc/proxychains.conf
 
 yum -y install tftp epel-release wim wget curl telnet lrzsz aria2 openssh-clients openssh-server iotop net-tools lsof tcpdump tree tcpdump zip unzip less dos2unix git iproute bind-utils autossh iproute proxychains zsh zssh vim nmap
-curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
+proxychains4 curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
-    cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
-    sed -i  's/^  git/  history dircycle systemd autosuggestions/' ~/.zshrc
-    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
 
-    cd ~/.oh-my-zsh/custom/plugins
-    git clone https://github.com/zsh-users/zsh-autosuggestions
-
-systemctl stop firewalld
-systemctl disable firewalld
-
-systemctl status firewalld
+# next please call ./config-zsh.sh in git/code_example/config_file directory
