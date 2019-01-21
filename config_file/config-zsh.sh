@@ -11,6 +11,7 @@
     #https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20for%20Powerline.ttf
     
     #install font method2:
+    cd ~
     git clone git@github.com:powerline/fonts.git
     cd fonts
     ./install.sh

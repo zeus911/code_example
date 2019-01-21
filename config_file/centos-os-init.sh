@@ -1,7 +1,7 @@
 yum update
 yum -y install git
 
-
+cd ~
 sudo yum -y groupinstall  "Development Tools"
 git clone https://github.com/rofl0r/proxychains-ng.git
 cd proxychains-ng/
@@ -16,12 +16,6 @@ yum -y install tftp epel-release wim wget curl telnet lrzsz aria2 openssh-client
 curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
-    cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
-    sed -i  's/^  git/  history dircycle systemd autosuggestions/' ~/.zshrc
-    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
-
-    cd ~/.oh-my-zsh/custom/plugins
-    git clone https://github.com/zsh-users/zsh-autosuggestions
 
 systemctl stop firewalld
 systemctl disable firewalld
