@@ -9,3 +9,5 @@ sudo proxychains apt-get -y install tree lrzsz dos2unix build-essential autoconf
 sudo proxychains curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh 
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
+
+# next please call ./config-zsh.sh in git/code_example/config_file directory
