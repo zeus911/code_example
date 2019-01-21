@@ -1,6 +1,6 @@
     #!/bin/bash
     cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
-    sed -i  's/^  git/  history dircycle systemd autosuggestions/' ~/.zshrc
+    sed -i  's/^  git/  history dircycle systemd autosuggestions extract/' ~/.zshrc
     #sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME=""/'  ~/.zshrc
     #sed -i 's/ZSH_THEME="afowler"/ZSH_THEME="agnoster"/'  ~/.zshrc
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/'  ~/.zshrc
