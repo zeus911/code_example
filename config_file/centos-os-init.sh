@@ -9,6 +9,7 @@ yum -y install git
 
 cd ~
 sudo yum -y groupinstall  "Development Tools"
+cp ./ssh-host-config ~/.ssh/config
 git clone https://github.com/rofl0r/proxychains-ng.git
 cd proxychains-ng/
 ./configure
