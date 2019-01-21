@@ -1,3 +1,9 @@
+
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl status firewalld
+
+
 yum update
 yum -y install git
 
@@ -17,7 +23,3 @@ curl -o ./zsh_install.sh -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/mas
     chmod +x  ./zsh_install.sh
     ./zsh_install.sh
 
-systemctl stop firewalld
-systemctl disable firewalld
-
-systemctl status firewalld
