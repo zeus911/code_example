@@ -1,8 +1,8 @@
     #!/bin/bash
     cp ~/.zshrc ~/.zshrc.bak.$(date "+%b_%d_%Y_%H.%M.%S")
     sed -i  's/^  git/  history dircycle systemd autosuggestions/' ~/.zshrc
-    #sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="afowler"/'  ~/.zshrc
-    
+    #sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME=""/'  ~/.zshrc
+    #sed -i 's/ZSH_THEME="afowler"/ZSH_THEME="agnoster"/'  ~/.zshrc
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/'  ~/.zshrc
     #https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
     #on windows10 download and exec ttf file,and change wsl terminal's font to DejaVu Sans Mono for Powerline
