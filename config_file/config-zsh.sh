@@ -11,10 +11,13 @@
     #https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20for%20Powerline.ttf
     
     #install font method2:
-    cd ~
-    git clone git@github.com:powerline/fonts.git
-    cd fonts
-    ./install.sh
+      #only needed to be run on windows10(wsl) or macos(iterm2)
+  
+        # cd ~
+        # git clone git@github.com:powerline/fonts.git
+        # cd fonts
+        # ./install.sh
+
      #iterm2->Preferences->Profiles->Text->Font->Change Font->Droid Sans Mono for Powerline
 
     cd ~/.oh-my-zsh/custom/plugins
